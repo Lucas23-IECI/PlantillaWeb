@@ -5,29 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto | Mi Tienda</title>
-    <meta name="description" content="Contáctanos para cualquier consulta o información sobre nuestros productos.">
+    <meta name="description" content="Contáctanos por WhatsApp, teléfono o email. Estamos para ayudarte. Respuesta en menos de 2 horas.">
 
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 
-    <!-- CSS - Sistema Modular -->
-    <link rel="stylesheet" href="/css/main.css?v=5.0">
-    <link rel="stylesheet" href="/css/pages/contacto.css?v=5.0">
-
+    <link rel="stylesheet" href="/css/main.css?v=6.4">
+    <link rel="stylesheet" href="/css/pages/contacto.css?v=6.4">
 </head>
 
 <body>
-    <!-- Skip Link -->
     <a href="#main" class="skip-link">Ir al contenido principal</a>
 
-    <!-- Header Component -->
     <header class="header-container">
-        <!-- Info Banner -->
         <div class="header-info">
             <p>Envío gratis en compras sobre $50.000 | Lunes a Viernes 9:00 - 18:00hrs</p>
         </div>
 
-        <!-- Navbar -->
         <nav class="header-nav">
             <div class="container">
                 <button class="menu-toggle" aria-label="Menú">
@@ -38,16 +31,15 @@
                     </svg>
                 </button>
 
-                <a href="../home.html" class="header-logo">MT</a>
+                <a href="/home.html" class="header-logo">MT</a>
 
                 <ul class="nav-links">
-                    <li><a href="../home.html">Inicio</a></li>
+                    <li><a href="/home.html">Inicio</a></li>
                     <li><a href="productos.html">Productos</a></li>
                     <li><a href="nosotros.html">Nosotros</a></li>
                     <li><a href="contacto.html" class="active">Contacto</a></li>
                 </ul>
 
-                <!-- Búsqueda Expandible -->
                 <div class="header-search">
                     <button class="search-icon" aria-label="Buscar">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -60,16 +52,19 @@
 
                 <div class="header-actions">
                     <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="5" />
-                            <line x1="12" y1="1" x2="12" y2="3" />
-                            <line x1="12" y1="21" x2="12" y2="23" />
-                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                            <line x1="1" y1="12" x2="3" y2="12" />
-                            <line x1="21" y1="12" x2="23" y2="12" />
-                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                         </svg>
                     </button>
 
@@ -93,14 +88,13 @@
         </nav>
     </header>
 
-    <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-header">
             <span>Menú</span>
             <button class="mobile-close" aria-label="Cerrar">&times;</button>
         </div>
         <nav class="mobile-nav">
-            <a href="../home.html">Inicio</a>
+            <a href="/home.html">Inicio</a>
             <a href="productos.html">Productos</a>
             <a href="nosotros.html">Nosotros</a>
             <a href="contacto.html">Contacto</a>
@@ -109,85 +103,342 @@
     </div>
     <div class="mobile-overlay" id="mobileOverlay"></div>
 
-    <!-- Main Content -->
     <main id="main">
-        <!-- Hero Section -->
+        <!-- 1. Hero Section -->
         <section class="contacto-hero">
-            <div class="container">
-                <h1>Contacto</h1>
-                <p>Estamos aquí para ayudarte con cualquier consulta</p>
+            <div class="hero-content">
+                <h1>Hablemos</h1>
+                <p class="hero-subtitle">Estamos aquí para ayudarte en cada paso</p>
+                <div class="response-badge">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    Respondemos en menos de 2 horas
+                </div>
+                <div class="quick-contact-btns">
+                    <a href="https://wa.me/56912345678" class="quick-btn whatsapp" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.5 0 .18 5.32.18 11.88c0 2.1.55 4.15 1.6 5.97L0 24l6.32-1.74a11.86 11.86 0 0 0 5.74 1.46c6.56 0 11.88-5.33 11.88-11.89 0-3.18-1.24-6.16-3.43-8.35Z" />
+                        </svg>
+                        WhatsApp
+                    </a>
+                    <a href="tel:+56912345678" class="quick-btn phone">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                        Llamar
+                    </a>
+                    <a href="mailto:contacto@mitienda.cl" class="quick-btn email">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                        Email
+                    </a>
+                </div>
             </div>
         </section>
 
-        <!-- Contact Form & Info -->
-        <section class="section">
+        <!-- 2. Quick Contact Channels -->
+        <section class="channels-section">
             <div class="container">
-                <div class="contacto-grid">
+                <div class="channels-grid">
+                    <a href="https://wa.me/56912345678" class="channel-card whatsapp" target="_blank">
+                        <div class="channel-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.5 0 .18 5.32.18 11.88c0 2.1.55 4.15 1.6 5.97L0 24l6.32-1.74a11.86 11.86 0 0 0 5.74 1.46c6.56 0 11.88-5.33 11.88-11.89 0-3.18-1.24-6.16-3.43-8.35Z" />
+                            </svg>
+                        </div>
+                        <h3>WhatsApp</h3>
+                        <p>Respuesta inmediata</p>
+                        <span class="channel-link">+56 9 1234 5678 →</span>
+                    </a>
+                    <a href="tel:+56912345678" class="channel-card phone">
+                        <div class="channel-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.8.31 1.58.55 2.35a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.77.24 1.55.43 2.35.55a2 2 0 0 1 1.72 2z" />
+                            </svg>
+                        </div>
+                        <h3>Llámanos</h3>
+                        <p>Lun-Vie 9:00-18:00</p>
+                        <span class="channel-link">+56 9 1234 5678 →</span>
+                    </a>
+                    <a href="mailto:contacto@mitienda.cl" class="channel-card email">
+                        <div class="channel-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg>
+                        </div>
+                        <h3>Email</h3>
+                        <p>Respuesta en 24h</p>
+                        <span class="channel-link">contacto@mitienda.cl →</span>
+                    </a>
+                    <div class="channel-card chat" onclick="document.querySelector('.chat-widget').classList.add('open')">
+                        <div class="channel-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                            </svg>
+                        </div>
+                        <h3>Chat en Vivo</h3>
+                        <p>Ayuda instantánea</p>
+                        <span class="channel-link">Iniciar chat →</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Form + Map Section -->
+        <section class="form-map-section">
+            <div class="container">
+                <div class="form-map-grid">
                     <!-- Contact Form -->
-                    <div class="contacto-form-container">
+                    <div class="contact-form-container">
                         <h2>Envíanos un mensaje</h2>
-                        <form class="contacto-form" id="contactForm">
-                            <div class="form-group">
-                                <label for="nombre">Nombre completo *</label>
-                                <input type="text" id="nombre" name="nombre" required>
+                        <p class="form-subtitle">Completa el formulario y te responderemos pronto</p>
+
+                        <div class="subject-tabs">
+                            <button class="subject-tab active" data-subject="Consulta de ventas">Ventas</button>
+                            <button class="subject-tab" data-subject="Soporte técnico">Soporte</button>
+                            <button class="subject-tab" data-subject="Consulta general">Otros</button>
+                        </div>
+
+                        <form id="contactForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre completo *</label>
+                                    <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre">
+                                    <span class="error-message"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" id="email" name="email" required placeholder="tu@email.com">
+                                    <span class="error-message"></span>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="email">Email *</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telefono">Teléfono</label>
-                                <input type="tel" id="telefono" name="telefono">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="asunto">Asunto *</label>
-                                <input type="text" id="asunto" name="asunto" required>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="telefono">Teléfono</label>
+                                    <input type="tel" id="telefono" name="telefono" placeholder="+56 9 1234 5678">
+                                    <span class="error-message"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="asunto">Asunto *</label>
+                                    <input type="text" id="asunto" name="asunto" required value="Consulta de ventas" placeholder="¿En qué podemos ayudarte?">
+                                    <span class="error-message"></span>
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="mensaje">Mensaje *</label>
-                                <textarea id="mensaje" name="mensaje" rows="6" required></textarea>
+                                <textarea id="mensaje" name="mensaje" required placeholder="Escribe tu mensaje aquí..."></textarea>
+                                <span class="char-counter">0/1000</span>
+                                <span class="error-message"></span>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-lg">Enviar Mensaje</button>
+                            <button type="submit" class="submit-btn">
+                                <span class="btn-text">Enviar Mensaje</span>
+                                <div class="spinner"></div>
+                            </button>
                         </form>
+
+                        <div class="form-success">
+                            <div class="success-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </div>
+                            <h3>¡Mensaje enviado!</h3>
+                            <p>Te responderemos lo antes posible.</p>
+                        </div>
                     </div>
 
-                    <!-- Contact Info -->
-                    <div class="contacto-info">
-                        <div class="info-card">
-                            <div class="info-icon">📍</div>
-                            <h3>Dirección</h3>
-                            <p>Dirección de ejemplo 123<br>Ciudad, Región</p>
+                    <!-- Map & Info -->
+                    <div class="map-info-container">
+                        <div class="map-wrapper">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.9979889492743!2d-70.65287968479708!3d-33.43724988077257!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a3d7a0fb73%3A0x6e2a7f1c8f4b9e0f!2sAv.%20Providencia%201234%2C%20Providencia%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses!2scl!4v1234567890123"
+                                allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
                         </div>
 
-                        <div class="info-card">
-                            <div class="info-icon">📞</div>
-                            <h3>Teléfono</h3>
-                            <p>+56 9 1234 5678</p>
+                        <div class="info-cards-grid">
+                            <div class="info-card">
+                                <div class="info-card-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                        <circle cx="12" cy="10" r="3" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Dirección</h4>
+                                    <p>Av. Providencia 1234, Santiago</p>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-card-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <polyline points="12 6 12 12 16 14" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Horario</h4>
+                                    <p>Lun-Vie 9:00 - 18:00</p>
+                                    <span class="status-badge open"></span>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-card-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path
+                                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.8.31 1.58.55 2.35a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.77.24 1.55.43 2.35.55A2 2 0 0 1 22 16.92z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Teléfono</h4>
+                                    <p>+56 9 1234 5678</p>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-card-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                        <polyline points="22,6 12,13 2,6" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>contacto@mitienda.cl</p>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                        <div class="info-card">
-                            <div class="info-icon">✉️</div>
-                            <h3>Email</h3>
-                            <p>contacto@mitienda.cl</p>
-                        </div>
+        <!-- 4. FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <h2>Preguntas Frecuentes</h2>
+                <p class="section-subtitle">Encuentra respuestas rápidas a las consultas más comunes</p>
 
-                        <div class="info-card">
-                            <div class="info-icon">🕐</div>
-                            <h3>Horario</h3>
-                            <p>Lunes a Viernes<br>9:00 - 18:00hrs</p>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cuánto tiempo tarda el envío?</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Los envíos dentro de Santiago demoran 1-2 días hábiles. Para regiones, el tiempo de entrega es de 3-5 días hábiles. Todos los pedidos incluyen número de seguimiento.</p>
                         </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Cómo puedo devolver un producto?</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Tienes 30 días para devolver cualquier producto sin uso y en su empaque original. Solo contáctanos por WhatsApp o email y coordinamos el retiro sin costo adicional.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Qué métodos de pago aceptan?</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Aceptamos tarjetas de crédito y débito (Visa, Mastercard, American Express), transferencia bancaria, y pagos con WebPay. Todas las transacciones son 100% seguras.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Los productos tienen garantía?</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Sí, todos nuestros productos tienen garantía de 6 meses a 2 años dependiendo del fabricante. En caso de falla, te ofrecemos cambio o reembolso.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>¿Hacen envíos a todo Chile?</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>¡Sí! Hacemos envíos a todas las regiones de Chile, incluyendo zonas extremas. El envío es gratis en compras sobre $50.000.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Trust Section -->
+        <section class="trust-section">
+            <div class="container">
+                <div class="trust-grid">
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                        </div>
+                        <div class="trust-number">100%</div>
+                        <div class="trust-label">Compra Segura</div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <polyline points="12 6 12 12 16 14" />
+                            </svg>
+                        </div>
+                        <div class="trust-number">&lt;2h</div>
+                        <div class="trust-label">Tiempo de Respuesta</div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                            </svg>
+                        </div>
+                        <div class="trust-number">4.9/5</div>
+                        <div class="trust-label">Satisfacción</div>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="3" width="15" height="13" />
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                                <circle cx="5.5" cy="18.5" r="2.5" />
+                                <circle cx="18.5" cy="18.5" r="2.5" />
+                            </svg>
+                        </div>
+                        <div class="trust-number">Gratis</div>
+                        <div class="trust-label">Envío +$50.000</div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
     <footer class="footer" id="footer">
         <div class="container">
             <div class="footer-content">
@@ -202,7 +453,7 @@
                 <div class="footer-section footer-links">
                     <h4 class="footer-title">Enlaces</h4>
                     <ul>
-                        <li><a href="../home.html">Inicio</a></li>
+                        <li><a href="/home.html">Inicio</a></li>
                         <li><a href="productos.html">Productos</a></li>
                         <li><a href="nosotros.html">Nosotros</a></li>
                         <li><a href="contacto.html">Contacto</a></li>
@@ -212,7 +463,7 @@
                 <div class="footer-section footer-contact">
                     <h4 class="footer-title">Contacto</h4>
                     <ul>
-                        <li>📍 Dirección de ejemplo 123</li>
+                        <li>📍 Av. Providencia 1234, Santiago</li>
                         <li>📞 +56 9 1234 5678</li>
                         <li>✉️ contacto@mitienda.cl</li>
                     </ul>
@@ -224,7 +475,40 @@
         </div>
     </footer>
 
-    <!-- Social Float -->
+    <!-- Chat Widget -->
+    <div class="chat-widget">
+        <button class="chat-bubble" aria-label="Abrir chat">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+        </button>
+        <div class="chat-window">
+            <div class="chat-header">
+                <h4>¡Hola! 👋</h4>
+                <p>¿En qué podemos ayudarte?</p>
+            </div>
+            <div class="chat-body">
+                <div class="chat-message">
+                    Selecciona una opción o escríbenos directamente:
+                </div>
+                <div class="chat-options">
+                    <button class="chat-option" data-subject="Consulta sobre producto">
+                        🛍️ Tengo una consulta sobre un producto
+                    </button>
+                    <button class="chat-option" data-subject="Estado de mi pedido">
+                        📦 ¿Dónde está mi pedido?
+                    </button>
+                    <button class="chat-option" data-subject="Devolución o cambio">
+                        🔄 Quiero hacer una devolución
+                    </button>
+                    <button class="chat-option" data-subject="Consulta general">
+                        💬 Otra consulta
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="social-float-container" id="socialFloat">
         <a class="social-float social-whatsapp" href="https://wa.me/56912345678" target="_blank" rel="noopener" aria-label="WhatsApp">
             <span class="social-icon">
@@ -235,36 +519,16 @@
             </span>
             <span class="social-text">WhatsApp</span>
         </a>
-
-        <a class="social-float social-facebook" href="https://facebook.com/mitienda" target="_blank" rel="noopener" aria-label="Facebook">
-            <span class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                </svg>
-            </span>
-            <span class="social-text">Facebook</span>
-        </a>
-
-        <a class="social-float social-instagram" href="https://instagram.com/mitienda" target="_blank" rel="noopener" aria-label="Instagram">
-            <span class="social-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259 0-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                </svg>
-            </span>
-            <span class="social-text">Instagram</span>
-        </a>
     </div>
 
-    <!-- Scripts -->
-    <script src="/js/config.js?v=5.0"></script>
-    <script src="/js/utils.js?v=5.0"></script>
-    <script src="/js/auth.js?v=5.0"></script>
-    <script src="/js/cart.js?v=5.0"></script>
-    <script src="/js/api.js?v=5.0"></script>
-    <script src="/js/header.js?v=5.0"></script>
-    <script src="/js/script.js?v=5.0"></script>
+    <script src="/js/config.js?v=6.4"></script>
+    <script src="/js/utils.js?v=6.4"></script>
+    <script src="/js/auth.js?v=6.4" defer></script>
+    <script src="/js/cart.js?v=6.4"></script>
+    <script src="/js/api.js?v=6.4"></script>
+    <script src="/js/header.js?v=6.4" defer></script>
+    <script src="/js/script.js?v=6.4"></script>
+    <script src="/js/contacto.js?v=6.4"></script>
 </body>
 
 </html>
