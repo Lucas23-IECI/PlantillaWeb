@@ -1,20 +1,31 @@
-document.addEventListener('DOMContentLoaded', initMiniCart);
+// IMMEDIATE: Add capture-phase listener to intercept cart clicks before navigation
+// This runs as soon as this script loads, not waiting for DOMContentLoaded
+document.addEventListener('click', function (e) {
+    const cartBtn = e.target.closest('.cart-btn');
+    if (cartBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        // Ensure mini-cart is created
+        if (!document.getElementById('miniCart')) {
+            createMiniCartHTML();
+            renderMiniCartItems();
+        }
+        openMiniCart();
+    }
+}, true); // true = capture phase, runs first
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMiniCart);
+} else {
+    initMiniCart();
+}
 
 function initMiniCart() {
     if (!document.getElementById('miniCart')) {
         createMiniCartHTML();
     }
-
     document.addEventListener('cartUpdated', renderMiniCartItems);
-
-    const cartBtns = document.querySelectorAll('.cart-btn');
-    cartBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            openMiniCart();
-        });
-    });
-
     renderMiniCartItems();
 }
 

@@ -9,8 +9,10 @@
 
     <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 
-    <link rel="stylesheet" href="/css/main.css?v=6.3">
-    <link rel="stylesheet" href="/css/pages/nosotros.css?v=6.3">
+    <link rel="stylesheet" href="/css/main.css?v=6.5">
+    <link rel="stylesheet" href="/css/pages/nosotros.css?v=6.5">
+    <link rel="stylesheet" href="/css/components/mini-cart.css?v=6.5">
+    <link rel="stylesheet" href="/css/components/wishlist.css?v=6.5">
 </head>
 
 <body>
@@ -67,6 +69,13 @@
                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                         </svg>
                     </button>
+
+                    <a href="wishlist.html" class="wishlist-header-btn" aria-label="Favoritos">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                        </svg>
+                        <span class="wishlist-count" style="display:none;">0</span>
+                    </a>
 
                     <a href="carrito.html" class="cart-btn" aria-label="Carrito">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -479,14 +488,16 @@
         </a>
     </div>
 
-    <script src="/js/config.js?v=6.3"></script>
-    <script src="/js/utils.js?v=6.3"></script>
-    <script src="/js/auth.js?v=6.3" defer></script>
-    <script src="/js/cart.js?v=6.3"></script>
-    <script src="/js/api.js?v=6.3"></script>
-    <script src="/js/header.js?v=6.3" defer></script>
-    <script src="/js/script.js?v=6.3"></script>
-    <script src="/js/nosotros.js?v=6.3"></script>
+    <script src="/js/config.js?v=6.5"></script>
+    <script src="/js/utils.js?v=6.5"></script>
+    <script src="/js/auth.js?v=6.5" defer></script>
+    <script src="/js/cart.js?v=6.5"></script>
+    <script src="/js/mini-cart.js?v=6.5"></script>
+    <script src="/js/api.js?v=6.5"></script>
+    <script src="/js/header.js?v=6.5" defer></script>
+    <script src="/js/wishlist.js?v=6.5"></script>
+    <script src="/js/script.js?v=6.5"></script>
+    <script src="/js/nosotros.js?v=6.5"></script>
 </body>
 
 </html>
