@@ -4,358 +4,598 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito | Mi Tienda</title>
-    <meta name="description" content="Tu carrito de compras en Mi Tienda.">
-    <link rel="icon" href="../favicon.ico">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/mobile.css">
-    <style>
-        .carrito-container {
-            margin-top: var(--header-height);
-            padding: var(--spacing-2xl) 0;
-        }
+    <title>Tu Carrito | Mi Tienda</title>
+    <meta name="description" content="Tu carrito de compras en Mi Tienda. Revisa tus productos y procede al pago.">
 
-        .carrito-grid {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: var(--spacing-2xl);
-        }
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 
-        @media (max-width: 768px) {
-            .carrito-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .carrito-items {
-            background: var(--color-surface);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-lg);
-        }
-
-        .carrito-item {
-            display: flex;
-            gap: var(--spacing-lg);
-            padding: var(--spacing-lg) 0;
-            border-bottom: 1px solid var(--color-border);
-        }
-
-        .carrito-item:last-child {
-            border-bottom: none;
-        }
-
-        .carrito-item-image {
-            width: 80px;
-            height: 80px;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .carrito-item-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .carrito-item-info {
-            flex: 1;
-        }
-
-        .carrito-item-name {
-            font-weight: 500;
-            margin-bottom: var(--spacing-xs);
-        }
-
-        .carrito-item-price {
-            color: var(--color-text-light);
-            font-size: var(--font-size-sm);
-        }
-
-        .carrito-item-actions {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            margin-top: var(--spacing-sm);
-        }
-
-        .qty-btn {
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--color-border);
-            background: var(--color-surface);
-            cursor: pointer;
-            border-radius: var(--radius-sm);
-        }
-
-        .qty-input {
-            width: 40px;
-            text-align: center;
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-sm);
-            padding: var(--spacing-xs);
-        }
-
-        .carrito-item-remove {
-            background: none;
-            border: none;
-            color: var(--color-error);
-            cursor: pointer;
-            font-size: var(--font-size-sm);
-            margin-left: auto;
-        }
-
-        .carrito-summary {
-            background: var(--color-surface);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-xl);
-            position: sticky;
-            top: calc(var(--header-height) + 20px);
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: var(--spacing-md);
-        }
-
-        .summary-total {
-            font-size: var(--font-size-xl);
-            font-weight: 600;
-            border-top: 1px solid var(--color-border);
-            padding-top: var(--spacing-md);
-            margin-top: var(--spacing-md);
-        }
-
-        .discount-input {
-            display: flex;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-lg);
-        }
-
-        .discount-input input {
-            flex: 1;
-        }
-    </style>
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/main.css?v=6.5">
+    <link rel="stylesheet" href="/css/components/wishlist.css?v=6.5">
+    <link rel="stylesheet" href="/css/pages/carrito.css?v=6.5">
 </head>
 
 <body>
-    <header class="header">
-        <div class="header-content">
-            <button class="menu-toggle" id="menuToggle" aria-label="Menú">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="logo">
-                <a href="../index.html"><img src="../images/logo-placeholder.svg" width="48" height="48" alt="Mi Tienda"></a>
-            </div>
-            <div class="header-actions">
-                <button class="cart-btn" aria-label="Carrito">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M3 3h2l.4 2M5.4 5h12.3l-1.7 8H7L5.4 5z" stroke="currentColor" stroke-width="1.5" />
-                        <circle cx="8" cy="18" r="1" fill="currentColor" />
-                        <circle cx="16" cy="18" r="1" fill="currentColor" />
-                    </svg>
-                    <span class="cart-badge" style="display: none;">0</span>
-                </button>
-            </div>
+    <a href="#main" class="skip-link">Ir al contenido principal</a>
+
+    <!-- Header -->
+    <header class="header-container">
+        <div class="header-info">
+            <p>Envío gratis en compras sobre $50.000 | Lunes a Viernes 9:00 - 18:00hrs</p>
         </div>
-        <nav class="nav-menu" id="navMenu">
-            <ul class="nav-links">
-                <li><a href="../index.html">Inicio</a></li>
-                <li><a href="productos.html">Productos</a></li>
-            </ul>
+
+        <nav class="header-nav">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Menú">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+
+                <a href="/home.html" class="header-logo">MT</a>
+
+                <ul class="nav-links">
+                    <li><a href="/home.html">Inicio</a></li>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+
+                <div class="header-search">
+                    <button class="search-icon" aria-label="Buscar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                    </button>
+                    <input type="text" placeholder="Buscar productos...">
+                </div>
+
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+
+                    <a href="wishlist.html" class="wishlist-header-btn" aria-label="Favoritos">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                        </svg>
+                        <span class="wishlist-count" style="display:none;">0</span>
+                    </a>
+
+                    <a href="carrito.html" class="cart-btn active" aria-label="Carrito">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1" />
+                            <circle cx="20" cy="21" r="1" />
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                        </svg>
+                        <span class="cart-count" id="cartCount" style="display:none;">0</span>
+                    </a>
+
+                    <a href="login.html" class="user-btn" aria-label="Usuario">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <main class="carrito-container">
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <span>Menú</span>
+            <button class="mobile-close" aria-label="Cerrar">&times;</button>
+        </div>
+        <nav class="mobile-nav">
+            <a href="/home.html">Inicio</a>
+            <a href="productos.html">Productos</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="contacto.html">Contacto</a>
+            <a href="login.html">Ingresar</a>
+        </nav>
+    </div>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Main Content -->
+    <main id="main" class="cart-main">
         <div class="container">
-            <h1 class="section-title">Tu Carrito</h1>
-            <div class="carrito-grid">
-                <div class="carrito-items" id="carritoItems">
-                    <!-- Items render here -->
+            <!-- Page Header -->
+            <div class="cart-page-header">
+                <div class="cart-title-section">
+                    <h1>
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1" />
+                            <circle cx="20" cy="21" r="1" />
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                        </svg>
+                        Tu Carrito
+                        <span class="cart-item-count" id="cartBadge">(0 productos)</span>
+                    </h1>
                 </div>
-                <div class="carrito-summary">
-                    <h3 style="margin-bottom: var(--spacing-lg);">Resumen</h3>
-                    <div class="discount-input">
-                        <input type="text" class="form-input" id="discountCode" placeholder="Código de descuento">
-                        <button class="btn btn-outline btn-sm" id="applyDiscount">Aplicar</button>
+                <div class="cart-actions" id="cartActions">
+                    <a href="productos.html" class="btn-action">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6" />
+                        </svg>
+                        <span>Seguir comprando</span>
+                    </a>
+                    <button class="btn-action btn-danger" id="clearCartBtn" title="Vaciar carrito">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 6 5 6 21 6" />
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                        </svg>
+                        <span>Vaciar</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cart Grid -->
+            <div class="cart-grid" id="cartGrid">
+                <!-- Cart Items -->
+                <div class="cart-items-container" id="cartItems">
+                    <!-- Dynamic content rendered by JS -->
+                </div>
+
+                <!-- Order Summary -->
+                <div class="cart-summary" id="cartSummary">
+                    <div class="summary-header">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                            <rect x="9" y="3" width="6" height="4" rx="1" />
+                        </svg>
+                        <h2>Resumen del Pedido</h2>
                     </div>
-                    <div class="summary-row">
-                        <span>Subtotal</span>
-                        <span id="subtotal">$0</span>
+
+                    <!-- Discount Code -->
+                    <div class="discount-section">
+                        <div class="discount-input-group">
+                            <input type="text" id="discountCode" placeholder="Código de descuento">
+                            <button class="btn-apply-discount" id="applyDiscountBtn">Aplicar</button>
+                        </div>
+                        <div class="discount-applied" id="discountApplied" style="display: none;">
+                            <span id="discountText">DESCUENTO10 aplicado</span>
+                            <button id="removeDiscountBtn">×</button>
+                        </div>
                     </div>
-                    <div class="summary-row" id="discountRow" style="display: none;">
-                        <span>Descuento</span>
-                        <span id="discountAmount">-$0</span>
+
+                    <!-- Summary Rows -->
+                    <div class="summary-rows">
+                        <div class="summary-row">
+                            <span>Subtotal</span>
+                            <span id="subtotal">$0</span>
+                        </div>
+                        <div class="summary-row" id="shippingRow">
+                            <span>Envío</span>
+                            <span id="shipping">Gratis</span>
+                        </div>
+                        <div class="summary-row discount" id="discountRow" style="display: none;">
+                            <span>Descuento</span>
+                            <span id="discountAmount">-$0</span>
+                        </div>
                     </div>
-                    <div class="summary-row summary-total">
+
+                    <!-- Total -->
+                    <div class="summary-total">
                         <span>Total</span>
                         <span id="total">$0</span>
                     </div>
-                    <button class="btn btn-accent" style="width: 100%; margin-top: var(--spacing-lg);" id="checkoutBtn">
+
+                    <!-- Checkout Button -->
+                    <button class="btn-checkout" id="checkoutBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                            <line x1="1" y1="10" x2="23" y2="10" />
+                        </svg>
                         Proceder al Pago
                     </button>
+
+                    <a href="productos.html" class="continue-shopping">← Seguir comprando</a>
+
+                    <!-- Secure Badge -->
+                    <div class="secure-badge">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                        </svg>
+                        <span>Pago 100% seguro y encriptado</span>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="footer">
+    <!-- Footer -->
+    <footer class="footer" id="footer">
         <div class="container">
+            <div class="footer-content">
+                <div class="footer-section footer-about">
+                    <div class="footer-logo">
+                        <span class="footer-logo-text">MT</span>
+                        <h3>Mi Tienda</h3>
+                    </div>
+                    <p class="footer-description">Tu tienda online de confianza con los mejores productos.</p>
+                    <div class="footer-social">
+                        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            </svg>
+                        </a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259 0-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/56912345678" target="_blank" rel="noopener" aria-label="WhatsApp">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path
+                                    d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.5 0 .18 5.32.18 11.88c0 2.1.55 4.15 1.6 5.97L0 24l6.32-1.74a11.86 11.86 0 0 0 5.74 1.46h.01c6.56 0 11.88-5.33 11.88-11.89 0-3.18-1.24-6.16-3.43-8.35Z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section footer-links">
+                    <h4 class="footer-title">Enlaces</h4>
+                    <ul>
+                        <li><a href="/home.html">Inicio</a></li>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="nosotros.html">Nosotros</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section footer-contact">
+                    <h4 class="footer-title">Contacto</h4>
+                    <ul>
+                        <li>📍 Av. Providencia 1234, Santiago</li>
+                        <li>📞 +56 9 1234 5678</li>
+                        <li>✉️ contacto@mitienda.cl</li>
+                    </ul>
+                </div>
+
+                <div class="footer-section footer-legal">
+                    <h4 class="footer-title">Legal</h4>
+                    <ul>
+                        <li><a href="privacidad.html">Privacidad</a></li>
+                        <li><a href="terminos.html">Términos</a></li>
+                    </ul>
+                </div>
+            </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Mi Tienda</p>
+                <p>&copy; 2025 Mi Tienda. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
-    <script src="../js/config.js"></script>
-    <script src="../js/utils.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/cart.js"></script>
-    <script src="../js/api.js"></script>
+    <!-- Social Float -->
+    <div class="social-float-container" id="socialFloat">
+        <a class="social-float social-whatsapp" href="https://wa.me/56912345678" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <span class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.5 0 .18 5.32.18 11.88c0 2.1.55 4.15 1.6 5.97L0 24l6.32-1.74a11.86 11.86 0 0 0 5.74 1.46h.01c6.56 0 11.88-5.33 11.88-11.89 0-3.18-1.24-6.16-3.43-8.35Z" />
+                </svg>
+            </span>
+            <span class="social-text">WhatsApp</span>
+        </a>
+        <a class="social-float social-facebook" href="https://facebook.com/mitienda" target="_blank" rel="noopener" aria-label="Facebook">
+            <span class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+            </span>
+            <span class="social-text">Facebook</span>
+        </a>
+        <a class="social-float social-instagram" href="https://instagram.com/mitienda" target="_blank" rel="noopener" aria-label="Instagram">
+            <span class="social-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259 0-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                </svg>
+            </span>
+            <span class="social-text">Instagram</span>
+        </a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/config.js?v=6.5"></script>
+    <script src="/js/utils.js?v=6.5"></script>
+    <script src="/js/auth.js?v=6.5" defer></script>
+    <script src="/js/cart.js?v=6.5"></script>
+    <script src="/js/api.js?v=6.5"></script>
+    <script src="/js/header.js?v=6.5" defer></script>
+    <script src="/js/wishlist.js?v=6.5"></script>
+    <script src="/js/script.js?v=6.5"></script>
+
     <script>
+        // Cart page functionality
         let appliedDiscount = 0;
         let discountCode = null;
 
-        function renderCarrito() {
-            const container = document.getElementById('carritoItems');
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCartPage();
+            initCartActions();
+        });
+
+        function renderCartPage() {
+            const container = document.getElementById('cartItems');
+            const badge = document.getElementById('cartBadge');
+            const actionsContainer = document.getElementById('cartActions');
+            const summaryContainer = document.getElementById('cartSummary');
+
+            if (!container || typeof cart === 'undefined') return;
+
             const items = cart.getAll();
+            const count = cart.getCount();
+
+            // Update badge
+            if (badge) {
+                badge.textContent = `(${items.length} producto${items.length !== 1 ? 's' : ''})`;
+            }
+
+            // Toggle visibility
+            if (actionsContainer) {
+                actionsContainer.style.display = items.length > 0 ? 'flex' : 'none';
+            }
+            if (summaryContainer) {
+                summaryContainer.style.display = items.length > 0 ? 'block' : 'none';
+            }
 
             if (items.length === 0) {
                 container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🛒</div>
-                        <h3 class="empty-state-title">Tu carrito está vacío</h3>
-                        <p class="empty-state-text">Agrega productos para continuar</p>
-                        <a href="productos.html" class="btn btn-primary">Ver Productos</a>
+                    <div class="cart-empty">
+                        <div class="empty-icon">
+                            <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="9" cy="21" r="1"/>
+                                <circle cx="20" cy="21" r="1"/>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                            </svg>
+                        </div>
+                        <h2>Tu carrito está vacío</h2>
+                        <p>Agrega productos para comenzar tu compra</p>
+                        <a href="productos.html" class="btn btn-primary">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                <line x1="3" y1="6" x2="21" y2="6"/>
+                                <path d="M16 10a4 4 0 0 1-8 0"/>
+                            </svg>
+                            Explorar Productos
+                        </a>
                     </div>
                 `;
                 return;
             }
 
-            container.innerHTML = items.map(item => `
-                <div class="carrito-item" data-id="${item.product_id}">
-                    <div class="carrito-item-image">
-                        <img src="${item.image_url || '../images/products/placeholder.png'}" alt="${escapeHtml(item.name)}">
+            // Render items
+            container.innerHTML = items.map(item => createCartItemHTML(item)).join('');
+
+            // Attach event listeners
+            attachCartItemListeners();
+
+            // Update totals
+            updateTotals();
+        }
+
+        function createCartItemHTML(item) {
+            const id = item.product_id || item.id;
+            const name = item.name || item.nombre || 'Producto';
+            const price = item.price || item.precio || 0;
+            const image = item.image_url || item.imagen || '/images/products/placeholder.png';
+            const brand = item.brand || item.marca || '';
+            const quantity = item.quantity || 1;
+            const lineTotal = price * quantity;
+
+            return `
+                <div class="cart-item" data-id="${id}">
+                    <div class="cart-item-image" onclick="window.location.href='producto.html?id=${id}'">
+                        <img src="${image}" alt="${escapeHtml(name)}" loading="lazy">
                     </div>
-                    <div class="carrito-item-info">
-                        <div class="carrito-item-name">${escapeHtml(item.name)}</div>
-                        <div class="carrito-item-price">${formatPrice(item.price)}</div>
-                        <div class="carrito-item-actions">
-                            <button class="qty-btn" onclick="updateQty('${item.product_id}', -1)">-</button>
-                            <input type="number" class="qty-input" value="${item.quantity}" min="1" 
-                                onchange="setQty('${item.product_id}', this.value)">
-                            <button class="qty-btn" onclick="updateQty('${item.product_id}', 1)">+</button>
-                            <button class="carrito-item-remove" onclick="removeItem('${item.product_id}')">Eliminar</button>
+                    <div class="cart-item-details">
+                        ${brand ? `<span class="item-brand">${escapeHtml(brand)}</span>` : ''}
+                        <h3 class="item-name" onclick="window.location.href='producto.html?id=${id}'">${escapeHtml(name)}</h3>
+                        <span class="item-price-unit">${formatPrice(price)} c/u</span>
+                        <div class="quantity-controls">
+                            <button class="qty-btn" data-action="decrease" data-id="${id}" ${quantity <= 1 ? 'disabled' : ''}>−</button>
+                            <span class="qty-display">${quantity}</span>
+                            <button class="qty-btn" data-action="increase" data-id="${id}">+</button>
                         </div>
                     </div>
+                    <div class="cart-item-right">
+                        <span class="item-line-total">${formatPrice(lineTotal)}</span>
+                        <button class="btn-remove-item" data-id="${id}">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"/>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            </svg>
+                            Eliminar
+                        </button>
+                    </div>
                 </div>
-            `).join('');
-
-            updateSummary();
+            `;
         }
 
-        function updateQty(id, delta) {
-            const item = cart.getAll().find(i => i.product_id === id);
-            if (item) {
-                cart.updateQuantity(id, item.quantity + delta);
-                renderCarrito();
-            }
-        }
+        function attachCartItemListeners() {
+            // Quantity buttons
+            document.querySelectorAll('.qty-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = btn.dataset.id;
+                    const action = btn.dataset.action;
+                    const items = cart.getAll();
+                    const item = items.find(i => String(i.product_id || i.id) === String(id));
 
-        function setQty(id, value) {
-            cart.updateQuantity(id, parseInt(value) || 1);
-            renderCarrito();
-        }
-
-        function removeItem(id) {
-            cart.remove(id);
-            renderCarrito();
-        }
-
-        function updateSummary() {
-            const subtotal = cart.getSubtotal();
-            const total = cart.getTotal(appliedDiscount);
-
-            document.getElementById('subtotal').textContent = formatPrice(subtotal);
-            document.getElementById('total').textContent = formatPrice(total);
-
-            if (appliedDiscount > 0) {
-                document.getElementById('discountRow').style.display = 'flex';
-                document.getElementById('discountAmount').textContent = '-' + formatPrice(appliedDiscount);
-            } else {
-                document.getElementById('discountRow').style.display = 'none';
-            }
-        }
-
-        document.getElementById('applyDiscount').addEventListener('click', async () => {
-            const code = document.getElementById('discountCode').value.trim();
-            if (!code) return;
-
-            try {
-                const result = await api.validateDiscountCode(code);
-                if (result.valid) {
-                    discountCode = result.code;
-                    const subtotal = cart.getSubtotal();
-
-                    if (result.discount_type === 'percentage') {
-                        appliedDiscount = Math.round(subtotal * (result.discount_value / 100));
-                    } else {
-                        appliedDiscount = result.discount_value;
+                    if (item) {
+                        const newQty = action === 'increase' ? item.quantity + 1 : item.quantity - 1;
+                        if (newQty <= 0) {
+                            removeCartItem(id);
+                        } else {
+                            cart.updateQuantity(id, newQty);
+                            renderCartPage();
+                        }
                     }
-
-                    updateSummary();
-                    showNotification(`Código ${result.code} aplicado: ${result.discount_value}${result.discount_type === 'percentage' ? '%' : ''} de descuento`, 'success');
-                }
-            } catch (error) {
-                showNotification(error.message || 'Código no válido', 'error');
-            }
-        });
-
-        document.getElementById('checkoutBtn').addEventListener('click', async () => {
-            if (!isLoggedIn()) {
-                showNotification('Debes iniciar sesión para continuar', 'warning');
-                setTimeout(() => window.location.href = 'login.html', 1000);
-                return;
-            }
-
-            if (cart.isEmpty()) {
-                showNotification('Tu carrito está vacío', 'error');
-                return;
-            }
-
-            try {
-                const result = await api.createTransaction({
-                    items: cart.getItemsForApi(),
-                    discount_code: discountCode,
-                    discount_amount: appliedDiscount
                 });
+            });
 
-                // Iniciar pago Webpay
-                const paymentResult = await api.webpayCreate(result.order_id);
+            // Remove buttons
+            document.querySelectorAll('.btn-remove-item').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.dataset.id;
+                    removeCartItem(id);
+                });
+            });
+        }
 
-                // Redirigir a Webpay
-                if (paymentResult.url && paymentResult.token) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = paymentResult.url;
-
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'token_ws';
-                    input.value = paymentResult.token;
-
-                    form.appendChild(input);
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            } catch (error) {
-                showNotification(error.message || 'Error al procesar el pago', 'error');
+        function removeCartItem(id) {
+            const itemEl = document.querySelector(`.cart-item[data-id="${id}"]`);
+            if (itemEl) {
+                itemEl.classList.add('removing');
+                setTimeout(() => {
+                    cart.remove(id);
+                    renderCartPage();
+                    showNotification('Producto eliminado del carrito');
+                }, 300);
             }
-        });
+        }
 
-        document.addEventListener('DOMContentLoaded', renderCarrito);
-        document.addEventListener('cartUpdated', renderCarrito);
+        function updateTotals() {
+            const subtotalEl = document.getElementById('subtotal');
+            const totalEl = document.getElementById('total');
+            const discountAmountEl = document.getElementById('discountAmount');
+            const discountRowEl = document.getElementById('discountRow');
+
+            const subtotal = cart.getSubtotal();
+            const discount = appliedDiscount;
+            const total = subtotal - discount;
+
+            if (subtotalEl) subtotalEl.textContent = formatPrice(subtotal);
+            if (totalEl) totalEl.textContent = formatPrice(total);
+
+            if (discountRowEl && discountAmountEl) {
+                if (discount > 0) {
+                    discountRowEl.style.display = 'flex';
+                    discountAmountEl.textContent = `-${formatPrice(discount)}`;
+                } else {
+                    discountRowEl.style.display = 'none';
+                }
+            }
+        }
+
+        function initCartActions() {
+            // Clear cart button
+            document.getElementById('clearCartBtn')?.addEventListener('click', () => {
+                if (cart.getCount() === 0) return;
+                if (confirm('¿Estás seguro de vaciar tu carrito?')) {
+                    cart.clear();
+                    renderCartPage();
+                    showNotification('Carrito vaciado');
+                }
+            });
+
+            // Apply discount
+            document.getElementById('applyDiscountBtn')?.addEventListener('click', applyDiscount);
+            document.getElementById('discountCode')?.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') applyDiscount();
+            });
+
+            // Remove discount
+            document.getElementById('removeDiscountBtn')?.addEventListener('click', () => {
+                appliedDiscount = 0;
+                discountCode = null;
+                document.getElementById('discountApplied').style.display = 'none';
+                document.getElementById('discountCode').value = '';
+                document.getElementById('discountCode').disabled = false;
+                updateTotals();
+            });
+
+            // Checkout button
+            document.getElementById('checkoutBtn')?.addEventListener('click', () => {
+                if (cart.getCount() === 0) {
+                    showNotification('Tu carrito está vacío');
+                    return;
+                }
+                // Navigate to checkout or show modal
+                showNotification('Redirigiendo al pago...');
+                // window.location.href = 'checkout.html';
+            });
+
+            // Listen for cart updates
+            document.addEventListener('cartUpdated', renderCartPage);
+        }
+
+        function applyDiscount() {
+            const codeInput = document.getElementById('discountCode');
+            const code = codeInput?.value.trim().toUpperCase();
+
+            if (!code) {
+                showNotification('Ingresa un código de descuento');
+                return;
+            }
+
+            // Mock discount codes
+            const discounts = {
+                'DESCUENTO10': 0.10,
+                'DESCUENTO20': 0.20,
+                'BIENVENIDO': 0.15
+            };
+
+            if (discounts[code]) {
+                const subtotal = cart.getSubtotal();
+                appliedDiscount = subtotal * discounts[code];
+                discountCode = code;
+
+                document.getElementById('discountApplied').style.display = 'flex';
+                document.getElementById('discountText').textContent = `${code} (${discounts[code] * 100}% off)`;
+                codeInput.disabled = true;
+
+                updateTotals();
+                showNotification(`Código ${code} aplicado exitosamente`);
+            } else {
+                showNotification('Código de descuento inválido');
+            }
+        }
+
+        function showNotification(message) {
+            // Use existing notification system or create simple one
+            if (typeof window.showWishlistNotification === 'function') {
+                window.showWishlistNotification(message);
+            } else {
+                alert(message);
+            }
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function formatPrice(price) {
+            return '$' + new Intl.NumberFormat('es-CL', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(price);
+        }
     </script>
 </body>
 
