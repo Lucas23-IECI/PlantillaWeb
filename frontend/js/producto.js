@@ -259,16 +259,17 @@ function renderProducto(container, producto) {
 }
 
 /**
- * Renderizar productos recomendados
+ * Renderizar productos recomendados con carousel
  */
 function renderProductosRecomendados(producto) {
     const container = document.getElementById('recomendadosContainer');
     if (!container) return;
 
-    const mockProducts = getProductosMock();
+    const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
+    // Get more products for carousel (up to 8)
     const recomendados = mockProducts
         .filter(p => (p.category || p.categoria) === producto.categoria && (p.product_id || p.id) !== producto.id && (p.stock || p.quantity) > 0)
-        .slice(0, 4)
+        .slice(0, 8)
         .map(normalizeProduct);
 
     if (recomendados.length === 0) {
@@ -281,33 +282,193 @@ function renderProductosRecomendados(producto) {
             <h2>También te puede interesar</h2>
             <p>Productos similares en ${producto.categoria}</p>
         </div>
-        <div class="recomendados-grid">
-            ${recomendados.map(p => crearCardRecomendado(p)).join('')}
+        <div class="recomendados-carousel">
+            <button class="carousel-arrow carousel-prev" aria-label="Anterior">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <div class="recomendados-track">
+                ${recomendados.map(p => crearCardRecomendado(p)).join('')}
+            </div>
+            <button class="carousel-arrow carousel-next" aria-label="Siguiente">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
         </div>
+    `;
+
+    // Initialize carousel
+    initRecomendadosCarousel();
+}
+
+/**
+ * Inicializar carousel de productos recomendados
+ */
+function initRecomendadosCarousel() {
+    const track = document.querySelector('.recomendados-track');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+
+    if (!track || !prevBtn || !nextBtn) return;
+
+    const cards = track.querySelectorAll('.producto-card');
+    if (cards.length === 0) return;
+
+    const cardWidth = cards[0].offsetWidth + 20; // card width + gap
+    let autoScrollInterval;
+
+    // Scroll function
+    function scrollCarousel(direction) {
+        const scrollAmount = cardWidth * direction;
+        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+
+    // Event listeners
+    prevBtn.addEventListener('click', () => {
+        scrollCarousel(-1);
+        resetAutoScroll();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        scrollCarousel(1);
+        resetAutoScroll();
+    });
+
+    // Auto-scroll every 4 seconds
+    function startAutoScroll() {
+        autoScrollInterval = setInterval(() => {
+            // If at end, go back to start
+            if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
+                track.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                scrollCarousel(1);
+            }
+        }, 4000);
+    }
+
+    function resetAutoScroll() {
+        clearInterval(autoScrollInterval);
+        startAutoScroll();
+    }
+
+    // Start auto-scroll
+    startAutoScroll();
+
+    // Pause on hover
+    track.addEventListener('mouseenter', () => clearInterval(autoScrollInterval));
+    track.addEventListener('mouseleave', startAutoScroll);
+
+    // Update arrow visibility based on scroll position
+    function updateArrows() {
+        prevBtn.style.opacity = track.scrollLeft <= 0 ? '0.3' : '1';
+        nextBtn.style.opacity = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10 ? '0.3' : '1';
+    }
+
+    track.addEventListener('scroll', updateArrows);
+    updateArrows();
+}
+
+/**
+ * Crear card de producto recomendado - Diseño compacto
+ */
+function crearCardRecomendado(producto) {
+    const precioFinal = getPrecioConDescuento(producto);
+    const isInWishlist = typeof wishlist !== 'undefined' && wishlist.exists && wishlist.exists(producto.id);
+
+    return `
+        <article class="recomendado-card">
+            <div class="recomendado-imagen">
+                <a href="producto.html?id=${producto.id}">
+                    <img src="${producto.imagen}" alt="${escapeHtml(producto.nombre)}" loading="lazy">
+                </a>
+                ${producto.descuento ? `<span class="recomendado-badge">-${producto.descuento}%</span>` : ''}
+                <button class="recomendado-wishlist ${isInWishlist ? 'active' : ''}" 
+                        onclick="event.stopPropagation(); toggleRecomendadoWishlist(${producto.id})"
+                        aria-label="Añadir a favoritos">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="${isInWishlist ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="recomendado-info">
+                <span class="recomendado-brand">${escapeHtml(producto.marca || producto.categoria)}</span>
+                <h4 class="recomendado-nombre">
+                    <a href="producto.html?id=${producto.id}">${escapeHtml(producto.nombre)}</a>
+                </h4>
+                <div class="recomendado-precios">
+                    ${producto.precioOriginal ? `<span class="precio-tachado">${formatPrice(producto.precioOriginal)}</span>` : ''}
+                    <span class="precio-final">${formatPrice(precioFinal)}</span>
+                </div>
+                <button class="btn-agregar-carro" onclick="event.stopPropagation(); agregarRecomendadoAlCarro(${producto.id})">
+                    Agregar al Carro
+                </button>
+            </div>
+        </article>
     `;
 }
 
 /**
- * Crear card de producto recomendado
+ * Toggle wishlist para producto recomendado
  */
-function crearCardRecomendado(producto) {
-    const precioFinal = getPrecioConDescuento(producto);
-    return `
-        <article class="producto-card" onclick="location.href='producto.html?id=${producto.id}'">
-            <div class="producto-imagen">
-                <img src="${producto.imagen}" alt="${escapeHtml(producto.nombre)}" loading="lazy">
-                ${producto.descuento ? `<span class="producto-badge">-${producto.descuento}%</span>` : ''}
-            </div>
-            <div class="producto-info">
-                <span class="producto-categoria">${escapeHtml(producto.categoria)}</span>
-                <h3 class="producto-nombre">${escapeHtml(producto.nombre)}</h3>
-                <div class="producto-precio">
-                    ${producto.precioOriginal ? `<span class="precio-original">${formatPrice(producto.precioOriginal)}</span>` : ''}
-                    <span class="precio-actual">${formatPrice(precioFinal)}</span>
-                </div>
-            </div>
-        </article>
-    `;
+function toggleRecomendadoWishlist(productId) {
+    if (typeof wishlist === 'undefined') return;
+
+    const producto = getProductoById(productId);
+    if (!producto) return;
+
+    if (wishlist.exists(productId)) {
+        wishlist.remove(productId);
+    } else {
+        wishlist.add({
+            product_id: productId,
+            id: productId,
+            name: producto.nombre,
+            price: getPrecioConDescuento(producto),
+            image_url: producto.imagen
+        });
+    }
+
+    // Update button visual
+    const btn = document.querySelector(`.recomendado-card button[onclick*="${productId}"]`);
+    if (btn) {
+        btn.classList.toggle('active');
+        const svg = btn.querySelector('svg');
+        if (svg) {
+            svg.setAttribute('fill', wishlist.exists(productId) ? 'currentColor' : 'none');
+        }
+    }
+}
+
+/**
+ * Agregar producto recomendado al carrito
+ */
+function agregarRecomendadoAlCarro(productId) {
+    const producto = getProductoById(productId);
+    if (!producto) return;
+
+    cart.add({
+        product_id: productId,
+        id: productId,
+        name: producto.nombre,
+        price: getPrecioConDescuento(producto),
+        image_url: producto.imagen,
+        quantity: 1
+    });
+
+    if (typeof showNotification === 'function') {
+        showNotification(`${producto.nombre} agregado al carrito`, 'success');
+    }
+}
+
+/**
+ * Obtener producto por ID
+ */
+function getProductoById(productId) {
+    const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
+    const found = mockProducts.find(p => (p.product_id || p.id) === productId || (p.product_id || p.id) === String(productId));
+    return found ? normalizeProduct(found) : null;
 }
 
 /**

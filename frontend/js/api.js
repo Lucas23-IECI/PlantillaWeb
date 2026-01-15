@@ -49,7 +49,8 @@ class APIClient {
 
             return data;
         } catch (error) {
-            console.error(`API Error [${endpoint}]:`, error.message);
+            // Use debug level for connection failures since mock fallback handles this
+            console.debug(`API [${endpoint}]:`, error.message);
             throw error;
         }
     }

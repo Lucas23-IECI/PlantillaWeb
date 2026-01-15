@@ -36,12 +36,20 @@ function initProductsPage() {
         // Filtros
         toggleFilters: document.getElementById('toggleFilters'),
         clearFilters: document.getElementById('clearFilters'),
+        clearAllFilters: document.getElementById('clearAllFilters'),
+        applyFilters: document.getElementById('applyFilters'),
         filtersSidebar: document.getElementById('filtersSidebar'),
         filtersCloseBtn: document.getElementById('filtersCloseBtn'),
-        filterCategory: document.getElementById('filterCategory'),
+        categoryTree: document.getElementById('categoryTree'),
         priceMin: document.getElementById('priceMin'),
         priceMax: document.getElementById('priceMax'),
-        filterStock: document.getElementById('filterStock'),
+        priceRangeMin: document.getElementById('priceRangeMin'),
+        priceRangeMax: document.getElementById('priceRangeMax'),
+        priceMinDisplay: document.getElementById('priceMinDisplay'),
+        priceMaxDisplay: document.getElementById('priceMaxDisplay'),
+        stockOptions: document.querySelectorAll('input[name="stock"]'),
+        brandList: document.getElementById('brandList'),
+        brandSearch: document.getElementById('brandSearch'),
 
         // Búsqueda
         searchProducts: document.getElementById('searchProducts'),
@@ -85,25 +93,52 @@ function initProductsPage() {
         limpiarFiltros(elements);
     });
 
-    // Filtros change
-    elements.filterCategory?.addEventListener('change', (e) => {
-        estadoProductos.filtros.categoria = e.target.value;
+    // Category tree click events
+    elements.categoryTree?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const category = link.dataset.category;
+            estadoProductos.filtros.categoria = category;
+
+            // Update active state
+            elements.categoryTree.querySelectorAll('a').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+
+            aplicarFiltros(elements);
+        });
+    });
+
+    // Stock radio buttons
+    elements.stockOptions?.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            estadoProductos.filtros.stock = e.target.value;
+            aplicarFiltros(elements);
+        });
+    });
+
+    // Clear all filters button
+    elements.clearAllFilters?.addEventListener('click', () => {
+        limpiarFiltros(elements);
+    });
+
+    // Apply filters button
+    elements.applyFilters?.addEventListener('click', () => {
         aplicarFiltros(elements);
     });
 
+    // Price inputs
     elements.priceMin?.addEventListener('change', (e) => {
         estadoProductos.filtros.precioMin = e.target.value;
-        aplicarFiltros(elements);
+        if (elements.priceMinDisplay) {
+            elements.priceMinDisplay.textContent = formatPrice(parseInt(e.target.value) || 0);
+        }
     });
 
     elements.priceMax?.addEventListener('change', (e) => {
         estadoProductos.filtros.precioMax = e.target.value;
-        aplicarFiltros(elements);
-    });
-
-    elements.filterStock?.addEventListener('change', (e) => {
-        estadoProductos.filtros.stock = e.target.value;
-        aplicarFiltros(elements);
+        if (elements.priceMaxDisplay) {
+            elements.priceMaxDisplay.textContent = formatPrice(parseInt(e.target.value) || 5000000);
+        }
     });
 
     // Búsqueda
@@ -600,10 +635,21 @@ function contarFiltrosActivos() {
  * Cargar categorías dinámicamente
  */
 function cargarCategorias(elements) {
+    // Category tree is now static in HTML, but we can update counts if needed
     const categorias = [...new Set(estadoProductos.productos.map(p => p.categoria || p.category || 'General'))];
 
-    elements.filterCategory.innerHTML = '<option value="">Todas las categorías</option>' +
-        categorias.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+    // Update category tree links if they exist
+    if (elements.categoryTree) {
+        // Update active state based on current filter
+        const currentCategory = estadoProductos.filtros.categoria;
+        elements.categoryTree.querySelectorAll('a').forEach(link => {
+            if (link.dataset.category === currentCategory) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
 }
 
 /**
@@ -614,14 +660,28 @@ function leerParametrosURL(elements) {
 
     if (params.has('busqueda')) {
         const busqueda = params.get('busqueda');
-        elements.searchProducts.value = busqueda;
+        if (elements.searchProducts) {
+            elements.searchProducts.value = busqueda;
+        }
         estadoProductos.filtros.busqueda = busqueda;
-        elements.searchClearBtn.style.display = 'block';
+        if (elements.searchClearBtn) {
+            elements.searchClearBtn.style.display = 'block';
+        }
     }
 
     if (params.has('categoria')) {
-        estadoProductos.filtros.categoria = params.get('categoria');
-        elements.filterCategory.value = params.get('categoria');
+        const categoria = params.get('categoria');
+        estadoProductos.filtros.categoria = categoria;
+        // Update category tree active state
+        if (elements.categoryTree) {
+            elements.categoryTree.querySelectorAll('a').forEach(link => {
+                if (link.dataset.category === categoria) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
     }
 }
 

@@ -11,10 +11,10 @@
     <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 
     <!-- CSS - Sistema Modular -->
-    <link rel="stylesheet" href="/css/main.css?v=3.0">
-    <link rel="stylesheet" href="/css/pages/productos.css?v=3.0">
-    <link rel="stylesheet" href="/css/components/mini-cart.css?v=3.0">
-    <link rel="stylesheet" href="/css/components/wishlist.css?v=3.0">
+    <link rel="stylesheet" href="/css/main.css?v=6.1">
+    <link rel="stylesheet" href="/css/pages/productos.css?v=6.1">
+    <link rel="stylesheet" href="/css/components/mini-cart.css?v=6.1">
+    <link rel="stylesheet" href="/css/components/wishlist.css?v=6.1">
 
 </head>
 
@@ -202,28 +202,76 @@
         <div class="productos-content">
             <div class="container">
                 <div class="productos-layout">
-                    <!-- Filters Sidebar -->
+                    <!-- Filters Sidebar - Ripley Style -->
                     <aside class="filters-sidebar" id="filtersSidebar">
                         <div class="filters-header">
-                            <h3>Filtros</h3>
+                            <h3>☰ FILTROS</h3>
                             <button class="filters-close" id="filtersCloseBtn">
                                 &times;
                             </button>
                         </div>
 
                         <div class="filters-body">
-                            <!-- Category Filter -->
-                            <div class="filter-section">
-                                <h4>Categoría</h4>
-                                <select id="filterCategory" class="filter-select">
-                                    <option value="">Todas las categorías</option>
-                                    <!-- Options will be populated dynamically -->
-                                </select>
+                            <!-- Category Tree Nav -->
+                            <div class="filter-section filter-categories">
+                                <h4 class="filter-title" data-toggle="categories">
+                                    Categoría
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </h4>
+                                <ul class="category-tree" id="categoryTree">
+                                    <li><a href="#" data-category="" class="active">Todas las categorías</a></li>
+                                    <li><a href="#" data-category="electronica">Electrónica</a></li>
+                                    <li><a href="#" data-category="accesorios">Accesorios</a></li>
+                                    <li><a href="#" data-category="hogar">Hogar</a></li>
+                                    <li><a href="#" data-category="moda">Moda</a></li>
+                                    <li><a href="#" data-category="deportes">Deportes</a></li>
+                                </ul>
                             </div>
 
-                            <!-- Price Filter -->
-                            <div class="filter-section">
-                                <h4>Precio</h4>
+                            <!-- Brand Checkboxes -->
+                            <div class="filter-section filter-brands">
+                                <h4 class="filter-title" data-toggle="brands">
+                                    Marca
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </h4>
+                                <div class="brand-search">
+                                    <input type="text" id="brandSearch" placeholder="Buscar marca...">
+                                </div>
+                                <ul class="brand-list" id="brandList">
+                                    <!-- Will be populated dynamically -->
+                                    <li><label><input type="checkbox" value="apple"> Apple <span class="count">(5)</span></label></li>
+                                    <li><label><input type="checkbox" value="samsung"> Samsung <span class="count">(8)</span></label></li>
+                                    <li><label><input type="checkbox" value="sony"> Sony <span class="count">(3)</span></label></li>
+                                    <li><label><input type="checkbox" value="adidas"> Adidas <span class="count">(4)</span></label></li>
+                                    <li><label><input type="checkbox" value="nike"> Nike <span class="count">(6)</span></label></li>
+                                </ul>
+                            </div>
+
+                            <!-- Price Range Slider -->
+                            <div class="filter-section filter-price">
+                                <h4 class="filter-title" data-toggle="price">
+                                    Precio
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </h4>
+                                <p class="price-range-text">Selecciona un rango de precio</p>
+                                <div class="price-range-display">
+                                    <span class="price-min-label">Mínimo</span>
+                                    <span class="price-max-label">Máximo</span>
+                                </div>
+                                <div class="price-range-values">
+                                    <span id="priceMinDisplay">$0</span>
+                                    <span id="priceMaxDisplay">$5.000.000</span>
+                                </div>
+                                <div class="price-slider-container">
+                                    <input type="range" id="priceRangeMin" min="0" max="5000000" value="0" step="10000">
+                                    <input type="range" id="priceRangeMax" min="0" max="5000000" value="5000000" step="10000">
+                                </div>
                                 <div class="price-inputs">
                                     <input type="number" id="priceMin" placeholder="Mín" min="0">
                                     <span>-</span>
@@ -232,13 +280,24 @@
                             </div>
 
                             <!-- Stock Filter -->
-                            <div class="filter-section">
-                                <h4>Disponibilidad</h4>
-                                <select id="filterStock" class="filter-select">
-                                    <option value="">Todos</option>
-                                    <option value="in-stock">En stock</option>
-                                    <option value="out-of-stock">Agotado</option>
-                                </select>
+                            <div class="filter-section filter-stock">
+                                <h4 class="filter-title" data-toggle="stock">
+                                    Disponibilidad
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </h4>
+                                <ul class="stock-options">
+                                    <li><label><input type="radio" name="stock" value="" checked> Todos</label></li>
+                                    <li><label><input type="radio" name="stock" value="in-stock"> En stock</label></li>
+                                    <li><label><input type="radio" name="stock" value="out-of-stock"> Agotado</label></li>
+                                </ul>
+                            </div>
+
+                            <!-- Apply Filters Button -->
+                            <div class="filter-actions">
+                                <button class="btn-apply-filters" id="applyFilters">Aplicar filtros</button>
+                                <button class="btn-clear-filters" id="clearAllFilters">Limpiar todo</button>
                             </div>
                         </div>
                     </aside>
@@ -342,16 +401,16 @@
     </div>
 
     <!-- Scripts -->
-    <script src="/js/config.js?v=3.0"></script>
-    <script src="/js/utils.js?v=3.0"></script>
-    <script src="/js/auth.js?v=3.0"></script>
-    <script src="/js/cart.js?v=3.0"></script>
-    <script src="/js/api.js?v=3.0"></script>
-    <script src="/js/header.js?v=3.0"></script>
-    <script src="/js/script.js?v=3.0"></script>
-    <script src="/js/mini-cart.js?v=3.0"></script>
-    <script src="/js/wishlist.js?v=3.0"></script>
-    <script src="/js/productos.js?v=3.0"></script>
+    <script src="/js/config.js?v=6.0"></script>
+    <script src="/js/utils.js?v=6.0"></script>
+    <script src="/js/auth.js?v=6.0"></script>
+    <script src="/js/cart.js?v=6.0"></script>
+    <script src="/js/api.js?v=6.0"></script>
+    <script src="/js/header.js?v=6.0"></script>
+    <script src="/js/script.js?v=6.0"></script>
+    <script src="/js/mini-cart.js?v=6.0"></script>
+    <script src="/js/wishlist.js?v=6.0"></script>
+    <script src="/js/productos.js?v=6.0"></script>
 </body>
 
 </html>
