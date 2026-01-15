@@ -1,15 +1,9 @@
-/* ===================================
-   GALERÍA MULTI-IMAGEN
-=================================== */
-
-/* Gallery Container */
 .producto-gallery {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
 }
 
-/* Main Image */
 .producto-main-image {
     position: relative;
     aspect-ratio: 1 / 1;
@@ -41,7 +35,6 @@
     box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
 }
 
-/* Thumbnails Strip */
 .gallery-thumbnails {
     display: flex;
     gap: var(--spacing-sm);
@@ -60,7 +53,6 @@
     border-radius: 2px;
 }
 
-/* Thumbnail Button */
 .gallery-thumb {
     flex-shrink: 0;
     width: 70px;
@@ -92,7 +84,6 @@
     object-fit: cover;
 }
 
-/* Dark Mode */
 [data-theme="dark"] .producto-main-image {
     background: var(--color-card);
 }
@@ -106,7 +97,6 @@
     box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb, 79, 172, 254), 0.2);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .gallery-thumb {
         width: 60px;

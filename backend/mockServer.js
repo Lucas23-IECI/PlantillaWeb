@@ -4,9 +4,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // Para form data de Webpay
-
-// Datos en memoria
+app.use(express.urlencoded({ extended: true })); // Para form data de Webpay
 const users = [{
     id: 'user_1',
     email: 'admin@test.com',
@@ -282,9 +280,7 @@ const products = [
         category: 'Electrónica'
     }
 ];
-const orders = [];
-
-// Helper JWT Mock
+const orders = [];
 function createMockToken(user) {
     const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString('base64').replace(/=/g, '');
     const payload = Buffer.from(JSON.stringify({
@@ -295,14 +291,10 @@ function createMockToken(user) {
         exp: Math.floor(Date.now() / 1000) + 86400
     })).toString('base64').replace(/=/g, '');
     return `${header}.${payload}.mock_signature`;
-}
-
-// Middleware simulación delay
+}
 app.use((req, res, next) => {
     setTimeout(next, 300);
-});
-
-// AUTH
+});
 app.post('/api/auth/login', (req, res) => {
     const { email, password } = req.body;
     const user = users.find(u => u.email === email && u.password === password);
@@ -317,26 +309,19 @@ app.post('/api/auth/register', (req, res) => {
     const newUser = { ...req.body, id: `user_${users.length + 1}`, admin: false };
     users.push(newUser);
     res.json({ token: createMockToken(newUser), user: newUser });
-});
-
-// PRODUCTS
+});
 app.get('/api/products', (req, res) => res.json(products));
 app.get('/api/products/home-featured', (req, res) => res.json(products.slice(0, 4)));
 app.get('/api/products/:id', (req, res) => {
     const p = products.find(i => i.product_id === req.params.id);
     p ? res.json(p) : res.status(404).json({ error: 'Not found' });
-});
-
-// CART/TRANSACTIONS
+});
 app.post('/api/transactions', (req, res) => {
     const order = { ...req.body, order_id: `ord_${Date.now()}`, status: 'pending', createdAt: new Date() };
     orders.push(order);
     res.json({ order_id: order.order_id });
-});
-
-// WEBPAY MOCK
-app.post('/api/webpay/create', (req, res) => {
-    // Retorna URL local para simular redirect de Webpay
+});
+app.post('/api/webpay/create', (req, res) => {
     res.json({ url: `http://localhost:5000/mock-webpay`, token: 'mock_token_ws_' + req.body.order_id });
 });
 app.post('/api/webpay/commit', (req, res) => {
@@ -347,9 +332,7 @@ app.post('/api/webpay/commit', (req, res) => {
         buy_order: req.body.order_id,
         card_detail: { card_number: '6623' }
     });
-});
-
-// Formulario Mock Webpay (Soporta POST y GET)
+});
 const webpayForm = (req, res) => {
     const token = req.query.token_ws || req.body.token_ws || 'mock_token_ws';
     res.send(`
@@ -382,12 +365,8 @@ const webpayForm = (req, res) => {
     `);
 };
 app.get('/mock-webpay', webpayForm);
-app.post('/mock-webpay', webpayForm);
-
-// NOTICES
-app.get('/api/notices/active', (req, res) => res.json([{ message: '📢 Envío gratis por compras sobre $50.000 (Mock)', active: true }]));
-
-// DISCOUNT CODES
+app.post('/mock-webpay', webpayForm);
+app.get('/api/notices/active', (req, res) => res.json([{ message: '📢 Envío gratis por compras sobre $50.000 (Mock)', active: true }]));
 app.get('/api/discount-codes/validate', (req, res) => {
     const code = req.query.code;
     if (code === 'TEST') {
@@ -397,15 +376,11 @@ app.get('/api/discount-codes/validate', (req, res) => {
     } else {
         res.status(404).json({ valid: false, error: 'Código no válido' });
     }
-});
-
-// ADMIN
+});
 app.get('/api/admin/orders', (req, res) => res.json({ orders }));
 app.get('/api/admin/products', (req, res) => res.json(products));
 app.get('/api/admin/notices', (req, res) => res.json({ notices: [] }));
-app.get('/api/admin/discount-codes', (req, res) => res.json({ codes: [] }));
-
-// Start
+app.get('/api/admin/discount-codes', (req, res) => res.json({ codes: [] }));
 app.listen(5000, () => {
     console.log('🎭 MOCK Server corriendo en http://localhost:5000');
 });

@@ -1,11 +1,5 @@
-/* ===================================
-   ESTILOS PRINCIPALES
-   Plantilla Web E-commerce
-=================================== */
-
 @import url('variables.css');
 
-/* ===== RESET Y BASE ===== */
 *,
 *::before,
 *::after {
@@ -30,7 +24,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===== UTILIDADES ===== */
 .sr-only {
     position: absolute !important;
     width: 1px !important;
@@ -59,7 +52,6 @@ body {
     display: none !important;
 }
 
-/* ===== LINKS Y BOTONES ===== */
 a {
     color: var(--color-accent);
     text-decoration: none;
@@ -132,7 +124,6 @@ a:hover {
     font-size: var(--font-size-base);
 }
 
-/* ===== HEADER ===== */
 .header {
     position: fixed;
     top: 0;
@@ -253,7 +244,6 @@ a:hover {
     text-align: center;
 }
 
-/* ===== NAVIGATION ===== */
 .nav-menu {
     position: fixed;
     top: var(--header-height);
@@ -299,7 +289,6 @@ a:hover {
     background: var(--color-surface-hover);
 }
 
-/* ===== HERO ===== */
 .hero {
     margin-top: var(--header-height);
     min-height: 600px;
@@ -349,7 +338,6 @@ a:hover {
     flex-wrap: wrap;
 }
 
-/* ===== SECCIONES ===== */
 .section {
     padding: var(--spacing-4xl) 0;
 }
@@ -370,7 +358,6 @@ a:hover {
     text-align: center;
 }
 
-/* ===== PRODUCTOS GRID ===== */
 .productos-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -426,7 +413,6 @@ a:hover {
     font-weight: 400;
 }
 
-/* ===== FORMULARIOS ===== */
 .form-group {
     margin-bottom: var(--spacing-lg);
 }
@@ -472,7 +458,6 @@ a:hover {
     margin-top: var(--spacing-xs);
 }
 
-/* ===== FOOTER ===== */
 .footer {
     background: var(--color-primary);
     color: var(--color-text-inverse);
@@ -511,7 +496,6 @@ a:hover {
     opacity: 0.7;
 }
 
-/* ===== NOTIFICACIONES TOAST ===== */
 .notification-toast {
     position: fixed;
     bottom: 20px;
@@ -563,7 +547,6 @@ a:hover {
     opacity: 1;
 }
 
-/* ===== WHATSAPP FLOAT ===== */
 .whatsapp-float {
     position: fixed;
     bottom: 20px;
@@ -585,7 +568,6 @@ a:hover {
     transform: scale(1.1);
 }
 
-/* ===== SEARCH OVERLAY ===== */
 .search-overlay {
     position: fixed;
     inset: 0;
@@ -640,7 +622,6 @@ a:hover {
     cursor: pointer;
 }
 
-/* ===== SITE NOTICE (BANNER) ===== */
 .site-notice {
     position: fixed;
     left: 0;
@@ -664,7 +645,6 @@ a:hover {
     text-align: center;
 }
 
-/* ===== PAGE HEADER ===== */
 .page-header {
     margin-top: var(--header-height);
     text-align: center;
@@ -684,7 +664,6 @@ a:hover {
     color: var(--color-text-light);
 }
 
-/* ===== SKIP LINK ===== */
 .skip-link {
     position: absolute;
     top: -40px;
@@ -700,7 +679,6 @@ a:hover {
     top: 0;
 }
 
-/* ===== LOADING SPINNER ===== */
 .loading {
     display: flex;
     align-items: center;
@@ -723,7 +701,6 @@ a:hover {
     }
 }
 
-/* ===== EMPTY STATE ===== */
 .empty-state {
     text-align: center;
     padding: var(--spacing-4xl) var(--spacing-xl);

@@ -2,9 +2,6 @@ const { getDb } = require('../config/firebaseAdmin');
 
 const NOTICES_COLLECTION = 'notices';
 
-/**
- * Obtener avisos activos (público)
- */
 async function getActiveNotices(req, res) {
     try {
         const db = getDb();
@@ -21,8 +18,7 @@ async function getActiveNotices(req, res) {
                 notice_id: doc.id,
                 ...doc.data()
             }))
-            .filter(notice => {
-                // Filtrar por fechas si existen
+            .filter(notice => {
                 if (notice.start_date && new Date(notice.start_date) > now) return false;
                 if (notice.end_date && new Date(notice.end_date) < now) return false;
                 return true;
@@ -35,9 +31,6 @@ async function getActiveNotices(req, res) {
     }
 }
 
-/**
- * Listar todos los avisos (admin)
- */
 async function listNotices(req, res) {
     try {
         const db = getDb();
@@ -58,9 +51,6 @@ async function listNotices(req, res) {
     }
 }
 
-/**
- * Crear aviso (admin)
- */
 async function createNotice(req, res) {
     try {
         const { message, active = true, start_date, end_date } = req.body;
@@ -92,9 +82,6 @@ async function createNotice(req, res) {
     }
 }
 
-/**
- * Actualizar aviso (admin)
- */
 async function updateNotice(req, res) {
     try {
         const { noticeId } = req.params;
@@ -127,9 +114,6 @@ async function updateNotice(req, res) {
     }
 }
 
-/**
- * Eliminar aviso (admin)
- */
 async function deleteNotice(req, res) {
     try {
         const { noticeId } = req.params;

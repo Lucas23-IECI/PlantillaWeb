@@ -1,17 +1,9 @@
-/* ===================================
-   PÁGINA CARRITO - Professional Design
-   =================================== */
-
-/* Container */
 .carrito-container {
     padding: var(--spacing-3xl) 0;
     min-height: 80vh;
     background: var(--color-background);
 }
 
-/* ===================================
-   CART PAGE HEADER
-   =================================== */
 .carrito-page-header {
     display: flex;
     align-items: center;
@@ -89,9 +81,6 @@
     transform: translateY(-1px);
 }
 
-/* ===================================
-   GRID LAYOUT
-   =================================== */
 .carrito-grid {
     display: grid;
     grid-template-columns: 1fr 380px;
@@ -109,9 +98,6 @@
     }
 }
 
-/* ===================================
-   CART ITEMS
-   =================================== */
 .carrito-items {
     display: flex;
     flex-direction: column;
@@ -216,9 +202,6 @@
     font-weight: bold;
 }
 
-/* ===================================
-   ITEM CONTROLS
-   =================================== */
 .item-controls {
     display: flex;
     flex-direction: column;
@@ -330,9 +313,6 @@
     color: white;
 }
 
-/* ===================================
-   EMPTY STATE
-   =================================== */
 .carrito-empty {
     text-align: center;
     padding: var(--spacing-4xl) var(--spacing-xl);
@@ -358,9 +338,6 @@
     color: var(--color-text-light);
 }
 
-/* ===================================
-   SUMMARY
-   =================================== */
 .carrito-summary-wrapper {
     display: flex;
     flex-direction: column;
@@ -488,9 +465,6 @@
     color: var(--color-primary);
 }
 
-/* ===================================
-   TRUST BADGES
-   =================================== */
 .trust-badges {
     display: flex;
     flex-wrap: wrap;
@@ -515,9 +489,6 @@
     color: var(--color-accent);
 }
 
-/* ===================================
-   RESPONSIVE
-   =================================== */
 @media (max-width: 768px) {
     .carrito-container {
         padding: var(--spacing-xl) 0;
@@ -597,9 +568,6 @@
     }
 }
 
-/* ===================================
-   DARK MODE
-   =================================== */
 [data-theme="dark"] .carrito-item {
     background: var(--color-surface);
     border-color: var(--color-border);

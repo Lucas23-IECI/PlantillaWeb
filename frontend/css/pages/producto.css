@@ -1,9 +1,3 @@
-/* ===================================
-   PRODUCTO DETALLE PAGE - Styles
-   Basado en OpticaDanniels
-=================================== */
-
-/* Animaciones */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -62,7 +56,6 @@
     }
 }
 
-/* Contenedor Principal */
 .producto-page {
     min-height: 100vh;
     background: var(--color-background);
@@ -70,7 +63,6 @@
     animation: fadeIn 0.5s ease-out;
 }
 
-/* Header de Navegación */
 .producto-nav {
     max-width: 1200px;
     margin: 0 auto;
@@ -136,7 +128,6 @@
     background: rgba(233, 69, 96, 0.1);
 }
 
-/* Contenido Principal */
 .producto-content {
     max-width: 1200px;
     margin: 0 auto;
@@ -148,7 +139,6 @@
     animation: fadeInUp 0.6s ease-out;
 }
 
-/* Galería */
 .producto-gallery {
     position: relative;
     animation: slideInLeft 0.8s ease-out;
@@ -191,7 +181,6 @@
     animation: pulse 2s infinite;
 }
 
-/* Info del Producto */
 .producto-info {
     display: flex;
     flex-direction: column;
@@ -247,7 +236,6 @@
     margin: 0;
 }
 
-/* Rating */
 .producto-rating {
     display: flex;
     align-items: center;
@@ -273,7 +261,6 @@
     font-size: 0.9rem;
 }
 
-/* Precios */
 .producto-pricing {
     padding: 1.5rem;
     background: var(--color-surface);
@@ -311,7 +298,6 @@
     width: fit-content;
 }
 
-/* Stock */
 .stock-status {
     display: flex;
     align-items: center;
@@ -343,7 +329,6 @@
     font-size: 0.9rem;
 }
 
-/* Descripción */
 .producto-description {
     padding: 1.5rem;
     background: var(--color-surface);
@@ -365,7 +350,6 @@
     margin: 0;
 }
 
-/* Acciones */
 .producto-actions {
     display: flex;
     flex-direction: column;
@@ -493,7 +477,6 @@
     transform: scale(1.1);
 }
 
-/* Beneficios */
 .producto-benefits {
     display: flex;
     flex-direction: column;
@@ -518,7 +501,6 @@
     flex-shrink: 0;
 }
 
-/* Productos Recomendados */
 .productos-recomendados {
     max-width: 1200px;
     margin: 0 auto;
@@ -550,7 +532,6 @@
     gap: 2rem;
 }
 
-/* Carousel Styles - Compact Cards */
 .recomendados-carousel {
     position: relative;
     display: flex;
@@ -574,7 +555,6 @@
     display: none;
 }
 
-/* Compact Card Design */
 .recomendado-card {
     flex: 0 0 160px;
     min-width: 160px;
@@ -728,7 +708,6 @@
     color: white;
 }
 
-/* Carousel Arrows */
 .carousel-arrow {
     position: absolute;
     top: 50%;
@@ -765,7 +744,6 @@
     background: var(--color-surface);
 }
 
-/* Mobile Carousel */
 @media (max-width: 768px) {
     .recomendados-carousel {
         padding: 0 1rem;
@@ -791,7 +769,6 @@
     }
 }
 
-/* Estados de Carga y Error */
 .producto-loading,
 .producto-error {
     min-height: 60vh;
@@ -841,7 +818,6 @@
     }
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
     .producto-content {
         grid-template-columns: 1fr;

@@ -1,8 +1,3 @@
-/**
- * Script para asignar rol de administrador a un usuario
- * Uso: node scripts/setAdmin.js usuario@email.com
- */
-
 require('dotenv').config();
 const { getDb } = require('../config/firebaseAdmin');
 

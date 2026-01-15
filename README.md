@@ -1,52 +1,69 @@
-# 🚀 Plantilla Web E-commerce Completa
+# Plantilla Web E-commerce
 
 Plantilla profesional con todo lo necesario para lanzar un sitio de ventas online.
 
-## ✨ Características
+## Inicio Rapido
 
-- ✅ Autenticación JWT completa (registro, login, cambio contraseña)
-- ✅ Gestión de productos con imágenes
-- ✅ Carrito de compras persistente
-- ✅ Panel de administración completo
-- ✅ Integración Webpay Plus (Transbank)
-- ✅ Emails transaccionales (Resend)
-- ✅ Upload de imágenes (Cloudinary)
-- ✅ SEO optimizado con Schema.org
-- ✅ Responsive design mobile-first
-- ✅ Avisos flotantes y códigos de descuento
+### Frontend
+```bash
+cd frontend
+python -m http.server 8080
+```
+Abrir en navegador: `http://localhost:8080`
 
-## 🛠️ Stack Tecnológico
+### Backend
+```bash
+cd backend
+node mockServer.js
+```
+El servidor corre en: `http://localhost:3000`
 
-**Frontend:** HTML5, CSS3, JavaScript ES6+  
-**Backend:** Node.js + Express  
-**Database:** Firebase Firestore  
-**Pagos:** Webpay Plus (Transbank)  
-**Email:** Resend  
-**Storage:** Cloudinary  
+## Caracteristicas
 
-## 📁 Estructura del Proyecto
+- Autenticacion JWT completa (registro, login, cambio de contrasena)
+- Gestion de productos con imagenes
+- Carrito de compras persistente
+- Panel de administracion completo
+- Integracion Webpay Plus (Transbank)
+- Emails transaccionales (Resend)
+- Upload de imagenes (Cloudinary)
+- SEO optimizado con Schema.org
+- Responsive design mobile-first
+- Avisos flotantes y codigos de descuento
+
+## Stack Tecnologico
+
+| Capa | Tecnologia |
+|------|------------|
+| Frontend | HTML5, CSS3, JavaScript ES6+ |
+| Backend | Node.js + Express |
+| Database | Firebase Firestore |
+| Pagos | Webpay Plus (Transbank) |
+| Email | Resend |
+| Storage | Cloudinary |
+
+## Estructura del Proyecto
 
 ```
 PlantillaCompleta/
-├── frontend/           # Código del cliente
-│   ├── css/            # Estilos
-│   ├── js/             # JavaScript
-│   ├── images/         # Imágenes y assets
-│   ├── pages/          # Páginas HTML
-│   └── index.html      # Página principal
+├── frontend/
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   ├── pages/
+│   └── index.html
 │
-├── backend/            # Código del servidor
-│   ├── config/         # Configuraciones
-│   ├── controllers/    # Lógica de rutas
-│   ├── middleware/     # Middlewares
-│   ├── routes/         # Definición de rutas
-│   ├── services/       # Servicios externos
-│   └── server.js       # Punto de entrada
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── routes/
+│   └── server.js
 │
-└── docs/               # Documentación
+└── docs/
 ```
 
-## 🚀 Instalación Rápida
+## Instalacion Completa
 
 ### 1. Clonar y entrar al proyecto
 ```bash
@@ -57,22 +74,21 @@ cd PlantillaCompleta
 ```bash
 cd backend
 cp .env.example .env
-# Editar .env con tus credenciales
 npm install
 ```
 
-### 3. Ejecutar
+### 3. Configurar variables de entorno
+Editar `.env` con las credenciales correspondientes.
+
+### 4. Ejecutar en desarrollo
 ```bash
 npm run dev
 ```
 
-### 4. Abrir frontend
-Abre `frontend/index.html` en tu navegador o usa un servidor estático.
-
-## 🎨 Personalización
+## Personalizacion
 
 ### Cambiar colores
-Edita `frontend/css/variables.css`:
+Editar `frontend/css/variables.css`:
 ```css
 :root {
     --color-primary: #tu-color;
@@ -81,34 +97,32 @@ Edita `frontend/css/variables.css`:
 ```
 
 ### Configurar datos del negocio
-Edita `frontend/js/config.js`:
+Editar `frontend/js/config.js`:
 ```javascript
 const CONFIG = {
     SITE_NAME: 'Tu Tienda',
     WHATSAPP_NUMBER: '56912345678',
-    // ...
 };
 ```
 
-## 📖 Documentación
+## Documentacion
 
-- [Guía de Instalación](docs/INSTALLATION.md)
-- [Guía de Personalización](docs/CUSTOMIZATION.md)
-- [Documentación API](docs/API.md)
-- [Guía de Deploy](docs/DEPLOYMENT.md)
+- [Guia de Instalacion](docs/INSTALLATION.md)
+- [Guia de Personalizacion](docs/CUSTOMIZATION.md)
+- [Documentacion API](docs/API.md)
+- [Guia de Deploy](docs/DEPLOYMENT.md)
 - [Integraciones](docs/INTEGRATIONS.md)
 
-## 👤 Credenciales de Prueba
+## Credenciales de Prueba
 
-Para Webpay en modo integración:
-- **Tarjeta:** 4051 8856 0044 6623
-- **CVV:** 123
-- **Fecha:** Cualquier fecha futura
+Para Webpay en modo integracion:
 
-## 📝 Licencia
+| Campo | Valor |
+|-------|-------|
+| Tarjeta | 4051 8856 0044 6623 |
+| CVV | 123 |
+| Fecha | Cualquier fecha futura |
+
+## Licencia
 
 MIT - Libre para uso personal y comercial.
-
----
-
-Desarrollado con ❤️ como plantilla base para proyectos e-commerce.

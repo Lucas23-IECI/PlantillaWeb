@@ -2,9 +2,6 @@ const { getDb } = require('../config/firebaseAdmin');
 
 const TRANSACTIONS_COLLECTION = 'transactions';
 
-/**
- * Crear transacción/pedido
- */
 async function createTransaction(req, res) {
     try {
         const {
@@ -21,13 +18,9 @@ async function createTransaction(req, res) {
 
         if (!items || !items.length) {
             return res.status(400).json({ error: 'Items del pedido son requeridos' });
-        }
-
-        // Calcular total
+        }
         const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        const total_amount = Math.max(0, subtotal - discount_amount);
-
-        // Generar order_id único
+        const total_amount = Math.max(0, subtotal - discount_amount);
         const ts = Date.now().toString(36);
         const rand = Math.random().toString(36).slice(2, 8);
         const order_id = `ORD-${ts}-${rand}`.toUpperCase();
@@ -67,9 +60,6 @@ async function createTransaction(req, res) {
     }
 }
 
-/**
- * Obtener transacción por order_id
- */
 async function getTransaction(req, res) {
     try {
         const { orderId } = req.params;
@@ -85,9 +75,7 @@ async function getTransaction(req, res) {
         }
 
         const doc = snapshot.docs[0];
-        const data = doc.data();
-
-        // Verificar que el usuario sea el dueño o admin
+        const data = doc.data();
         if (data.user_id !== req.user.uid && !req.user.admin) {
             return res.status(403).json({ error: 'Acceso denegado' });
         }
@@ -102,9 +90,6 @@ async function getTransaction(req, res) {
     }
 }
 
-/**
- * Obtener mis transacciones
- */
 async function getMyTransactions(req, res) {
     try {
         const db = getDb();
@@ -126,9 +111,6 @@ async function getMyTransactions(req, res) {
     }
 }
 
-/**
- * Actualizar estado de transacción
- */
 async function updateTransactionStatus(req, res) {
     try {
         const { orderId } = req.params;
@@ -163,9 +145,6 @@ async function updateTransactionStatus(req, res) {
     }
 }
 
-/**
- * Obtener todos los pedidos (admin)
- */
 async function getAllOrders(req, res) {
     try {
         const db = getDb();
@@ -186,9 +165,6 @@ async function getAllOrders(req, res) {
     }
 }
 
-/**
- * Actualizar estado de pedido (admin)
- */
 async function adminUpdateOrderStatus(req, res) {
     try {
         const { orderId } = req.params;
@@ -223,9 +199,6 @@ async function adminUpdateOrderStatus(req, res) {
     }
 }
 
-/**
- * Eliminar pedido (admin)
- */
 async function deleteOrder(req, res) {
     try {
         const { orderId } = req.params;

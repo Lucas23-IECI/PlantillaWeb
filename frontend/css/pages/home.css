@@ -1,11 +1,3 @@
-/* ===================================
-   HOME PAGE - ESTILOS ESPECÍFICOS
-   Productos destacados, hero, etc.
-=================================== */
-
-/* ===================================
-   PRODUCTOS GRID EN HOME
-=================================== */
 .productos-home-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -29,7 +21,6 @@
     border-color: var(--color-accent);
 }
 
-/* Imagen */
 .producto-home-imagen {
     position: relative;
     aspect-ratio: 1 / 1;
@@ -48,7 +39,6 @@
     transform: scale(1.08);
 }
 
-/* Badge descuento */
 .producto-home-card .producto-badge {
     position: absolute;
     top: 12px;
@@ -62,7 +52,6 @@
     z-index: 2;
 }
 
-/* Info */
 .producto-home-info {
     padding: 20px;
     display: flex;
@@ -142,9 +131,6 @@
     color: var(--color-accent);
 }
 
-/* ===================================
-   LOADING STATE
-=================================== */
 .loading {
     display: flex;
     flex-direction: column;
@@ -170,9 +156,6 @@
     }
 }
 
-/* ===================================
-   RESPONSIVE
-=================================== */
 @media (max-width: 968px) {
     .productos-home-grid {
         grid-template-columns: repeat(2, 1fr);

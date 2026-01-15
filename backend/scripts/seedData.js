@@ -1,8 +1,3 @@
-/**
- * Script para crear datos iniciales de prueba
- * Uso: node scripts/seedData.js
- */
-
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const { getDb } = require('../config/firebaseAdmin');
@@ -13,11 +8,7 @@ const PRODUCTS_COLLECTION = 'products';
 async function seedData() {
     try {
         const db = getDb();
-        console.log('🌱 Iniciando seed de datos...');
-
-        // =============================================
-        // CREAR USUARIO ADMIN
-        // =============================================
+        console.log('🌱 Iniciando seed de datos...');
         const adminEmail = 'admin@tutienda.com';
         const existingAdmin = await db.collection(USERS_COLLECTION)
             .where('email', '==', adminEmail)
@@ -39,11 +30,7 @@ async function seedData() {
             console.log(`✅ Usuario admin creado: ${adminEmail} / Admin123!`);
         } else {
             console.log('ℹ️  Usuario admin ya existe');
-        }
-
-        // =============================================
-        // CREAR PRODUCTOS DE EJEMPLO
-        // =============================================
+        }
         const sampleProducts = [
             {
                 name: 'Producto de Ejemplo 1',

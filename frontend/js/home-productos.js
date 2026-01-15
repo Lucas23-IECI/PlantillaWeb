@@ -1,18 +1,9 @@
-/**
- * HOME PRODUCTOS - Carga productos destacados en la página de inicio
- */
-
-// Ejecutar cuando esté listo (o inmediatamente si ya cargó)
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initHomeProductos);
 } else {
-    // DOM ya listo, ejecutar inmediatamente
     initHomeProductos();
 }
 
-/**
- * Inicializar productos en home
- */
 function initHomeProductos() {
     const container = document.getElementById('productosDestacados');
     if (!container) return;
@@ -20,31 +11,23 @@ function initHomeProductos() {
     cargarProductosDestacados(container);
 }
 
-/**
- * Cargar productos destacados con mock data
- */
 function cargarProductosDestacados(container) {
-    // Usar productos mock si generarProductosMock existe
     let productos = [];
 
     if (typeof generarProductosMock === 'function') {
         productos = generarProductosMock();
     } else {
-        // Fallback: productos básicos
         productos = getProductosFallback();
     }
 
-    // Mostrar máximo 6 productos destacados
     const destacados = productos.slice(0, 6);
 
-    // Renderizar grid
     container.innerHTML = `
         <div class="productos-home-grid">
             ${destacados.map(p => crearCardProductoHome(p)).join('')}
         </div>
     `;
 
-    // Agregar click events
     container.querySelectorAll('.producto-home-card').forEach(card => {
         card.addEventListener('click', (e) => {
             const productId = card.dataset.id;
@@ -53,9 +36,6 @@ function cargarProductosDestacados(container) {
     });
 }
 
-/**
- * Crear card de producto para home
- */
 function crearCardProductoHome(producto) {
     const nombre = producto.nombre || producto.name || 'Producto';
     const precio = producto.precio || producto.price || 0;
@@ -65,10 +45,8 @@ function crearCardProductoHome(producto) {
     const imagen = producto.imagen || producto.image;
     const rating = producto.rating || 0;
 
-    // Format price
     const formatPrice = (p) => '$' + p.toLocaleString('es-CL');
 
-    // Render stars
     const starsHtml = renderStarsHome(rating);
 
     return `
@@ -95,9 +73,6 @@ function crearCardProductoHome(producto) {
     `;
 }
 
-/**
- * Render rating stars
- */
 function renderStarsHome(rating) {
     let stars = '';
     for (let i = 1; i <= 5; i++) {
@@ -106,9 +81,6 @@ function renderStarsHome(rating) {
     return stars;
 }
 
-/**
- * Fallback products if main mock not available
- */
 function getProductosFallback() {
     return [
         {

@@ -1,17 +1,8 @@
-const { Resend } = require('resend');
-
-// Inicializar cliente de Resend
+const { Resend } = require('resend');
 const resend = process.env.RESEND_API_KEY
     ? new Resend(process.env.RESEND_API_KEY)
     : null;
 
-/**
- * Envía un email usando Resend
- * @param {Object} options - Opciones del email
- * @param {string} options.to - Destinatario
- * @param {string} options.subject - Asunto
- * @param {string} options.html - Contenido HTML
- */
 async function sendEmail({ to, subject, html }) {
     if (!resend) {
         console.warn('⚠️ Email no enviado: RESEND_API_KEY no configurada');
@@ -36,9 +27,6 @@ async function sendEmail({ to, subject, html }) {
     }
 }
 
-/**
- * Envía confirmación de pedido al cliente
- */
 async function sendOrderConfirmation(order, customerEmail) {
     const subject = `Confirmación de pedido #${order.order_id}`;
     const html = `
@@ -55,9 +43,6 @@ async function sendOrderConfirmation(order, customerEmail) {
     return sendEmail({ to: customerEmail, subject, html });
 }
 
-/**
- * Envía notificación de nuevo pedido a la tienda
- */
 async function sendOrderNotification(order) {
     const notificationEmail = process.env.ORDER_NOTIFICATION_EMAIL || process.env.MAIL_REPLY_TO;
     if (!notificationEmail) return null;
@@ -77,9 +62,6 @@ async function sendOrderNotification(order) {
     return sendEmail({ to: notificationEmail, subject, html });
 }
 
-/**
- * Envía email de recuperación de contraseña
- */
 async function sendPasswordResetEmail(email, resetUrl) {
     const subject = 'Recuperar contraseña';
     const html = `

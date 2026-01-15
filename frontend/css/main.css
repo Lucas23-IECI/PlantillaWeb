@@ -1,55 +1,25 @@
-/* ===================================
-   MAIN CSS - PUNTO DE ENTRADA MODULAR
-   
-   Este archivo importa todos los módulos CSS
-   en el orden correcto. Usar este archivo
-   en lugar de styles.css para evitar duplicados.
-   
-   Orden de importación:
-   1. Variables (tokens de diseño)
-   2. Base (reset, utilidades)
-   3. Components (botones, cards, forms, header)
-   4. Layout (footer, sections)
-   5. Pages (home, productos, contacto)
-   6. Utilities (social float, notifications)
-   7. Mobile (responsive overrides)
-=================================== */
-
-/* 1. TOKENS DE DISEÑO */
 @import url('variables.css');
 
-/* 2. BASE Y RESET */
 @import url('base.css');
 
-/* 3. COMPONENTES */
 @import url('components/buttons.css');
 @import url('components/cards.css');
 @import url('components/forms.css');
 @import url('components/header.css');
 
-/* 4. LAYOUT */
 @import url('layout/footer.css');
 @import url('layout/sections.css');
 
-/* 5. PÁGINAS */
 @import url('pages/productos.css');
 @import url('pages/contacto.css');
 @import url('pages/nosotros.css');
 
-/* 6. UTILIDADES */
 @import url('utilities/social-float.css');
 @import url('utilities/notifications.css');
 @import url('utilities/overlays.css');
 
-/* 7. RESPONSIVE */
 @import url('mobile.css');
 
-/* ===================================
-   ESTILOS GLOBALES ADICIONALES
-   (Que no están en módulos específicos)
-=================================== */
-
-/* Hero Section */
 .hero {
    min-height: 500px;
    display: flex;
@@ -98,7 +68,6 @@
    flex-wrap: wrap;
 }
 
-/* Page Header */
 .page-header {
    text-align: center;
    padding: var(--spacing-3xl) var(--spacing-2xl);
@@ -117,14 +86,12 @@
    color: var(--color-text-light);
 }
 
-/* Productos Grid (para homepage) */
 .productos-grid-home {
    display: grid;
    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
    gap: var(--spacing-xl);
 }
 
-/* WhatsApp Float Simple */
 .whatsapp-float-simple {
    position: fixed;
    bottom: 20px;
@@ -146,7 +113,6 @@
    transform: scale(1.1);
 }
 
-/* Search Overlay */
 .search-overlay {
    position: fixed;
    inset: 0;
@@ -201,7 +167,6 @@
    cursor: pointer;
 }
 
-/* Toast Notifications */
 .toast {
    position: fixed;
    bottom: 20px;
@@ -250,7 +215,6 @@
    opacity: 1;
 }
 
-/* Site Notice Banner */
 .site-notice {
    position: fixed;
    left: 0;
@@ -285,7 +249,6 @@
    font-size: var(--font-size-xl);
 }
 
-/* Loading Spinner */
 .loading-container {
    display: flex;
    align-items: center;
@@ -303,7 +266,6 @@
    animation: spin 0.8s linear infinite;
 }
 
-/* Empty State */
 .empty-state {
    text-align: center;
    padding: var(--spacing-4xl) var(--spacing-xl);
@@ -326,7 +288,6 @@
    margin-bottom: var(--spacing-xl);
 }
 
-/* Skip Link */
 .skip-link {
    position: absolute;
    top: -40px;
@@ -343,7 +304,6 @@
    top: 0;
 }
 
-/* Animations */
 @keyframes spin {
    to {
       transform: rotate(360deg);
@@ -396,7 +356,6 @@
    }
 }
 
-/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
 
    *,

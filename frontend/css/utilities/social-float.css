@@ -1,11 +1,3 @@
-/* ===================================
-   SOCIAL FLOAT COMPONENT
-   Botones flotantes de redes sociales
-=================================== */
-
-/* ===================================
-   CONTAINER
-=================================== */
 .social-float-container {
     position: fixed;
     left: 20px;
@@ -17,16 +9,12 @@
     transition: all 0.3s ease;
 }
 
-/* Ocultar cuando está cerca del footer */
 .social-float-container.hidden-near-footer {
     opacity: 0;
     transform: translateX(-100px);
     pointer-events: none;
 }
 
-/* ===================================
-   FLOAT BUTTON
-=================================== */
 .social-float {
     display: flex;
     align-items: center;
@@ -48,9 +36,6 @@
     box-shadow: var(--shadow-xl);
 }
 
-/* ===================================
-   ICON Y TEXT
-=================================== */
 .social-icon {
     display: flex;
     align-items: center;
@@ -78,9 +63,6 @@
     opacity: 1;
 }
 
-/* ===================================
-   COLORES POR RED SOCIAL
-=================================== */
 .social-whatsapp {
     background: var(--color-whatsapp);
 }
@@ -121,9 +103,6 @@
     background: var(--color-primary-light);
 }
 
-/* ===================================
-   VARIANTE SIMPLE (SIN EXPAND)
-=================================== */
 .social-float-simple {
     display: flex;
     align-items: center;
@@ -142,9 +121,6 @@
     box-shadow: var(--shadow-xl);
 }
 
-/* ===================================
-   PULSE ANIMATION
-=================================== */
 .social-float-pulse {
     animation: pulse-ring 2s infinite;
 }
@@ -163,9 +139,6 @@
     }
 }
 
-/* ===================================
-   TOOLTIP
-=================================== */
 .social-float-tooltip {
     position: relative;
 }
@@ -193,9 +166,6 @@
     visibility: visible;
 }
 
-/* ===================================
-   POSITION VARIANTS
-=================================== */
 .social-float-container.position-right {
     left: auto;
     right: 20px;
@@ -210,9 +180,6 @@
     flex-direction: row;
 }
 
-/* ===================================
-   DARK MODE
-=================================== */
 [data-theme="dark"] .social-float {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
@@ -221,9 +188,6 @@
     background: var(--color-accent);
 }
 
-/* ===================================
-   RESPONSIVE
-=================================== */
 @media (max-width: 768px) {
     .social-float-container {
         left: 10px;
@@ -245,7 +209,6 @@
         height: 20px;
     }
 
-    /* En mobile no expandir al hover */
     .social-float:hover {
         max-width: 44px;
         padding-right: var(--spacing-xs);

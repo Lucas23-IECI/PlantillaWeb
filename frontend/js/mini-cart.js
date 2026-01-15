@@ -1,24 +1,12 @@
-/**
- * MINI CART SIDEBAR
- * Drawer que aparece al agregar productos
- */
-
-// Inicializar al cargar DOM
 document.addEventListener('DOMContentLoaded', initMiniCart);
 
-/**
- * Inicializar mini cart
- */
 function initMiniCart() {
-    // Crear estructura HTML si no existe
     if (!document.getElementById('miniCart')) {
         createMiniCartHTML();
     }
 
-    // Escuchar cambios del carrito
     document.addEventListener('cartUpdated', renderMiniCartItems);
 
-    // Click en carrito del header abre mini cart
     const cartBtns = document.querySelectorAll('.cart-btn');
     cartBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -27,13 +15,9 @@ function initMiniCart() {
         });
     });
 
-    // Render inicial
     renderMiniCartItems();
 }
 
-/**
- * Crear estructura HTML del mini cart
- */
 function createMiniCartHTML() {
     const html = `
         <div class="mini-cart-overlay" id="miniCartOverlay"></div>
@@ -50,7 +34,6 @@ function createMiniCartHTML() {
                 <button class="mini-cart-close" onclick="closeMiniCart()" aria-label="Cerrar">×</button>
             </div>
             <div class="mini-cart-items" id="miniCartItems">
-                <!-- Items dinámicos -->
             </div>
             <div class="mini-cart-footer" id="miniCartFooter">
                 <div class="mini-cart-subtotal">
@@ -67,13 +50,9 @@ function createMiniCartHTML() {
 
     document.body.insertAdjacentHTML('beforeend', html);
 
-    // Eventos
     document.getElementById('miniCartOverlay').addEventListener('click', closeMiniCart);
 }
 
-/**
- * Abrir mini cart
- */
 function openMiniCart() {
     const miniCart = document.getElementById('miniCart');
     const overlay = document.getElementById('miniCartOverlay');
@@ -85,9 +64,6 @@ function openMiniCart() {
     }
 }
 
-/**
- * Cerrar mini cart
- */
 function closeMiniCart() {
     const miniCart = document.getElementById('miniCart');
     const overlay = document.getElementById('miniCartOverlay');
@@ -99,9 +75,6 @@ function closeMiniCart() {
     }
 }
 
-/**
- * Renderizar items del mini cart
- */
 function renderMiniCartItems() {
     const container = document.getElementById('miniCartItems');
     const countEl = document.getElementById('miniCartCount');
@@ -114,23 +87,19 @@ function renderMiniCartItems() {
     const count = cart.getCount();
     const subtotal = cart.getSubtotal();
 
-    // Update count badge
     if (countEl) {
         countEl.textContent = count;
         countEl.style.display = count > 0 ? 'inline-block' : 'none';
     }
 
-    // Update subtotal
     if (subtotalEl) {
         subtotalEl.textContent = formatPriceCart(subtotal);
     }
 
-    // Show/hide footer
     if (footer) {
         footer.style.display = items.length > 0 ? 'block' : 'none';
     }
 
-    // Render items
     if (items.length === 0) {
         container.innerHTML = `
             <div class="mini-cart-empty">
@@ -170,9 +139,6 @@ function renderMiniCartItems() {
     `).join('');
 }
 
-/**
- * Actualizar cantidad en mini cart
- */
 function updateMiniCartQty(productId, delta) {
     if (typeof cart === 'undefined') return;
 
@@ -189,18 +155,12 @@ function updateMiniCartQty(productId, delta) {
     }
 }
 
-/**
- * Eliminar item del mini cart
- */
 function removeMiniCartItem(productId) {
     if (typeof cart !== 'undefined') {
         cart.remove(productId);
     }
 }
 
-/**
- * Formatear precio para carrito
- */
 function formatPriceCart(precio) {
     return '$' + new Intl.NumberFormat('es-CL', {
         minimumFractionDigits: 0,
@@ -208,6 +168,5 @@ function formatPriceCart(precio) {
     }).format(precio);
 }
 
-// Exponer funciones globalmente
 window.openMiniCart = openMiniCart;
 window.closeMiniCart = closeMiniCart;

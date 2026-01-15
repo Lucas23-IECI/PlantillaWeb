@@ -1,11 +1,3 @@
-/* ===================================
-   BUTTONS COMPONENT
-   Sistema de botones unificado
-=================================== */
-
-/* ===================================
-   BASE BUTTON
-=================================== */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -39,11 +31,6 @@
     box-shadow: none !important;
 }
 
-/* ===================================
-   VARIANTES DE COLOR
-=================================== */
-
-/* Primary */
 .btn-primary {
     background-color: var(--btn-primary-bg);
     color: var(--btn-primary-text);
@@ -57,7 +44,6 @@
     box-shadow: var(--shadow-primary);
 }
 
-/* Secondary */
 .btn-secondary {
     background-color: var(--btn-secondary-bg);
     color: var(--btn-secondary-text);
@@ -71,7 +57,6 @@
     box-shadow: var(--shadow-md);
 }
 
-/* Accent */
 .btn-accent {
     background-color: var(--btn-accent-bg);
     color: var(--btn-accent-text);
@@ -85,7 +70,6 @@
     box-shadow: var(--shadow-accent);
 }
 
-/* Success */
 .btn-success {
     background-color: var(--color-success);
     color: var(--color-text-inverse);
@@ -99,7 +83,6 @@
     box-shadow: var(--shadow-success);
 }
 
-/* Danger/Error */
 .btn-danger {
     background-color: var(--color-error);
     color: var(--color-text-inverse);
@@ -113,7 +96,6 @@
     box-shadow: var(--shadow-md);
 }
 
-/* Outline */
 .btn-outline {
     background-color: transparent;
     color: var(--btn-outline-text);
@@ -126,7 +108,6 @@
     border-color: var(--btn-outline-hover-bg);
 }
 
-/* Ghost (sin borde) */
 .btn-ghost {
     background-color: transparent;
     color: var(--color-text);
@@ -137,7 +118,6 @@
     background-color: var(--color-surface-hover);
 }
 
-/* Link style */
 .btn-link {
     background: transparent;
     color: var(--color-accent);
@@ -153,9 +133,6 @@
     transform: none;
 }
 
-/* ===================================
-   TAMAÑOS
-=================================== */
 .btn-xs {
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: var(--font-size-xs);
@@ -176,9 +153,6 @@
     font-size: var(--font-size-lg);
 }
 
-/* ===================================
-   VARIANTES DE FORMA
-=================================== */
 .btn-full {
     width: 100%;
 }
@@ -209,9 +183,6 @@
     border-radius: var(--radius-full);
 }
 
-/* ===================================
-   ESTADOS
-=================================== */
 .btn-loading {
     position: relative;
     color: transparent !important;
@@ -229,9 +200,6 @@
     animation: spin 0.6s linear infinite;
 }
 
-/* ===================================
-   GRUPOS DE BOTONES
-=================================== */
 .btn-group {
     display: inline-flex;
 }
@@ -252,9 +220,6 @@
     margin-left: -2px;
 }
 
-/* ===================================
-   DARK MODE
-=================================== */
 [data-theme="dark"] .btn-outline {
     border-color: var(--btn-outline-border);
     color: var(--btn-outline-text);

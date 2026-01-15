@@ -1,9 +1,3 @@
-/* ===================================
-   MINI CART SIDEBAR
-   Drawer que aparece al agregar productos
-=================================== */
-
-/* Overlay */
 .mini-cart-overlay {
     position: fixed;
     inset: 0;
@@ -19,7 +13,6 @@
     visibility: visible;
 }
 
-/* Sidebar */
 .mini-cart {
     position: fixed;
     top: 0;
@@ -39,7 +32,6 @@
     right: 0;
 }
 
-/* Header */
 .mini-cart-header {
     display: flex;
     justify-content: space-between;
@@ -92,14 +84,12 @@
     color: white;
 }
 
-/* Items Container */
 .mini-cart-items {
     flex: 1;
     overflow-y: auto;
     padding: 16px 24px;
 }
 
-/* Empty State */
 .mini-cart-empty {
     text-align: center;
     padding: 60px 20px;
@@ -123,7 +113,6 @@
     font-size: 0.9rem;
 }
 
-/* Cart Item */
 .mini-cart-item {
     display: flex;
     gap: 16px;
@@ -245,7 +234,6 @@
     background: rgba(233, 69, 96, 0.1);
 }
 
-/* Footer */
 .mini-cart-footer {
     padding: 20px 24px;
     border-top: 1px solid var(--color-border);
@@ -315,7 +303,6 @@
     box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
 }
 
-/* Responsive */
 @media (max-width: 480px) {
     .mini-cart {
         max-width: 100%;

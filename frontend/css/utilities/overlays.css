@@ -1,9 +1,3 @@
-/* ===================================
-   OVERLAYS
-   Search overlay, modals
-=================================== */
-
-/* ===== SEARCH OVERLAY ===== */
 .search-overlay {
     position: fixed;
     inset: 0;
@@ -58,7 +52,6 @@
     cursor: pointer;
 }
 
-/* ===== WHATSAPP FLOAT ===== */
 .whatsapp-float {
     position: fixed;
     bottom: 20px;

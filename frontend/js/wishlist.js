@@ -1,8 +1,3 @@
-/**
- * WISHLIST - Sistema de favoritos
- * Permite a usuarios guardar productos favoritos
- */
-
 class Wishlist {
     constructor() {
         this.items = [];
@@ -10,14 +5,10 @@ class Wishlist {
         this.load();
     }
 
-    /**
-     * Cargar wishlist desde localStorage
-     */
     load() {
         try {
             const stored = localStorage.getItem(this.storageKey);
-            const parsed = stored ? JSON.parse(stored) : [];
-            // Filter out null/undefined items and ensure each has an id
+            const parsed = stored ? JSON.parse(stored) : [];
             this.items = parsed.filter(item => item && item.id);
         } catch (e) {
             console.warn('Error loading wishlist:', e);
@@ -25,9 +16,6 @@ class Wishlist {
         }
     }
 
-    /**
-     * Guardar wishlist en localStorage
-     */
     save() {
         try {
             localStorage.setItem(this.storageKey, JSON.stringify(this.items));
@@ -38,9 +26,6 @@ class Wishlist {
         }
     }
 
-    /**
-     * Agregar producto a wishlist
-     */
     add(producto) {
         const id = producto.id || producto.product_id;
         if (!this.isInWishlist(id)) {
@@ -60,9 +45,6 @@ class Wishlist {
         return false;
     }
 
-    /**
-     * Remover producto de wishlist
-     */
     remove(productId) {
         const initialLength = this.items.length;
         const strId = String(productId);
@@ -74,9 +56,6 @@ class Wishlist {
         return false;
     }
 
-    /**
-     * Toggle wishlist (agregar/quitar)
-     */
     toggle(producto) {
         const id = producto.id || producto.product_id;
         if (this.isInWishlist(id)) {
@@ -88,38 +67,23 @@ class Wishlist {
         }
     }
 
-    /**
-     * Verificar si producto está en wishlist
-     */
     isInWishlist(productId) {
         return this.items.some(item => item && (item.id === productId || item.id === String(productId) || String(item.id) === String(productId)));
     }
 
-    /**
-     * Obtener todos los items
-     */
     getAll() {
         return [...this.items];
     }
 
-    /**
-     * Obtener cantidad de items
-     */
     getCount() {
         return this.items.length;
     }
 
-    /**
-     * Limpiar wishlist
-     */
     clear() {
         this.items = [];
         this.save();
     }
 
-    /**
-     * Actualizar badge en header
-     */
     updateBadge() {
         const badges = document.querySelectorAll('.wishlist-count');
         const count = this.getCount();
@@ -130,22 +94,14 @@ class Wishlist {
         });
     }
 
-    /**
-     * Notificar cambios (custom event)
-     */
     notify() {
         window.dispatchEvent(new CustomEvent('wishlistUpdated', {
             detail: { items: this.items, count: this.getCount() }
         }));
     }
-}
-
-// Instancia global
+}
 const wishlist = new Wishlist();
 
-/**
- * Crear botón wishlist para un producto
- */
 function createWishlistButton(producto, options = {}) {
     const { size = 'medium', showLabel = false } = options;
     const id = producto.id || producto.product_id;
@@ -169,32 +125,21 @@ function createWishlistButton(producto, options = {}) {
         e.stopPropagation();
 
         const wasAdded = wishlist.toggle(producto);
-        button.classList.toggle('active', wasAdded);
-
-        // Update SVG fill
+        button.classList.toggle('active', wasAdded);
         const svg = button.querySelector('svg');
-        svg.setAttribute('fill', wasAdded ? 'currentColor' : 'none');
-
-        // Update label if present
+        svg.setAttribute('fill', wasAdded ? 'currentColor' : 'none');
         const label = button.querySelector('span');
         if (label) {
             label.textContent = wasAdded ? 'En favoritos' : 'Agregar a favoritos';
-        }
-
-        // Update title
+        }
         button.title = wasAdded ? 'Quitar de favoritos' : 'Agregar a favoritos';
-        button.setAttribute('aria-label', button.title);
-
-        // Show notification
+        button.setAttribute('aria-label', button.title);
         showWishlistNotification(wasAdded ? 'Agregado a favoritos' : 'Eliminado de favoritos');
     });
 
     return button;
 }
 
-/**
- * Mostrar notificación de wishlist
- */
 function showWishlistNotification(message) {
     const existing = document.querySelector('.wishlist-notification');
     if (existing) existing.remove();
@@ -208,23 +153,16 @@ function showWishlistNotification(message) {
         <span>${message}</span>
     `;
 
-    document.body.appendChild(notif);
-
-    // Animate in
+    document.body.appendChild(notif);
     requestAnimationFrame(() => {
         notif.classList.add('show');
-    });
-
-    // Remove after delay
+    });
     setTimeout(() => {
         notif.classList.remove('show');
         setTimeout(() => notif.remove(), 300);
     }, 2000);
 }
 
-/**
- * Renderizar página de wishlist
- */
 function renderWishlistPage() {
     const container = document.getElementById('wishlistContainer');
     if (!container) return;
@@ -253,17 +191,13 @@ function renderWishlistPage() {
         <div class="wishlist-grid">
             ${items.map(item => createWishlistItemHTML(item)).join('')}
         </div>
-    `;
-
-    // Event listeners
+    `;
     container.querySelector('#clearWishlist')?.addEventListener('click', () => {
         if (confirm('¿Eliminar todos los favoritos?')) {
             wishlist.clear();
             renderWishlistPage();
         }
-    });
-
-    // Remove button (Heart icon in quick-actions)
+    });
     container.querySelectorAll('.quick-btn.wishlist').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation(); // Prevent card click
@@ -272,17 +206,14 @@ function renderWishlistPage() {
             renderWishlistPage(); // Re-render
             showWishlistNotification('Eliminado de favoritos');
         });
-    });
-
-    // Add to cart button
+    });
     container.querySelectorAll('.quick-btn.cart').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation(); // Prevent card click
             const id = parseInt(btn.dataset.id);
             const item = items.find(i => (i.id || i.product_id) === id);
 
-            if (item && typeof cart !== 'undefined') {
-                // Adapt item structure if needed for cart
+            if (item && typeof cart !== 'undefined') {
                 cart.add({
                     product_id: item.id || item.product_id,
                     name: item.nombre || item.name,
@@ -292,9 +223,7 @@ function renderWishlistPage() {
                 showWishlistNotification('Agregado al carrito');
             }
         });
-    });
-
-    // Card click (navigate to product)
+    });
     container.querySelectorAll('.producto-card').forEach(card => {
         card.addEventListener('click', () => {
             const id = card.dataset.id;
@@ -303,9 +232,6 @@ function renderWishlistPage() {
     });
 }
 
-/**
- * Crear HTML para item de wishlist (Estilo Producto Card)
- */
 function createWishlistItemHTML(item) {
     if (!item) return ''; // Safety check
 
@@ -349,9 +275,7 @@ function createWishlistItemHTML(item) {
             </div>
         </article>
     `;
-}
-
-// Initialize badge on load
+}
 document.addEventListener('DOMContentLoaded', () => {
     wishlist.updateBadge();
 });

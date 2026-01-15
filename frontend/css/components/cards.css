@@ -1,11 +1,3 @@
-/* ===================================
-   CARDS COMPONENT
-   Sistema de tarjetas unificado
-=================================== */
-
-/* ===================================
-   BASE CARD
-=================================== */
 .card {
     background-color: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -18,9 +10,6 @@
     box-shadow: var(--card-shadow-hover);
 }
 
-/* ===================================
-   CARD INTERACTIVA
-=================================== */
 .card-interactive {
     cursor: pointer;
 }
@@ -30,9 +19,6 @@
     box-shadow: var(--shadow-lg);
 }
 
-/* ===================================
-   CARD STRUCTURE
-=================================== */
 .card-header {
     padding: var(--spacing-lg);
     border-bottom: 1px solid var(--card-border);
@@ -70,9 +56,6 @@
     line-height: var(--line-height-relaxed);
 }
 
-/* ===================================
-   CARD IMAGE
-=================================== */
 .card-image {
     position: relative;
     overflow: hidden;
@@ -99,9 +82,6 @@
     aspect-ratio: 3/4;
 }
 
-/* ===================================
-   CARD BADGES
-=================================== */
 .card-badge {
     position: absolute;
     top: var(--spacing-md);
@@ -128,9 +108,6 @@
     background-color: var(--color-error);
 }
 
-/* ===================================
-   PRODUCTO CARD
-=================================== */
 .producto-card {
     background-color: var(--card-bg);
     border-radius: var(--radius-lg);
@@ -237,9 +214,6 @@
     background-color: var(--color-primary-light);
 }
 
-/* ===================================
-   FEATURE CARD
-=================================== */
 .feature-card {
     text-align: center;
     padding: var(--spacing-2xl);
@@ -278,9 +252,6 @@
     color: var(--color-text-light);
 }
 
-/* ===================================
-   VARIANTES DE TAMAÑO
-=================================== */
 .card-compact .card-header,
 .card-compact .card-body,
 .card-compact .card-footer {
@@ -292,9 +263,6 @@
     padding: var(--spacing-xl);
 }
 
-/* ===================================
-   VARIANTES DE ESTILO
-=================================== */
 .card-flat {
     box-shadow: none;
     border: 2px solid var(--card-border);
@@ -309,9 +277,6 @@
     box-shadow: var(--shadow-xl);
 }
 
-/* ===================================
-   DARK MODE
-=================================== */
 [data-theme="dark"] .card,
 [data-theme="dark"] .producto-card,
 [data-theme="dark"] .feature-card {

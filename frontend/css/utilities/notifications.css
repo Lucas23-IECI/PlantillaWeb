@@ -1,9 +1,3 @@
-/* ===================================
-   NOTIFICATIONS
-   Toasts, site notices
-=================================== */
-
-/* ===== NOTIFICACIONES TOAST ===== */
 .notification-toast {
     position: fixed;
     bottom: 20px;
@@ -55,7 +49,6 @@
     opacity: 1;
 }
 
-/* ===== SITE NOTICE (BANNER) ===== */
 .site-notice {
     position: fixed;
     left: 0;

@@ -4,9 +4,6 @@ const { sendOrderConfirmation, sendOrderNotification } = require('../config/emai
 
 const TRANSACTIONS_COLLECTION = 'transactions';
 
-/**
- * Crear pago Webpay
- */
 async function createPayment(req, res) {
     try {
         const { order_id } = req.body;
@@ -15,9 +12,7 @@ async function createPayment(req, res) {
             return res.status(400).json({ error: 'order_id es requerido' });
         }
 
-        const db = getDb();
-
-        // Buscar transacción
+        const db = getDb();
         const snapshot = await db.collection(TRANSACTIONS_COLLECTION)
             .where('order_id', '==', order_id)
             .limit(1)
@@ -28,9 +23,7 @@ async function createPayment(req, res) {
         }
 
         const transactionDoc = snapshot.docs[0];
-        const transactionData = transactionDoc.data();
-
-        // Verificar que no esté ya pagado
+        const transactionData = transactionDoc.data();
         if (transactionData.status === 'completed') {
             return res.status(400).json({ error: 'Este pedido ya fue pagado' });
         }
@@ -38,19 +31,11 @@ async function createPayment(req, res) {
         const amount = transactionData.amount || transactionData.total_amount;
         if (!amount || amount <= 0) {
             return res.status(400).json({ error: 'Monto inválido' });
-        }
-
-        // URL de retorno
+        }
         const backendUrl = process.env.BACKEND_PUBLIC_URL || `http://localhost:${process.env.PORT || 5000}`;
-        const returnUrl = `${backendUrl}/api/webpay/return`;
-
-        // Generar sessionId único
-        const sessionId = `SID-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-
-        // Crear transacción en Webpay
-        const webpayResponse = await createTransaction(order_id, sessionId, Math.round(amount), returnUrl);
-
-        // Guardar token en la transacción
+        const returnUrl = `${backendUrl}/api/webpay/return`;
+        const sessionId = `SID-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        const webpayResponse = await createTransaction(order_id, sessionId, Math.round(amount), returnUrl);
         await db.collection(TRANSACTIONS_COLLECTION).doc(transactionDoc.id).update({
             webpay_token: webpayResponse.token,
             webpay_session_id: sessionId,
@@ -67,20 +52,14 @@ async function createPayment(req, res) {
     }
 }
 
-/**
- * Manejar retorno de Webpay
- */
 async function handleReturn(req, res) {
     try {
         const token = req.body.token_ws || req.query.token_ws;
         const frontendUrl = process.env.FRONTEND_PUBLIC_URL || 'http://localhost:5173';
 
-        if (!token) {
-            // Usuario canceló el pago
+        if (!token) {
             return res.redirect(`${frontendUrl}/pages/resultado-pago.html?status=cancelled`);
-        }
-
-        // Redirigir al frontend con el token para confirmar
+        }
         res.redirect(`${frontendUrl}/pages/resultado-pago.html?token_ws=${token}`);
     } catch (error) {
         console.error('Error en handleReturn:', error);
@@ -89,9 +68,6 @@ async function handleReturn(req, res) {
     }
 }
 
-/**
- * Confirmar pago
- */
 async function commitPayment(req, res) {
     try {
         const { token_ws, order_id } = req.body;
@@ -100,9 +76,7 @@ async function commitPayment(req, res) {
             return res.status(400).json({ error: 'Token es requerido' });
         }
 
-        const db = getDb();
-
-        // Buscar transacción por token o order_id
+        const db = getDb();
         let snapshot;
         if (order_id) {
             snapshot = await db.collection(TRANSACTIONS_COLLECTION)
@@ -121,9 +95,7 @@ async function commitPayment(req, res) {
         }
 
         const transactionDoc = snapshot.docs[0];
-        const transactionData = transactionDoc.data();
-
-        // Verificar que no esté ya procesado (idempotencia)
+        const transactionData = transactionDoc.data();
         if (transactionData.status === 'completed') {
             return res.json({
                 success: true,
@@ -131,15 +103,9 @@ async function commitPayment(req, res) {
                 order_id: transactionData.order_id,
                 ...transactionData.webpay_result
             });
-        }
-
-        // Confirmar con Webpay
-        const result = await commitTransaction(token_ws);
-
-        // Verificar respuesta
-        const isApproved = result.response_code === 0;
-
-        // Actualizar transacción
+        }
+        const result = await commitTransaction(token_ws);
+        const isApproved = result.response_code === 0;
         const updateData = {
             status: isApproved ? 'completed' : 'failed',
             webpay_result: {
@@ -161,22 +127,16 @@ async function commitPayment(req, res) {
             updatedAt: new Date()
         };
 
-        await db.collection(TRANSACTIONS_COLLECTION).doc(transactionDoc.id).update(updateData);
-
-        // Si el pago fue exitoso, enviar emails
+        await db.collection(TRANSACTIONS_COLLECTION).doc(transactionDoc.id).update(updateData);
         if (isApproved) {
-            const fullTransaction = { ...transactionData, ...updateData };
-
-            // Email al cliente
+            const fullTransaction = { ...transactionData, ...updateData };
             if (transactionData.customer_email) {
                 try {
                     await sendOrderConfirmation(fullTransaction, transactionData.customer_email);
                 } catch (emailError) {
                     console.warn('Error enviando confirmación:', emailError.message);
                 }
-            }
-
-            // Email a la tienda
+            }
             try {
                 await sendOrderNotification(fullTransaction);
             } catch (emailError) {

@@ -2,9 +2,6 @@ const { getDb } = require('../config/firebaseAdmin');
 
 const DISCOUNT_CODES_COLLECTION = 'discount_codes';
 
-/**
- * Validar código de descuento (público)
- */
 async function validateCode(req, res) {
     try {
         const { code } = req.query;
@@ -26,19 +23,13 @@ async function validateCode(req, res) {
         }
 
         const doc = snapshot.docs[0];
-        const data = doc.data();
-
-        // Verificar si está activo
+        const data = doc.data();
         if (!data.active) {
             return res.status(400).json({ error: 'Código expirado', valid: false });
-        }
-
-        // Verificar fecha de expiración
+        }
         if (data.expires_at && new Date(data.expires_at) < new Date()) {
             return res.status(400).json({ error: 'Código expirado', valid: false });
-        }
-
-        // Verificar usos máximos
+        }
         if (data.max_uses && data.uses_count >= data.max_uses) {
             return res.status(400).json({ error: 'Código agotado', valid: false });
         }
@@ -56,9 +47,6 @@ async function validateCode(req, res) {
     }
 }
 
-/**
- * Listar códigos de descuento (admin)
- */
 async function listCodes(req, res) {
     try {
         const db = getDb();
@@ -79,9 +67,6 @@ async function listCodes(req, res) {
     }
 }
 
-/**
- * Crear código de descuento (admin)
- */
 async function createCode(req, res) {
     try {
         const {
@@ -99,9 +84,7 @@ async function createCode(req, res) {
         }
 
         const db = getDb();
-        const codeUpper = code.toUpperCase().trim();
-
-        // Verificar que no exista
+        const codeUpper = code.toUpperCase().trim();
         const existing = await db.collection(DISCOUNT_CODES_COLLECTION)
             .where('code', '==', codeUpper)
             .limit(1)
@@ -137,9 +120,6 @@ async function createCode(req, res) {
     }
 }
 
-/**
- * Actualizar código de descuento (admin)
- */
 async function updateCode(req, res) {
     try {
         const { code } = req.params;
@@ -178,9 +158,6 @@ async function updateCode(req, res) {
     }
 }
 
-/**
- * Eliminar código de descuento (admin)
- */
 async function deleteCode(req, res) {
     try {
         const { code } = req.params;

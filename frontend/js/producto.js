@@ -1,9 +1,3 @@
-/**
- * PRODUCTO DETALLE - JavaScript
- * Funcionalidad para página de detalle de producto
- */
-
-// Estado del producto
 let productoActual = null;
 let cantidadSeleccionada = 1;
 
@@ -12,14 +6,9 @@ document.addEventListener('DOMContentLoaded', function () {
     updateCartBadge();
 });
 
-/**
- * Cargar detalle del producto
- */
 async function loadProductDetail() {
     const container = document.getElementById('productoContent');
-    if (!container) return;
-
-    // Mostrar loading
+    if (!container) return;
     container.innerHTML = `
         <div class="producto-loading">
             <div class="loading-content">
@@ -28,9 +17,7 @@ async function loadProductDetail() {
                 <p>Un momento por favor</p>
             </div>
         </div>
-    `;
-
-    // Obtener ID del producto de URL
+    `;
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
 
@@ -39,8 +26,7 @@ async function loadProductDetail() {
         return;
     }
 
-    try {
-        // Intentar obtener de API
+    try {
         let producto = null;
 
         try {
@@ -49,14 +35,9 @@ async function loadProductDetail() {
             }
         } catch (apiError) {
             console.warn('API no disponible, usando mock');
-        }
-
-        // Si no hay producto, buscar en mock
-        if (!producto) {
-            // Use generarProductosMock from productos.js if available (numeric IDs like 1, 2, 3)
-            // Otherwise fall back to local getProductosMock (string IDs like prod_1)
-            const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
-            // Buscar por string ID o number ID para compatibilidad
+        }
+        if (!producto) {
+            const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
             producto = mockProducts.find(p =>
                 p.product_id === productId ||
                 p.id === productId ||
@@ -68,16 +49,12 @@ async function loadProductDetail() {
         if (!producto) {
             mostrarError(container, 'Producto no encontrado');
             return;
-        }
-
-        // Normalizar objeto producto (backend snake_case -> frontend camelCase)
+        }
         productoActual = normalizeProduct(producto);
         document.title = `${productoActual.nombre} | Mi Tienda`;
 
         renderProducto(container, productoActual);
-        renderProductosRecomendados(productoActual);
-
-        // Check wishlist status
+        renderProductosRecomendados(productoActual);
         if (typeof wishlist !== 'undefined' && wishlist.isInWishlist(productoActual.id)) {
             const btn = document.querySelector('.btn-wishlist-large');
             if (btn) btn.classList.add('active');
@@ -89,9 +66,6 @@ async function loadProductDetail() {
     }
 }
 
-/**
- * Normalizar datos del producto
- */
 function normalizeProduct(p) {
     return {
         id: p.product_id || p.id,
@@ -112,9 +86,6 @@ function normalizeProduct(p) {
     };
 }
 
-/**
- * Renderizar producto
- */
 function renderProducto(container, producto) {
     const stockStatus = getStockStatus(producto.stock);
     const precioFinal = getPrecioConDescuento(producto);
@@ -258,15 +229,11 @@ function renderProducto(container, producto) {
     `;
 }
 
-/**
- * Renderizar productos recomendados con carousel
- */
 function renderProductosRecomendados(producto) {
     const container = document.getElementById('recomendadosContainer');
     if (!container) return;
 
-    const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
-    // Get more products for carousel (up to 8)
+    const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
     const recomendados = mockProducts
         .filter(p => (p.category || p.categoria) === producto.categoria && (p.product_id || p.id) !== producto.id && (p.stock || p.quantity) > 0)
         .slice(0, 8)
@@ -297,15 +264,10 @@ function renderProductosRecomendados(producto) {
                 </svg>
             </button>
         </div>
-    `;
-
-    // Initialize carousel
+    `;
     initRecomendadosCarousel();
 }
 
-/**
- * Inicializar carousel de productos recomendados
- */
 function initRecomendadosCarousel() {
     const track = document.querySelector('.recomendados-track');
     const prevBtn = document.querySelector('.carousel-prev');
@@ -317,15 +279,11 @@ function initRecomendadosCarousel() {
     if (cards.length === 0) return;
 
     const cardWidth = cards[0].offsetWidth + 20; // card width + gap
-    let autoScrollInterval;
-
-    // Scroll function
+    let autoScrollInterval;
     function scrollCarousel(direction) {
         const scrollAmount = cardWidth * direction;
         track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-
-    // Event listeners
+    }
     prevBtn.addEventListener('click', () => {
         scrollCarousel(-1);
         resetAutoScroll();
@@ -334,12 +292,9 @@ function initRecomendadosCarousel() {
     nextBtn.addEventListener('click', () => {
         scrollCarousel(1);
         resetAutoScroll();
-    });
-
-    // Auto-scroll every 4 seconds
+    });
     function startAutoScroll() {
-        autoScrollInterval = setInterval(() => {
-            // If at end, go back to start
+        autoScrollInterval = setInterval(() => {
             if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
                 track.scrollTo({ left: 0, behavior: 'smooth' });
             } else {
@@ -351,16 +306,10 @@ function initRecomendadosCarousel() {
     function resetAutoScroll() {
         clearInterval(autoScrollInterval);
         startAutoScroll();
-    }
-
-    // Start auto-scroll
-    startAutoScroll();
-
-    // Pause on hover
+    }
+    startAutoScroll();
     track.addEventListener('mouseenter', () => clearInterval(autoScrollInterval));
-    track.addEventListener('mouseleave', startAutoScroll);
-
-    // Update arrow visibility based on scroll position
+    track.addEventListener('mouseleave', startAutoScroll);
     function updateArrows() {
         prevBtn.style.opacity = track.scrollLeft <= 0 ? '0.3' : '1';
         nextBtn.style.opacity = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10 ? '0.3' : '1';
@@ -370,9 +319,6 @@ function initRecomendadosCarousel() {
     updateArrows();
 }
 
-/**
- * Crear card de producto recomendado - Diseño compacto
- */
 function crearCardRecomendado(producto) {
     const precioFinal = getPrecioConDescuento(producto);
     const isInWishlist = typeof wishlist !== 'undefined' && wishlist.exists && wishlist.exists(producto.id);
@@ -409,9 +355,6 @@ function crearCardRecomendado(producto) {
     `;
 }
 
-/**
- * Toggle wishlist para producto recomendado
- */
 function toggleRecomendadoWishlist(productId) {
     if (typeof wishlist === 'undefined') return;
 
@@ -428,9 +371,7 @@ function toggleRecomendadoWishlist(productId) {
             price: getPrecioConDescuento(producto),
             image_url: producto.imagen
         });
-    }
-
-    // Update button visual
+    }
     const btn = document.querySelector(`.recomendado-card button[onclick*="${productId}"]`);
     if (btn) {
         btn.classList.toggle('active');
@@ -441,9 +382,6 @@ function toggleRecomendadoWishlist(productId) {
     }
 }
 
-/**
- * Agregar producto recomendado al carrito
- */
 function agregarRecomendadoAlCarro(productId) {
     const producto = getProductoById(productId);
     if (!producto) return;
@@ -462,27 +400,19 @@ function agregarRecomendadoAlCarro(productId) {
     }
 }
 
-/**
- * Obtener producto por ID
- */
 function getProductoById(productId) {
     const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
     const found = mockProducts.find(p => (p.product_id || p.id) === productId || (p.product_id || p.id) === String(productId));
     return found ? normalizeProduct(found) : null;
 }
 
-/**
- * Cambiar cantidad
- */
 function changeCantidad(delta) {
     if (!productoActual) return;
 
     const newCantidad = cantidadSeleccionada + delta;
     if (newCantidad >= 1 && newCantidad <= productoActual.stock) {
         cantidadSeleccionada = newCantidad;
-        document.getElementById('cantidadDisplay').textContent = cantidadSeleccionada;
-
-        // Actualizar botones
+        document.getElementById('cantidadDisplay').textContent = cantidadSeleccionada;
         const btns = document.querySelectorAll('.cantidad-btn');
         if (btns.length === 2) {
             btns[0].disabled = cantidadSeleccionada <= 1;
@@ -491,16 +421,12 @@ function changeCantidad(delta) {
     }
 }
 
-/**
- * Agregar al carrito desde detalle
- */
 function addToCartDetail() {
     if (!productoActual) return;
 
     if (typeof cart !== 'undefined' && cart.add) {
         cart.add(productoActual, cantidadSeleccionada);
-    } else {
-        // Fallback con localStorage
+    } else {
         let cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
         const existingIndex = cartItems.findIndex(item => item.id === productoActual.id);
 
@@ -520,9 +446,6 @@ function addToCartDetail() {
     showNotification(`${productoActual.nombre} agregado al carrito`);
 }
 
-/**
- * Toggle wishlist
- */
 function toggleWishlist() {
     if (!productoActual) return;
 
@@ -533,8 +456,7 @@ function toggleWishlist() {
         const isActive = wishlist.isInWishlist(productoActual.id);
         if (btn) btn.classList.toggle('active', isActive);
         showNotification(isActive ? 'Agregado a favoritos' : 'Eliminado de favoritos');
-    } else {
-        // Fallback simple
+    } else {
         if (btn) {
             btn.classList.toggle('active');
             showNotification(btn.classList.contains('active') ? 'Agregado a favoritos' : 'Eliminado de favoritos');
@@ -542,9 +464,6 @@ function toggleWishlist() {
     }
 }
 
-/**
- * Compartir producto
- */
 function shareProducto() {
     if (navigator.share && productoActual) {
         navigator.share({
@@ -552,33 +471,22 @@ function shareProducto() {
             text: `Mira este producto: ${productoActual.nombre}`,
             url: window.location.href,
         });
-    } else {
-        // Fallback: copiar URL
+    } else {
         navigator.clipboard.writeText(window.location.href);
         showNotification('Enlace copiado al portapapeles');
     }
 }
 
-/**
- * Renderizar thumbnails de galería
- */
-function renderGalleryThumbnails(producto) {
-    // Obtener todas las imágenes (la principal + las adicionales del array imagenes)
+function renderGalleryThumbnails(producto) {
     let allImages = [producto.imagen];
 
     if (producto.imagenes && Array.isArray(producto.imagenes) && producto.imagenes.length > 0) {
         allImages = [...allImages, ...producto.imagenes];
-    }
-
-    // Filtrar nulos y vacíos
-    allImages = allImages.filter(img => img);
-
-    // Si solo hay una imagen, no mostrar thumbnails
+    }
+    allImages = allImages.filter(img => img);
     if (allImages.length <= 1) {
         return '';
-    }
-
-    // Remover duplicados
+    }
     allImages = [...new Set(allImages)];
 
     return `
@@ -594,22 +502,15 @@ function renderGalleryThumbnails(producto) {
     `;
 }
 
-/**
- * Cambiar imagen principal de la galería
- */
 function changeMainImage(imageUrl, thumbElement) {
     const mainImage = document.getElementById('mainImage');
-    if (!mainImage) return;
-
-    // Fade out
+    if (!mainImage) return;
     mainImage.style.opacity = '0';
 
     setTimeout(() => {
         mainImage.src = imageUrl;
         mainImage.style.opacity = '1';
-    }, 200);
-
-    // Update active thumbnail
+    }, 200);
     document.querySelectorAll('.gallery-thumb').forEach(thumb => {
         thumb.classList.remove('active');
     });
@@ -618,18 +519,12 @@ function changeMainImage(imageUrl, thumbElement) {
     }
 }
 
-/**
- * Obtener estado de stock
- */
 function getStockStatus(stock) {
     if (stock === 0) return { text: 'Sin stock', class: 'out-of-stock', available: false };
     if (stock <= 5) return { text: 'Últimas unidades', class: 'low-stock', available: true };
     return { text: 'Disponible', class: 'in-stock', available: true };
 }
 
-/**
- * Obtener precio con descuento
- */
 function getPrecioConDescuento(producto) {
     if (producto.descuento && producto.descuento > 0) {
         return producto.precio * (1 - producto.descuento / 100);
@@ -637,9 +532,6 @@ function getPrecioConDescuento(producto) {
     return producto.precio;
 }
 
-/**
- * Renderizar estrellas
- */
 function renderStars(rating) {
     let stars = '';
     for (let i = 1; i <= 5; i++) {
@@ -648,9 +540,6 @@ function renderStars(rating) {
     return stars;
 }
 
-/**
- * Formatear precio
- */
 function formatPrice(precio) {
     return '$' + new Intl.NumberFormat('es-CL', {
         minimumFractionDigits: 0,
@@ -658,9 +547,6 @@ function formatPrice(precio) {
     }).format(precio);
 }
 
-/**
- * Escapar HTML
- */
 function escapeHtml(text) {
     if (!text) return '';
     const div = document.createElement('div');
@@ -668,9 +554,6 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-/**
- * Mostrar error
- */
 function mostrarError(container, mensaje) {
     container.innerHTML = `
         <div class="producto-error">
@@ -687,9 +570,6 @@ function mostrarError(container, mensaje) {
     `;
 }
 
-/**
- * Actualizar badge carrito
- */
 function updateCartBadge() {
     const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
     const totalItems = cartItems.reduce((sum, item) => sum + (item.cantidad || 1), 0);
@@ -701,9 +581,6 @@ function updateCartBadge() {
     }
 }
 
-/**
- * Mostrar notificación
- */
 function showNotification(mensaje) {
     const notif = document.createElement('div');
     notif.textContent = mensaje;
@@ -712,9 +589,6 @@ function showNotification(mensaje) {
     setTimeout(() => notif.remove(), 3000);
 }
 
-/**
- * Productos mock para desarrollo (Actualizado)
- */
 function getProductosMock() {
     return [
         {

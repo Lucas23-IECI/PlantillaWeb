@@ -1,10 +1,6 @@
 const admin = require('firebase-admin');
 const fs = require('fs');
 
-/**
- * Obtiene las credenciales de Firebase desde variables de entorno
- * Soporta: JSON directo, Base64, o path a archivo
- */
 function getServiceAccount() {
     const path = process.env.FIREBASE_SERVICE_ACCOUNT_PATH;
     const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
@@ -39,9 +35,6 @@ function getServiceAccount() {
     return null;
 }
 
-/**
- * Inicializa Firebase Admin SDK
- */
 function initFirebaseAdmin() {
     if (admin.apps.length) return admin;
 
@@ -66,9 +59,6 @@ function initFirebaseAdmin() {
     return admin;
 }
 
-/**
- * Obtiene instancia de Firestore
- */
 function getDb() {
     const firebase = initFirebaseAdmin();
     return firebase.firestore();

@@ -1,17 +1,10 @@
-const cloudinary = require('cloudinary').v2;
-
-// Configurar Cloudinary
+const cloudinary = require('cloudinary').v2;
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-/**
- * Sube una imagen a Cloudinary
- * @param {Buffer|string} file - Buffer de la imagen o path
- * @param {Object} options - Opciones adicionales
- */
 async function uploadImage(file, options = {}) {
     const defaultOptions = {
         folder: 'productos',
@@ -39,10 +32,6 @@ async function uploadImage(file, options = {}) {
     });
 }
 
-/**
- * Elimina una imagen de Cloudinary
- * @param {string} publicId - ID público de la imagen
- */
 async function deleteImage(publicId) {
     return cloudinary.uploader.destroy(publicId);
 }

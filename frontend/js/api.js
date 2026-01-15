@@ -1,32 +1,20 @@
-/**
- * CLIENTE API
- * Maneja todas las comunicaciones con el backend
- */
-
 class APIClient {
     constructor(baseURL) {
         this._customBaseURL = baseURL;
         this.cache = new Map();
-        this.cacheTimeout = 5 * 60 * 1000; // 5 minutos
+        this.cacheTimeout = 5 * 60 * 1000;
     }
 
     get baseURL() {
         if (this._customBaseURL) return this._customBaseURL;
-        // Intentar leer config global, fallback a /api
         return (typeof window !== 'undefined' && window.CONFIG?.API_URL) || '/api';
     }
 
-    /**
-     * Obtener headers de autenticación
-     */
     getAuthHeaders() {
         const token = localStorage.getItem('auth_token');
         return token ? { 'Authorization': `Bearer ${token}` } : {};
     }
 
-    /**
-     * Request base
-     */
     async request(endpoint, options = {}) {
         const url = `${this.baseURL}${endpoint}`;
         const headers = {
@@ -49,7 +37,6 @@ class APIClient {
 
             return data;
         } catch (error) {
-            // Use debug level for connection failures since mock fallback handles this
             console.debug(`API [${endpoint}]:`, error.message);
             throw error;
         }
@@ -84,13 +71,9 @@ class APIClient {
         return this.request(endpoint, { method: 'DELETE' });
     }
 
-    /**
-     * Request con FormData (para uploads)
-     */
     async requestForm(endpoint, formData) {
         const url = `${this.baseURL}${endpoint}`;
         const headers = this.getAuthHeaders();
-        // No incluir Content-Type, fetch lo maneja automáticamente para FormData
 
         const response = await fetch(url, {
             method: 'POST',
@@ -107,10 +90,6 @@ class APIClient {
         return data;
     }
 
-    // =============================================
-    // AUTENTICACIÓN
-    // =============================================
-
     async register(email, name, password, phone = '', address = '', city = '') {
         return this.post('/auth/register', { email, name, password, phone, address, city });
     }
@@ -126,10 +105,6 @@ class APIClient {
     async changePassword(currentPassword, newPassword) {
         return this.post('/auth/change-password', { currentPassword, newPassword });
     }
-
-    // =============================================
-    // PRODUCTOS
-    // =============================================
 
     async getProducts(forceRefresh = false) {
         const cacheKey = 'products';
@@ -154,10 +129,6 @@ class APIClient {
         return this.get('/products/home-featured');
     }
 
-    // =============================================
-    // TRANSACCIONES
-    // =============================================
-
     async createTransaction(transactionData) {
         return this.post('/transactions', transactionData);
     }
@@ -174,10 +145,6 @@ class APIClient {
         return this.patch(`/transactions/${orderId}/status`, { status });
     }
 
-    // =============================================
-    // PAGOS (WEBPAY)
-    // =============================================
-
     async webpayCreate(orderId) {
         return this.post('/webpay/create', { order_id: orderId });
     }
@@ -186,25 +153,13 @@ class APIClient {
         return this.post('/webpay/commit', { token_ws: token, order_id: orderId });
     }
 
-    // =============================================
-    // AVISOS
-    // =============================================
-
     async getActiveNotices() {
         return this.get('/notices/active');
     }
 
-    // =============================================
-    // CÓDIGOS DE DESCUENTO
-    // =============================================
-
     async validateDiscountCode(code) {
         return this.get(`/discount-codes/validate?code=${encodeURIComponent(code)}`);
     }
-
-    // =============================================
-    // ADMIN: PEDIDOS
-    // =============================================
 
     async getAdminOrders() {
         return this.get('/admin/orders');
@@ -217,10 +172,6 @@ class APIClient {
     async adminDeleteOrder(orderId) {
         return this.delete(`/admin/orders/${orderId}`);
     }
-
-    // =============================================
-    // ADMIN: PRODUCTOS
-    // =============================================
 
     async getAdminProducts() {
         return this.get('/admin/products');
@@ -260,10 +211,6 @@ class APIClient {
         return this.put('/admin/catalog-product-order', { catalog_product_ids: ids });
     }
 
-    // =============================================
-    // ADMIN: AVISOS
-    // =============================================
-
     async adminListNotices() {
         return this.get('/admin/notices');
     }
@@ -279,10 +226,6 @@ class APIClient {
     async adminDeleteNotice(noticeId) {
         return this.delete(`/admin/notices/${noticeId}`);
     }
-
-    // =============================================
-    // ADMIN: CÓDIGOS DE DESCUENTO
-    // =============================================
 
     async adminListDiscountCodes() {
         return this.get('/admin/discount-codes');
@@ -301,5 +244,4 @@ class APIClient {
     }
 }
 
-// Instancia global
 const api = new APIClient();

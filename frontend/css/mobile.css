@@ -1,10 +1,3 @@
-/* ===================================
-   ESTILOS RESPONSIVE MOBILE
-   Media queries para diferentes
-   tamaños de pantalla
-=================================== */
-
-/* ===== TABLET LANDSCAPE (max: 968px) ===== */
 @media (max-width: 968px) {
 
     .container,
@@ -22,7 +15,6 @@
     }
 }
 
-/* ===== TABLET PORTRAIT (max: 768px) ===== */
 @media (max-width: 768px) {
     :root {
         --header-height: 100px;
@@ -92,7 +84,6 @@
     }
 }
 
-/* ===== MOBILE LARGE (max: 520px) ===== */
 @media (max-width: 520px) {
 
     .container,
@@ -157,7 +148,6 @@
     }
 }
 
-/* ===== MOBILE SMALL (max: 375px) ===== */
 @media (max-width: 375px) {
     :root {
         --header-height: 90px;
@@ -186,7 +176,6 @@
     }
 }
 
-/* ===== PREFERS REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
 
     *,
@@ -202,7 +191,6 @@
     }
 }
 
-/* ===== PRINT STYLES ===== */
 @media print {
 
     .header,

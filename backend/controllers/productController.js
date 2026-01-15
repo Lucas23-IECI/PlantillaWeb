@@ -4,9 +4,6 @@ const { uploadImage, deleteImage } = require('../config/cloudinary');
 const PRODUCTS_COLLECTION = 'products';
 const SETTINGS_COLLECTION = 'settings';
 
-/**
- * Obtener todos los productos (público)
- */
 async function getProducts(req, res) {
     try {
         const db = getDb();
@@ -27,9 +24,6 @@ async function getProducts(req, res) {
     }
 }
 
-/**
- * Obtener producto por ID (público)
- */
 async function getProductById(req, res) {
     try {
         const { id } = req.params;
@@ -50,21 +44,15 @@ async function getProductById(req, res) {
     }
 }
 
-/**
- * Obtener productos destacados para el home (público)
- */
 async function getHomeFeaturedProducts(req, res) {
     try {
-        const db = getDb();
-
-        // Obtener IDs de productos destacados
+        const db = getDb();
         const settingsDoc = await db.collection(SETTINGS_COLLECTION).doc('home').get();
         const featuredIds = settingsDoc.exists
             ? (settingsDoc.data().featured_product_ids || [])
             : [];
 
-        if (!featuredIds.length) {
-            // Si no hay destacados, retornar los últimos 5 productos
+        if (!featuredIds.length) {
             const snapshot = await db.collection(PRODUCTS_COLLECTION)
                 .where('active', '==', true)
                 .orderBy('createdAt', 'desc')
@@ -77,9 +65,7 @@ async function getHomeFeaturedProducts(req, res) {
             }));
 
             return res.json(products);
-        }
-
-        // Obtener productos por IDs
+        }
         const products = [];
         for (const id of featuredIds.slice(0, 5)) {
             const doc = await db.collection(PRODUCTS_COLLECTION).doc(id).get();
@@ -98,9 +84,6 @@ async function getHomeFeaturedProducts(req, res) {
     }
 }
 
-/**
- * Crear producto (admin)
- */
 async function createProduct(req, res) {
     try {
         const { name, description, price, image_url, category = '', stock = 0 } = req.body;
@@ -135,9 +118,6 @@ async function createProduct(req, res) {
     }
 }
 
-/**
- * Actualizar producto (admin)
- */
 async function updateProduct(req, res) {
     try {
         const { productId } = req.params;
@@ -149,9 +129,7 @@ async function updateProduct(req, res) {
 
         if (!doc.exists) {
             return res.status(404).json({ error: 'Producto no encontrado' });
-        }
-
-        // Filtrar campos permitidos
+        }
         const allowedFields = ['name', 'description', 'price', 'image_url', 'category', 'stock', 'active'];
         const filteredUpdates = {};
         for (const key of allowedFields) {
@@ -171,9 +149,6 @@ async function updateProduct(req, res) {
     }
 }
 
-/**
- * Eliminar producto (admin)
- */
 async function deleteProduct(req, res) {
     try {
         const { productId } = req.params;
@@ -195,9 +170,6 @@ async function deleteProduct(req, res) {
     }
 }
 
-/**
- * Subir imagen (admin)
- */
 async function uploadProductImage(req, res) {
     try {
         if (!req.file) {
@@ -216,9 +188,6 @@ async function uploadProductImage(req, res) {
     }
 }
 
-/**
- * Obtener IDs de productos destacados (admin)
- */
 async function getHomeFeaturedProductIds(req, res) {
     try {
         const db = getDb();
@@ -235,9 +204,6 @@ async function getHomeFeaturedProductIds(req, res) {
     }
 }
 
-/**
- * Establecer productos destacados (admin)
- */
 async function setHomeFeaturedProducts(req, res) {
     try {
         const { featured_product_ids } = req.body;
@@ -258,9 +224,6 @@ async function setHomeFeaturedProducts(req, res) {
     }
 }
 
-/**
- * Obtener orden del catálogo (admin)
- */
 async function getCatalogProductOrder(req, res) {
     try {
         const db = getDb();
@@ -277,9 +240,6 @@ async function getCatalogProductOrder(req, res) {
     }
 }
 
-/**
- * Establecer orden del catálogo (admin)
- */
 async function setCatalogProductOrder(req, res) {
     try {
         const { catalog_product_ids } = req.body;

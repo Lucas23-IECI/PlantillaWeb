@@ -1,13 +1,6 @@
-/**
- * PRODUCTOS PAGE - JavaScript
- * Funcionalidad para filtros, búsqueda, sorting y vistas
- */
-
 document.addEventListener('DOMContentLoaded', function () {
     initProductsPage();
-});
-
-// Estado de la página
+});
 let estadoProductos = {
     productos: [],
     filtros: {
@@ -20,20 +13,19 @@ let estadoProductos = {
     orden: '',
     vista: 'grid', // 'grid' o 'list'
     paginaActual: 1,
-    productosPorPagina: 12
-};
+    productosPorPagina: 12,
+    cargado: false
+};
+const productosCache = new Map();
+let prefetchQueue = [];
+let isLoadingProducts = false;
 
-function initProductsPage() {
-    // Solo ejecutar en la página de productos (verificar que productosGrid existe)
+function initProductsPage() {
     const productosGrid = document.getElementById('productosGrid');
-    if (!productosGrid) {
-        // No estamos en la página de productos, no hacer nada
+    if (!productosGrid) {
         return;
-    }
-
-    // Elementos del DOM
-    const elements = {
-        // Filtros
+    }
+    const elements = {
         toggleFilters: document.getElementById('toggleFilters'),
         clearFilters: document.getElementById('clearFilters'),
         clearAllFilters: document.getElementById('clearAllFilters'),
@@ -49,27 +41,15 @@ function initProductsPage() {
         priceMaxDisplay: document.getElementById('priceMaxDisplay'),
         stockOptions: document.querySelectorAll('input[name="stock"]'),
         brandList: document.getElementById('brandList'),
-        brandSearch: document.getElementById('brandSearch'),
-
-        // Búsqueda
+        brandSearch: document.getElementById('brandSearch'),
         searchProducts: document.getElementById('searchProducts'),
-        searchClearBtn: document.getElementById('searchClearBtn'),
-
-        // Vistas
-        viewBtns: document.querySelectorAll('.view-btn'),
-
-        // Ordenar
-        sortBy: document.getElementById('sortBy'),
-
-        // Grid y contador
+        searchClearBtn: document.getElementById('searchClearBtn'),
+        viewBtns: document.querySelectorAll('.view-btn'),
+        sortBy: document.getElementById('sortBy'),
         productosGrid: document.getElementById('productosGrid'),
         productosCount: document.getElementById('productosCount'),
         filterCount: document.getElementById('filterCount')
-    };
-
-    // Event Listeners
-
-    // Toggle sidebar filters (mobile)
+    };
     const filtersOverlay = document.getElementById('filtersOverlay');
 
     elements.toggleFilters?.addEventListener('click', () => {
@@ -80,53 +60,37 @@ function initProductsPage() {
     elements.filtersCloseBtn?.addEventListener('click', () => {
         elements.filtersSidebar?.classList.remove('show');
         filtersOverlay?.classList.remove('show');
-    });
-
-    // Close filters when clicking overlay
+    });
     filtersOverlay?.addEventListener('click', () => {
         elements.filtersSidebar?.classList.remove('show');
         filtersOverlay?.classList.remove('show');
-    });
-
-    // Clear filters
+    });
     elements.clearFilters?.addEventListener('click', () => {
         limpiarFiltros(elements);
-    });
-
-    // Category tree click events
+    });
     elements.categoryTree?.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const category = link.dataset.category;
-            estadoProductos.filtros.categoria = category;
-
-            // Update active state
+            estadoProductos.filtros.categoria = category;
             elements.categoryTree.querySelectorAll('a').forEach(l => l.classList.remove('active'));
             link.classList.add('active');
 
             aplicarFiltros(elements);
         });
-    });
-
-    // Stock radio buttons
+    });
     elements.stockOptions?.forEach(radio => {
         radio.addEventListener('change', (e) => {
             estadoProductos.filtros.stock = e.target.value;
             aplicarFiltros(elements);
         });
-    });
-
-    // Clear all filters button
+    });
     elements.clearAllFilters?.addEventListener('click', () => {
         limpiarFiltros(elements);
-    });
-
-    // Apply filters button
+    });
     elements.applyFilters?.addEventListener('click', () => {
         aplicarFiltros(elements);
-    });
-
-    // Price inputs
+    });
     elements.priceMin?.addEventListener('change', (e) => {
         estadoProductos.filtros.precioMin = e.target.value;
         if (elements.priceMinDisplay) {
@@ -139,9 +103,7 @@ function initProductsPage() {
         if (elements.priceMaxDisplay) {
             elements.priceMaxDisplay.textContent = formatPrice(parseInt(e.target.value) || 5000000);
         }
-    });
-
-    // Búsqueda
+    });
     let searchTimeout;
     elements.searchProducts?.addEventListener('input', (e) => {
         const value = e.target.value;
@@ -159,92 +121,78 @@ function initProductsPage() {
         elements.searchClearBtn.style.display = 'none';
         estadoProductos.filtros.busqueda = '';
         aplicarFiltros(elements);
-    });
-
-    // Toggle vistas
+    });
     elements.viewBtns?.forEach(btn => {
         btn.addEventListener('click', () => {
             const vista = btn.dataset.view;
             cambiarVista(vista, elements);
         });
-    });
-
-    // Ordenar
+    });
     elements.sortBy?.addEventListener('change', (e) => {
         estadoProductos.orden = e.target.value;
         ordenarYRenderizar(elements);
-    });
-
-    // Cargar productos iniciales
-    cargarProductos(elements);
-
-    // Leer parámetros de URL
+    });
+    cargarProductos(elements);
     leerParametrosURL(elements);
 }
 
-/**
- * Cargar productos desde API
- */
-async function cargarProductos(elements) {
-    try {
-        elements.productosGrid.innerHTML = `
-            <div class="loading-spinner">
-                <div class="spinner"></div>
-                <p>Cargando productos...</p>
-            </div>
-        `;
-
-        let productos = [];
-
-        // Intentar cargar desde API primero
+async function cargarProductos(elements) {
+    if (isLoadingProducts) return;
+    isLoadingProducts = true;
+    const skeletonCount = 12;
+    elements.productosGrid.innerHTML = generarSkeletons(skeletonCount);
+    requestAnimationFrame(async () => {
+        let productos = [];
         try {
             if (typeof api !== 'undefined' && api.getProducts) {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 1000); // 1s timeout
                 const response = await api.getProducts();
+                clearTimeout(timeoutId);
                 productos = response.products || response || [];
             }
-        } catch (apiError) {
-            console.warn('API no disponible, usando productos mock:', apiError.message);
-        }
-
-        // Si no hay productos, usar mock
+        } catch (apiError) {
+        }
         if (!productos || productos.length === 0) {
-            console.log('Usando productos mock');
             productos = generarProductosMock();
         }
 
         estadoProductos.productos = productos;
-
-        // Cargar categorías en el select
-        cargarCategorias(elements);
-
-        // Renderizar productos
-        renderizarProductos(elements);
-
-    } catch (error) {
-        console.error('Error cargando productos:', error);
-        // Fallback final - usar mock
-        estadoProductos.productos = generarProductosMock();
-        cargarCategorias(elements);
-        renderizarProductos(elements);
-    }
+        estadoProductos.cargado = true;
+        cargarCategorias(elements);
+        requestAnimationFrame(() => {
+            renderizarProductos(elements);
+            isLoadingProducts = false;
+        });
+    });
 }
 
-/**
- * Filtrar productos según estado
- */
+function generarSkeletons(count) {
+    let skeletons = '';
+    for (let i = 0; i < count; i++) {
+        skeletons += `
+            <article class="producto-card skeleton-card">
+                <div class="skeleton-imagen"></div>
+                <div class="skeleton-info">
+                    <div class="skeleton-text skeleton-categoria"></div>
+                    <div class="skeleton-text skeleton-nombre"></div>
+                    <div class="skeleton-text skeleton-precio"></div>
+                </div>
+            </article>
+        `;
+    }
+    return skeletons;
+}
+
 function filtrarProductos() {
     let productosFiltrados = [...estadoProductos.productos];
 
-    const { categoria, precioMin, precioMax, stock, busqueda } = estadoProductos.filtros;
-
-    // Filtro por categoría
+    const { categoria, precioMin, precioMax, stock, busqueda } = estadoProductos.filtros;
     if (categoria) {
         productosFiltrados = productosFiltrados.filter(p =>
             (p.categoria || p.category || '').toLowerCase() === categoria.toLowerCase()
         );
-    }
-
-    // Filtro por precio
+    }
     if (precioMin) {
         productosFiltrados = productosFiltrados.filter(p =>
             (p.precio || p.price) >= parseFloat(precioMin)
@@ -255,9 +203,7 @@ function filtrarProductos() {
         productosFiltrados = productosFiltrados.filter(p =>
             (p.precio || p.price) <= parseFloat(precioMax)
         );
-    }
-
-    // Filtro por stock
+    }
     if (stock === 'in-stock') {
         productosFiltrados = productosFiltrados.filter(p =>
             (p.stock || p.quantity || 0) > 0
@@ -266,9 +212,7 @@ function filtrarProductos() {
         productosFiltrados = productosFiltrados.filter(p =>
             (p.stock || p.quantity || 0) === 0
         );
-    }
-
-    // Filtro por búsqueda
+    }
     if (busqueda) {
         const termino = busqueda.toLowerCase();
         productosFiltrados = productosFiltrados.filter(p => {
@@ -282,9 +226,6 @@ function filtrarProductos() {
     return productosFiltrados;
 }
 
-/**
- * Ordenar productos
- */
 function ordenarProductos(productos) {
     const productosOrdenados = [...productos];
 
@@ -306,17 +247,10 @@ function ordenarProductos(productos) {
     return productosOrdenados;
 }
 
-/**
- * Renderizar productos en el grid
- */
 function renderizarProductos(elements) {
     const productosFiltrados = filtrarProductos();
-    const productosOrdenados = ordenarProductos(productosFiltrados);
-
-    // Actualizar contador
-    elements.productosCount.textContent = `${productosOrdenados.length} producto${productosOrdenados.length !== 1 ? 's' : ''} encontrado${productosOrdenados.length !== 1 ? 's' : ''}`;
-
-    // Actualizar contador de filtros activos
+    const productosOrdenados = ordenarProductos(productosFiltrados);
+    elements.productosCount.textContent = `${productosOrdenados.length} producto${productosOrdenados.length !== 1 ? 's' : ''} encontrado${productosOrdenados.length !== 1 ? 's' : ''}`;
     const filtrosActivos = contarFiltrosActivos();
     if (filtrosActivos > 0) {
         elements.filterCount.textContent = filtrosActivos;
@@ -325,9 +259,7 @@ function renderizarProductos(elements) {
     } else {
         elements.filterCount.style.display = 'none';
         elements.clearFilters.style.display = 'none';
-    }
-
-    // Renderizar
+    }
     if (productosOrdenados.length === 0) {
         elements.productosGrid.innerHTML = `
             <div class="empty-state">
@@ -341,9 +273,7 @@ function renderizarProductos(elements) {
         return;
     }
 
-    elements.productosGrid.innerHTML = productosOrdenados.map(producto => crearCardProducto(producto)).join('');
-
-    // Agregar event listeners a las cards
+    elements.productosGrid.innerHTML = productosOrdenados.map(producto => crearCardProducto(producto)).join('');
     elements.productosGrid.querySelectorAll('.producto-card').forEach((card, index) => {
         card.addEventListener('click', () => {
             const producto = productosOrdenados[index];
@@ -353,9 +283,6 @@ function renderizarProductos(elements) {
     });
 }
 
-/**
- * Crear HTML de card de producto (Premium con Galería)
- */
 function crearCardProducto(producto) {
     const productId = producto.id || producto.product_id;
     const nombre = producto.nombre || producto.name || 'Producto sin nombre';
@@ -369,20 +296,12 @@ function crearCardProducto(producto) {
     const marca = producto.marca || producto.brand || '';
     const descripcion = producto.descripcion || producto.description || '';
     const rating = producto.rating || 0;
-    const reviews = producto.reviews || 0;
-
-    // Truncar descripción
+    const reviews = producto.reviews || 0;
     const descripcionCorta = descripcion.length > 60
         ? descripcion.substring(0, 60) + '...'
-        : descripcion;
-
-    // Stock status
-    const stockStatus = getStockStatus(stock);
-
-    // Render stars
-    const starsHtml = renderStars(rating);
-
-    // Generar galería solo si hay más de 1 imagen
+        : descripcion;
+    const stockStatus = getStockStatus(stock);
+    const starsHtml = renderStars(rating);
     const hasGallery = imagenes.length > 1;
     const galleryDotsHtml = hasGallery ? `
         <div class="gallery-dots">
@@ -442,9 +361,6 @@ function crearCardProducto(producto) {
     `;
 }
 
-/**
- * Cambiar imagen en galería de card
- */
 function cambiarImagenGaleria(btn, direction) {
     const card = btn.closest('.producto-card');
     const images = JSON.parse(card.dataset.images);
@@ -454,23 +370,17 @@ function cambiarImagenGaleria(btn, direction) {
     if (currentIndex < 0) currentIndex = images.length - 1;
     if (currentIndex >= images.length) currentIndex = 0;
 
-    card.dataset.currentImage = currentIndex;
-
-    // Update image
+    card.dataset.currentImage = currentIndex;
     const img = card.querySelector('.producto-imagen img');
     img.style.opacity = '0';
     setTimeout(() => {
         img.src = images[currentIndex];
         img.style.opacity = '1';
-    }, 150);
-
-    // Update dots
+    }, 150);
     card.querySelectorAll('.gallery-dot').forEach((dot, i) => {
         dot.classList.toggle('active', i === currentIndex);
     });
-}
-
-// Event delegation for gallery dots
+}
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('gallery-dot')) {
         e.stopPropagation();
@@ -493,18 +403,12 @@ document.addEventListener('click', (e) => {
     }
 });
 
-/**
- * Get stock status
- */
 function getStockStatus(stock) {
     if (stock === 0) return { text: 'Agotado', class: 'out-of-stock' };
     if (stock <= 5) return { text: `Últimas ${stock}`, class: 'low-stock' };
     return { text: 'Disponible', class: 'in-stock' };
 }
 
-/**
- * Render rating stars
- */
 function renderStars(rating) {
     let stars = '';
     for (let i = 1; i <= 5; i++) {
@@ -513,11 +417,7 @@ function renderStars(rating) {
     return stars;
 }
 
-/**
- * Toggle wishlist from card
- */
-function toggleWishlistCard(btn, productId) {
-    // Find the product data
+function toggleWishlistCard(btn, productId) {
     const producto = estadoProductos.productos.find(p =>
         (p.id || p.product_id) === productId ||
         (p.id || p.product_id) === String(productId)
@@ -526,9 +426,7 @@ function toggleWishlistCard(btn, productId) {
     if (!producto) {
         console.warn('Producto no encontrado:', productId);
         return;
-    }
-
-    // Use the global wishlist object if available
+    }
     if (typeof wishlist !== 'undefined' && wishlist.toggle) {
         const wasAdded = wishlist.toggle(producto);
         btn.classList.toggle('active', wishlist.isInWishlist(productId));
@@ -538,13 +436,11 @@ function toggleWishlistCard(btn, productId) {
         } else {
             showNotification('Eliminado de favoritos', 'info');
         }
-    } else {
-        // Fallback: toggle class and use localStorage directly
+    } else {
         btn.classList.toggle('active');
         let wishlistItems = JSON.parse(localStorage.getItem('wishlist') || '[]');
 
-        if (btn.classList.contains('active')) {
-            // Add full product object
+        if (btn.classList.contains('active')) {
             const exists = wishlistItems.some(item => item.id === productId);
             if (!exists) {
                 wishlistItems.push({
@@ -565,23 +461,14 @@ function toggleWishlistCard(btn, productId) {
     }
 }
 
-/**
- * Aplicar filtros
- */
 function aplicarFiltros(elements) {
     renderizarProductos(elements);
 }
 
-/**
- * Ordenar y renderizar
- */
 function ordenarYRenderizar(elements) {
     renderizarProductos(elements);
 }
 
-/**
- * Limpiar filtros
- */
 function limpiarFiltros(elements) {
     estadoProductos.filtros = {
         categoria: '',
@@ -601,9 +488,6 @@ function limpiarFiltros(elements) {
     renderizarProductos(elements);
 }
 
-/**
- * Cambiar vista (grid/list)
- */
 function cambiarVista(vista, elements) {
     estadoProductos.vista = vista;
 
@@ -615,9 +499,6 @@ function cambiarVista(vista, elements) {
     elements.productosGrid.classList.add(`view-${vista}`);
 }
 
-/**
- * Contar filtros activos
- */
 function contarFiltrosActivos() {
     let count = 0;
     const { categoria, precioMin, precioMax, stock, busqueda } = estadoProductos.filtros;
@@ -631,16 +512,9 @@ function contarFiltrosActivos() {
     return count;
 }
 
-/**
- * Cargar categorías dinámicamente
- */
-function cargarCategorias(elements) {
-    // Category tree is now static in HTML, but we can update counts if needed
-    const categorias = [...new Set(estadoProductos.productos.map(p => p.categoria || p.category || 'General'))];
-
-    // Update category tree links if they exist
-    if (elements.categoryTree) {
-        // Update active state based on current filter
+function cargarCategorias(elements) {
+    const categorias = [...new Set(estadoProductos.productos.map(p => p.categoria || p.category || 'General'))];
+    if (elements.categoryTree) {
         const currentCategory = estadoProductos.filtros.categoria;
         elements.categoryTree.querySelectorAll('a').forEach(link => {
             if (link.dataset.category === currentCategory) {
@@ -652,9 +526,6 @@ function cargarCategorias(elements) {
     }
 }
 
-/**
- * Leer parámetros de URL
- */
 function leerParametrosURL(elements) {
     const params = new URLSearchParams(window.location.search);
 
@@ -671,8 +542,7 @@ function leerParametrosURL(elements) {
 
     if (params.has('categoria')) {
         const categoria = params.get('categoria');
-        estadoProductos.filtros.categoria = categoria;
-        // Update category tree active state
+        estadoProductos.filtros.categoria = categoria;
         if (elements.categoryTree) {
             elements.categoryTree.querySelectorAll('a').forEach(link => {
                 if (link.dataset.category === categoria) {
@@ -685,9 +555,6 @@ function leerParametrosURL(elements) {
     }
 }
 
-/**
- * Formatear precio
- */
 function formatearPrecio(precio) {
     return new Intl.NumberFormat('es-CL', {
         minimumFractionDigits: 0,
@@ -695,18 +562,12 @@ function formatearPrecio(precio) {
     }).format(precio);
 }
 
-/**
- * Agregar al carrito (global para onclick)
- */
-function agregarAlCarrito(productoId) {
-    // Buscar el producto en el estado actual
+function agregarAlCarrito(productoId) {
     let producto = null;
 
     if (estadoProductos && estadoProductos.productos) {
         producto = estadoProductos.productos.find(p => p.id === productoId);
-    }
-
-    // Si no está en estado, buscar en mock
+    }
     if (!producto) {
         const mockProducts = generarProductosMock();
         producto = mockProducts.find(p => p.id === productoId);
@@ -720,42 +581,28 @@ function agregarAlCarrito(productoId) {
     }
 }
 
-/**
- * Toggle wishlist desde card de producto
- */
-function toggleWishlistCard(button, productoId) {
-    // Buscar producto en estado
+function toggleWishlistCard(button, productoId) {
     let producto = estadoProductos.productos.find(p =>
         (p.id === productoId || p.product_id === productoId)
-    );
-
-    // Si no está en estado, buscar en mock
+    );
     if (!producto) {
         const mockProducts = generarProductosMock();
         producto = mockProducts.find(p => p.id === productoId);
     }
 
     if (producto && typeof wishlist !== 'undefined' && wishlist.toggle) {
-        const wasAdded = wishlist.toggle(producto);
-
-        // Update button visual
+        const wasAdded = wishlist.toggle(producto);
         button.classList.toggle('active', wasAdded);
         const svg = button.querySelector('svg');
         if (svg) {
             svg.setAttribute('fill', wasAdded ? 'currentColor' : 'none');
-        }
-
-        // Show notification
+        }
         if (typeof showWishlistNotification === 'function') {
             showWishlistNotification(wasAdded ? 'Agregado a favoritos' : 'Eliminado de favoritos');
         }
     }
 }
 
-/**
- * Generar productos mock para desarrollo
- * Incluye rating, reviews e imagenes[] para galería
- */
 function generarProductosMock() {
     return [
         {
@@ -1001,11 +848,7 @@ function generarProductosMock() {
     ];
 }
 
-/**
- * Mostrar notificación
- */
-function showNotification(mensaje) {
-    // Implementación simple de notificación
+function showNotification(mensaje) {
     const notif = document.createElement('div');
     notif.textContent = mensaje;
     notif.style.cssText = 'position:fixed;top:20px;right:20px;background:#29A937;color:white;padding:16px 24px;border-radius:8px;z-index:10000;animation:slideIn 0.3s ease-out';

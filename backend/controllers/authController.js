@@ -5,9 +5,6 @@ const { sendPasswordResetEmail } = require('../config/email');
 
 const USERS_COLLECTION = 'users';
 
-/**
- * Registrar nuevo usuario
- */
 async function register(req, res) {
     try {
         const { email, name, password, phone = '', address = '', city = '' } = req.body;
@@ -21,9 +18,7 @@ async function register(req, res) {
         }
 
         const db = getDb();
-        const emailLower = email.toLowerCase().trim();
-
-        // Verificar si el usuario ya existe
+        const emailLower = email.toLowerCase().trim();
         const existingUser = await db.collection(USERS_COLLECTION)
             .where('email', '==', emailLower)
             .limit(1)
@@ -31,12 +26,8 @@ async function register(req, res) {
 
         if (!existingUser.empty) {
             return res.status(400).json({ error: 'Este email ya está registrado' });
-        }
-
-        // Hashear contraseña
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Crear usuario
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
         const userData = {
             email: emailLower,
             name: name.trim(),
@@ -48,9 +39,7 @@ async function register(req, res) {
             createdAt: new Date()
         };
 
-        const docRef = await db.collection(USERS_COLLECTION).add(userData);
-
-        // Generar token
+        const docRef = await db.collection(USERS_COLLECTION).add(userData);
         const token = jwt.sign(
             { uid: docRef.id, email: emailLower, admin: false },
             process.env.JWT_SECRET,
@@ -73,9 +62,6 @@ async function register(req, res) {
     }
 }
 
-/**
- * Iniciar sesión
- */
 async function login(req, res) {
     try {
         const { email, password } = req.body;
@@ -85,9 +71,7 @@ async function login(req, res) {
         }
 
         const db = getDb();
-        const emailLower = email.toLowerCase().trim();
-
-        // Buscar usuario
+        const emailLower = email.toLowerCase().trim();
         const snapshot = await db.collection(USERS_COLLECTION)
             .where('email', '==', emailLower)
             .limit(1)
@@ -98,15 +82,11 @@ async function login(req, res) {
         }
 
         const userDoc = snapshot.docs[0];
-        const userData = userDoc.data();
-
-        // Verificar contraseña
+        const userData = userDoc.data();
         const isValidPassword = await bcrypt.compare(password, userData.password);
         if (!isValidPassword) {
             return res.status(401).json({ error: 'Credenciales inválidas' });
-        }
-
-        // Generar token
+        }
         const token = jwt.sign(
             { uid: userDoc.id, email: emailLower, admin: !!userData.admin },
             process.env.JWT_SECRET,
@@ -129,9 +109,6 @@ async function login(req, res) {
     }
 }
 
-/**
- * Solicitar restablecimiento de contraseña
- */
 async function requestPasswordReset(req, res) {
     try {
         const { email } = req.body;
@@ -141,35 +118,25 @@ async function requestPasswordReset(req, res) {
         }
 
         const db = getDb();
-        const emailLower = email.toLowerCase().trim();
-
-        // Buscar usuario
+        const emailLower = email.toLowerCase().trim();
         const snapshot = await db.collection(USERS_COLLECTION)
             .where('email', '==', emailLower)
             .limit(1)
-            .get();
-
-        // Siempre responder OK (no revelar si el email existe)
+            .get();
         if (snapshot.empty) {
             return res.json({ message: 'Si el email existe, recibirás instrucciones para restablecer tu contraseña' });
         }
 
-        const userDoc = snapshot.docs[0];
-
-        // Generar token de reset (válido por 1 hora)
+        const userDoc = snapshot.docs[0];
         const resetToken = jwt.sign(
             { uid: userDoc.id, email: emailLower, type: 'reset' },
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
-        );
-
-        // Guardar token en el usuario
+        );
         await db.collection(USERS_COLLECTION).doc(userDoc.id).update({
             resetToken,
             resetTokenExpires: new Date(Date.now() + 3600000) // 1 hora
-        });
-
-        // Enviar email (si está configurado)
+        });
         const frontendUrl = process.env.FRONTEND_PUBLIC_URL || 'http://localhost:5173';
         const resetUrl = `${frontendUrl}/pages/reset-password.html?token=${resetToken}`;
 
@@ -186,9 +153,6 @@ async function requestPasswordReset(req, res) {
     }
 }
 
-/**
- * Cambiar contraseña (usuario autenticado)
- */
 async function changePassword(req, res) {
     try {
         const { currentPassword, newPassword } = req.body;
@@ -208,24 +172,16 @@ async function changePassword(req, res) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
 
-        const userData = userDoc.data();
-
-        // Verificar contraseña actual
+        const userData = userDoc.data();
         const isValidPassword = await bcrypt.compare(currentPassword, userData.password);
         if (!isValidPassword) {
             return res.status(401).json({ error: 'Contraseña actual incorrecta' });
-        }
-
-        // Hashear nueva contraseña
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-        // Actualizar contraseña
+        }
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
         await db.collection(USERS_COLLECTION).doc(req.user.uid).update({
             password: hashedPassword,
             updatedAt: new Date()
-        });
-
-        // Generar nuevo token
+        });
         const token = jwt.sign(
             { uid: req.user.uid, email: req.user.email, admin: req.user.admin },
             process.env.JWT_SECRET,

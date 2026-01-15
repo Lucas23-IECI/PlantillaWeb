@@ -1,13 +1,3 @@
-/* ===================================
-   HEADER COMPONENT
-   Navbar sticky solo en homepage
-   
-   Usa variables de variables.css
-=================================== */
-
-/* ===================================
-   CONTAINER PRINCIPAL
-=================================== */
 .header-container {
     width: 100%;
     z-index: var(--z-fixed, 1000);
@@ -17,7 +7,6 @@
     top: 0;
 }
 
-/* Sticky solo para homepage */
 body.homepage .header-container {
     position: fixed;
     top: 0;
@@ -25,17 +14,14 @@ body.homepage .header-container {
     right: 0;
 }
 
-/* Compensar altura del header fixed */
 body.homepage {
     padding-top: var(--header-height, 120px);
 }
 
-/* Páginas internas: header no es fixed pero necesitan espacio */
 body:not(.homepage) {
     padding-top: 0;
 }
 
-/* Hero de páginas internas ya no necesita margin-top */
 body:not(.homepage) .productos-hero,
 body:not(.homepage) .contacto-hero,
 body:not(.homepage) .nosotros-hero,
@@ -43,9 +29,6 @@ body:not(.homepage) .section-hero {
     margin-top: 0;
 }
 
-/* ===================================
-   BANNER INFO SUPERIOR
-=================================== */
 .header-info {
     background: var(--color-header-info-bg, var(--color-primary));
     color: var(--color-header-info-text, var(--color-text-inverse));
@@ -59,9 +42,6 @@ body:not(.homepage) .section-hero {
     line-height: 1.4;
 }
 
-/* ===================================
-   NAVBAR PRINCIPAL
-=================================== */
 .header-nav {
     background: var(--color-header-bg, var(--color-surface));
     border-bottom: 1px solid var(--color-header-border, var(--color-border));
@@ -77,9 +57,6 @@ body:not(.homepage) .section-hero {
     margin: 0 auto;
 }
 
-/* ===================================
-   LOGO
-=================================== */
 .header-logo {
     display: flex;
     align-items: center;
@@ -100,9 +77,6 @@ body:not(.homepage) .section-hero {
     width: auto;
 }
 
-/* ===================================
-   NAVIGATION LINKS
-=================================== */
 .nav-links {
     display: flex;
     list-style: none;
@@ -148,9 +122,6 @@ body:not(.homepage) .section-hero {
     color: var(--color-nav-link-hover, var(--color-accent));
 }
 
-/* ===================================
-   SEARCH EXPANDIBLE
-=================================== */
 .header-search {
     position: relative;
     display: flex;
@@ -223,9 +194,6 @@ body:not(.homepage) .section-hero {
     box-shadow: var(--input-shadow-focus);
 }
 
-/* ===================================
-   HEADER ACTIONS
-=================================== */
 .header-actions {
     display: flex;
     align-items: center;
@@ -251,7 +219,6 @@ body:not(.homepage) .section-hero {
     height: 40px;
 }
 
-/* Asegurar visibilidad sobre cualquier fondo */
 .theme-toggle svg,
 .cart-btn svg,
 .user-btn svg {
@@ -281,9 +248,6 @@ body:not(.homepage) .section-hero {
     font-weight: var(--font-weight-bold);
 }
 
-/* ===================================
-   MENU TOGGLE (MOBILE)
-=================================== */
 .menu-toggle {
     display: none;
     background: transparent;
@@ -299,9 +263,6 @@ body:not(.homepage) .section-hero {
     background-color: var(--color-surface-hover);
 }
 
-/* ===================================
-   MOBILE MENU OVERLAY
-=================================== */
 .mobile-menu {
     position: fixed;
     top: 0;
@@ -379,7 +340,6 @@ body:not(.homepage) .section-hero {
     padding-left: var(--spacing-sm);
 }
 
-/* Mobile Overlay Background */
 .mobile-overlay {
     display: none;
     position: fixed;
@@ -395,9 +355,6 @@ body:not(.homepage) .section-hero {
     display: block;
 }
 
-/* ===================================
-   RESPONSIVE
-=================================== */
 @media (max-width: 968px) {
     .nav-links {
         display: none;
@@ -457,7 +414,6 @@ body:not(.homepage) .section-hero {
         padding: var(--spacing-xs);
     }
 
-    /* Ocultar algunos botones en pantallas muy pequeñas */
     .theme-toggle {
         display: none;
     }

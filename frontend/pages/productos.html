@@ -10,11 +10,23 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 
+    <!-- McMaster-Style: DNS Prefetch & Preconnect -->
+    <link rel="dns-prefetch" href="//localhost:3000">
+    <link rel="preconnect" href="//localhost:3000" crossorigin>
+
+    <!-- Preload Critical CSS -->
+    <link rel="preload" href="/css/main.css?v=6.2" as="style">
+    <link rel="preload" href="/css/pages/productos.css?v=6.2" as="style">
+
     <!-- CSS - Sistema Modular -->
-    <link rel="stylesheet" href="/css/main.css?v=6.1">
-    <link rel="stylesheet" href="/css/pages/productos.css?v=6.1">
-    <link rel="stylesheet" href="/css/components/mini-cart.css?v=6.1">
-    <link rel="stylesheet" href="/css/components/wishlist.css?v=6.1">
+    <link rel="stylesheet" href="/css/main.css?v=6.2">
+    <link rel="stylesheet" href="/css/pages/productos.css?v=6.2">
+    <link rel="stylesheet" href="/css/components/mini-cart.css?v=6.2">
+    <link rel="stylesheet" href="/css/components/wishlist.css?v=6.2">
+
+    <!-- Prefetch likely next pages -->
+    <link rel="prefetch" href="/pages/producto.html">
+    <link rel="prefetch" href="/js/producto.js">
 
 </head>
 
@@ -400,17 +412,17 @@
         </a>
     </div>
 
-    <!-- Scripts -->
-    <script src="/js/config.js?v=6.0"></script>
-    <script src="/js/utils.js?v=6.0"></script>
-    <script src="/js/auth.js?v=6.0"></script>
-    <script src="/js/cart.js?v=6.0"></script>
-    <script src="/js/api.js?v=6.0"></script>
-    <script src="/js/header.js?v=6.0"></script>
-    <script src="/js/script.js?v=6.0"></script>
-    <script src="/js/mini-cart.js?v=6.0"></script>
-    <script src="/js/wishlist.js?v=6.0"></script>
-    <script src="/js/productos.js?v=6.0"></script>
+    <!-- Scripts - Defer non-critical for faster page load -->
+    <script src="/js/config.js?v=6.2"></script>
+    <script src="/js/utils.js?v=6.2"></script>
+    <script src="/js/auth.js?v=6.2" defer></script>
+    <script src="/js/cart.js?v=6.2"></script>
+    <script src="/js/api.js?v=6.2"></script>
+    <script src="/js/header.js?v=6.2" defer></script>
+    <script src="/js/script.js?v=6.2"></script>
+    <script src="/js/mini-cart.js?v=6.2" defer></script>
+    <script src="/js/wishlist.js?v=6.2" defer></script>
+    <script src="/js/productos.js?v=6.2"></script>
 </body>
 
 </html>
