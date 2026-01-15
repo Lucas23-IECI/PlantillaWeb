@@ -1,0 +1,60 @@
+/* ===========================================
+   SKELETON LOADING - McMaster Style
+   Instant perceived loading for all pages
+   =========================================== */
+
+@keyframes skeleton-shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Skeleton Base Styles */
+.skeleton-active .skeleton-imagen,
+.skeleton-imagen {
+    background: linear-gradient(90deg,
+            var(--color-border, #e0e0e0) 0%,
+            var(--color-surface, #f5f5f5) 50%,
+            var(--color-border, #e0e0e0) 100%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+    border-radius: 8px;
+}
+
+.skeleton-active .skeleton-text,
+.skeleton-text {
+    background: linear-gradient(90deg,
+            var(--color-border, #e0e0e0) 0%,
+            var(--color-surface, #f5f5f5) 50%,
+            var(--color-border, #e0e0e0) 100%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+    border-radius: 4px;
+}
+
+/* Skeleton Card */
+.skeleton-card {
+    pointer-events: none;
+}
+
+.skeleton-card .skeleton-imagen {
+    aspect-ratio: 1;
+}
+
+.skeleton-card .skeleton-info {
+    padding: 16px;
+}
+
+/* Dark Mode Support */
+[data-theme="dark"] .skeleton-imagen,
+[data-theme="dark"] .skeleton-text {
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.15) 50%,
+            rgba(255, 255, 255, 0.1) 100%);
+    background-size: 200% 100%;
+}

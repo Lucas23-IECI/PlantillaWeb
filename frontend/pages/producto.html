@@ -10,13 +10,22 @@
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 
+    <!-- McMaster-Style: Preload Critical CSS -->
+    <link rel="preload" href="/css/main.css?v=6.2" as="style">
+    <link rel="preload" href="/css/pages/producto.css?v=6.2" as="style">
+    <link rel="preload" href="/css/components/skeleton.css?v=6.2" as="style">
+
     <!-- CSS - Sistema Modular -->
-    <link rel="stylesheet" href="/css/main.css?v=3.0">
-    <link rel="stylesheet" href="/css/pages/producto.css?v=3.0">
-    <link rel="stylesheet" href="/css/pages/productos.css?v=3.0">
-    <link rel="stylesheet" href="/css/components/mini-cart.css?v=3.0">
-    <link rel="stylesheet" href="/css/components/gallery.css?v=3.0">
-    <link rel="stylesheet" href="/css/components/wishlist.css?v=3.0">
+    <link rel="stylesheet" href="/css/main.css?v=6.2">
+    <link rel="stylesheet" href="/css/components/skeleton.css?v=6.2">
+    <link rel="stylesheet" href="/css/pages/producto.css?v=6.2">
+    <link rel="stylesheet" href="/css/pages/productos.css?v=6.2">
+    <link rel="stylesheet" href="/css/components/mini-cart.css?v=6.2">
+    <link rel="stylesheet" href="/css/components/gallery.css?v=6.2">
+    <link rel="stylesheet" href="/css/components/wishlist.css?v=6.2">
+
+    <!-- Prefetch catalog page for quick navigation -->
+    <link rel="prefetch" href="/pages/productos.html">
 </head>
 
 <body>
@@ -204,17 +213,17 @@
         </a>
     </div>
 
-    <!-- Scripts -->
-    <script src="/js/config.js?v=5.0"></script>
-    <script src="/js/utils.js?v=5.0"></script>
-    <script src="/js/auth.js?v=5.0"></script>
-    <script src="/js/cart.js?v=5.0"></script>
-    <script src="/js/api.js?v=5.0"></script>
-    <script src="/js/header.js?v=5.0"></script>
-    <script src="/js/productos.js?v=5.0"></script>
-    <script src="/js/mini-cart.js?v=5.0"></script>
-    <script src="/js/wishlist.js?v=5.0"></script>
-    <script src="/js/producto.js?v=5.0"></script>
+    <!-- Scripts - Defer non-critical for faster page load -->
+    <script src="/js/config.js?v=6.2"></script>
+    <script src="/js/utils.js?v=6.2"></script>
+    <script src="/js/auth.js?v=6.2" defer></script>
+    <script src="/js/cart.js?v=6.2"></script>
+    <script src="/js/api.js?v=6.2"></script>
+    <script src="/js/header.js?v=6.2" defer></script>
+    <script src="/js/productos.js?v=6.2"></script>
+    <script src="/js/mini-cart.js?v=6.2" defer></script>
+    <script src="/js/wishlist.js?v=6.2" defer></script>
+    <script src="/js/producto.js?v=6.2"></script>
 </body>
 
 </html>

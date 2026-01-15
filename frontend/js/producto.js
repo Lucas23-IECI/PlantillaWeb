@@ -8,16 +8,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function loadProductDetail() {
     const container = document.getElementById('productoContent');
-    if (!container) return;
-    container.innerHTML = `
-        <div class="producto-loading">
-            <div class="loading-content">
-                <div class="loading-spinner"></div>
-                <h3>Cargando producto...</h3>
-                <p>Un momento por favor</p>
-            </div>
-        </div>
-    `;
+    if (!container) return;
+
+    // McMaster-Style: Show skeleton INSTANTLY
+    container.innerHTML = generarProductoSkeleton();
+
     const params = new URLSearchParams(window.location.search);
     const productId = params.get('id');
 
@@ -26,18 +21,27 @@ async function loadProductDetail() {
         return;
     }
 
-    try {
+    try {
+
         let producto = null;
 
         try {
             if (typeof api !== 'undefined' && api.getProductById) {
-                producto = await api.getProductById(productId);
+                // 500ms timeout for instant fallback
+                const timeoutPromise = new Promise((_, reject) =>
+                    setTimeout(() => reject(new Error('Timeout')), 500)
+                );
+                producto = await Promise.race([api.getProductById(productId), timeoutPromise]);
             }
         } catch (apiError) {
-            console.warn('API no disponible, usando mock');
-        }
-        if (!producto) {
-            const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
+            // Silent fallback
+        }
+
+        if (!producto) {
+
+
+            const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
+
             producto = mockProducts.find(p =>
                 p.product_id === productId ||
                 p.id === productId ||
@@ -49,21 +53,48 @@ async function loadProductDetail() {
         if (!producto) {
             mostrarError(container, 'Producto no encontrado');
             return;
-        }
+        }
+
         productoActual = normalizeProduct(producto);
         document.title = `${productoActual.nombre} | Mi Tienda`;
 
         renderProducto(container, productoActual);
-        renderProductosRecomendados(productoActual);
+        renderProductosRecomendados(productoActual);
+
         if (typeof wishlist !== 'undefined' && wishlist.isInWishlist(productoActual.id)) {
             const btn = document.querySelector('.btn-wishlist-large');
             if (btn) btn.classList.add('active');
         }
 
     } catch (error) {
-        console.error('Error cargando producto:', error);
+        // Silent error - use mock data
         mostrarError(container, 'Error al cargar el producto');
     }
+}
+
+/**
+ * Generar Skeleton para producto - McMaster Style
+ */
+function generarProductoSkeleton() {
+    return `
+        <div class="producto-detail skeleton-active">
+            <div class="producto-nav">
+                <div class="skeleton-text" style="width: 150px; height: 20px;"></div>
+            </div>
+            <div class="producto-main" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 20px;">
+                <div class="producto-gallery">
+                    <div class="skeleton-imagen" style="aspect-ratio: 1; width: 100%; border-radius: 12px;"></div>
+                </div>
+                <div class="producto-info">
+                    <div class="skeleton-text" style="width: 40%; height: 14px; margin-bottom: 8px;"></div>
+                    <div class="skeleton-text" style="width: 80%; height: 28px; margin-bottom: 12px;"></div>
+                    <div class="skeleton-text" style="width: 30%; height: 32px; margin-bottom: 20px;"></div>
+                    <div class="skeleton-text" style="width: 100%; height: 80px; margin-bottom: 20px;"></div>
+                    <div class="skeleton-text" style="width: 100%; height: 50px;"></div>
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function normalizeProduct(p) {
@@ -233,7 +264,8 @@ function renderProductosRecomendados(producto) {
     const container = document.getElementById('recomendadosContainer');
     if (!container) return;
 
-    const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
+    const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
+
     const recomendados = mockProducts
         .filter(p => (p.category || p.categoria) === producto.categoria && (p.product_id || p.id) !== producto.id && (p.stock || p.quantity) > 0)
         .slice(0, 8)
@@ -264,7 +296,8 @@ function renderProductosRecomendados(producto) {
                 </svg>
             </button>
         </div>
-    `;
+    `;
+
     initRecomendadosCarousel();
 }
 
@@ -279,11 +312,13 @@ function initRecomendadosCarousel() {
     if (cards.length === 0) return;
 
     const cardWidth = cards[0].offsetWidth + 20; // card width + gap
-    let autoScrollInterval;
+    let autoScrollInterval;
+
     function scrollCarousel(direction) {
         const scrollAmount = cardWidth * direction;
         track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
+    }
+
     prevBtn.addEventListener('click', () => {
         scrollCarousel(-1);
         resetAutoScroll();
@@ -292,9 +327,11 @@ function initRecomendadosCarousel() {
     nextBtn.addEventListener('click', () => {
         scrollCarousel(1);
         resetAutoScroll();
-    });
+    });
+
     function startAutoScroll() {
-        autoScrollInterval = setInterval(() => {
+        autoScrollInterval = setInterval(() => {
+
             if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
                 track.scrollTo({ left: 0, behavior: 'smooth' });
             } else {
@@ -306,10 +343,13 @@ function initRecomendadosCarousel() {
     function resetAutoScroll() {
         clearInterval(autoScrollInterval);
         startAutoScroll();
-    }
-    startAutoScroll();
+    }
+
+    startAutoScroll();
+
     track.addEventListener('mouseenter', () => clearInterval(autoScrollInterval));
-    track.addEventListener('mouseleave', startAutoScroll);
+    track.addEventListener('mouseleave', startAutoScroll);
+
     function updateArrows() {
         prevBtn.style.opacity = track.scrollLeft <= 0 ? '0.3' : '1';
         nextBtn.style.opacity = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10 ? '0.3' : '1';
@@ -371,7 +411,8 @@ function toggleRecomendadoWishlist(productId) {
             price: getPrecioConDescuento(producto),
             image_url: producto.imagen
         });
-    }
+    }
+
     const btn = document.querySelector(`.recomendado-card button[onclick*="${productId}"]`);
     if (btn) {
         btn.classList.toggle('active');
@@ -412,7 +453,8 @@ function changeCantidad(delta) {
     const newCantidad = cantidadSeleccionada + delta;
     if (newCantidad >= 1 && newCantidad <= productoActual.stock) {
         cantidadSeleccionada = newCantidad;
-        document.getElementById('cantidadDisplay').textContent = cantidadSeleccionada;
+        document.getElementById('cantidadDisplay').textContent = cantidadSeleccionada;
+
         const btns = document.querySelectorAll('.cantidad-btn');
         if (btns.length === 2) {
             btns[0].disabled = cantidadSeleccionada <= 1;
@@ -426,7 +468,8 @@ function addToCartDetail() {
 
     if (typeof cart !== 'undefined' && cart.add) {
         cart.add(productoActual, cantidadSeleccionada);
-    } else {
+    } else {
+
         let cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
         const existingIndex = cartItems.findIndex(item => item.id === productoActual.id);
 
@@ -456,7 +499,8 @@ function toggleWishlist() {
         const isActive = wishlist.isInWishlist(productoActual.id);
         if (btn) btn.classList.toggle('active', isActive);
         showNotification(isActive ? 'Agregado a favoritos' : 'Eliminado de favoritos');
-    } else {
+    } else {
+
         if (btn) {
             btn.classList.toggle('active');
             showNotification(btn.classList.contains('active') ? 'Agregado a favoritos' : 'Eliminado de favoritos');
@@ -471,22 +515,27 @@ function shareProducto() {
             text: `Mira este producto: ${productoActual.nombre}`,
             url: window.location.href,
         });
-    } else {
+    } else {
+
         navigator.clipboard.writeText(window.location.href);
         showNotification('Enlace copiado al portapapeles');
     }
 }
 
-function renderGalleryThumbnails(producto) {
+function renderGalleryThumbnails(producto) {
+
     let allImages = [producto.imagen];
 
     if (producto.imagenes && Array.isArray(producto.imagenes) && producto.imagenes.length > 0) {
         allImages = [...allImages, ...producto.imagenes];
-    }
-    allImages = allImages.filter(img => img);
+    }
+
+    allImages = allImages.filter(img => img);
+
     if (allImages.length <= 1) {
         return '';
-    }
+    }
+
     allImages = [...new Set(allImages)];
 
     return `
@@ -504,13 +553,15 @@ function renderGalleryThumbnails(producto) {
 
 function changeMainImage(imageUrl, thumbElement) {
     const mainImage = document.getElementById('mainImage');
-    if (!mainImage) return;
+    if (!mainImage) return;
+
     mainImage.style.opacity = '0';
 
     setTimeout(() => {
         mainImage.src = imageUrl;
         mainImage.style.opacity = '1';
-    }, 200);
+    }, 200);
+
     document.querySelectorAll('.gallery-thumb').forEach(thumb => {
         thumb.classList.remove('active');
     });

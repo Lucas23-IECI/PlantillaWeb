@@ -199,9 +199,11 @@
     border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 20px;
-    height: fit-content;
     position: sticky;
-    top: 100px;
+    top: 80px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    align-self: flex-start;
 }
 
 .filters-header {
@@ -236,6 +238,15 @@
 
 .filter-section:last-of-type {
     border-bottom: none;
+}
+
+/* Collapsed state for filter sections */
+.filter-section.collapsed>*:not(.filter-title) {
+    display: none;
+}
+
+.filter-section.collapsed .filter-title {
+    margin-bottom: 0;
 }
 
 .filter-title {
@@ -407,12 +418,16 @@
 }
 
 .price-inputs {
+    max-width: 100%;
+    overflow: hidden;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
 .price-inputs input {
+    min-width: 0;
+    max-width: 45%;
     flex: 1;
     padding: 8px 10px;
     border: 1px solid var(--color-border);
@@ -524,7 +539,7 @@
 }
 
 .productos-grid.view-grid {
-    
+
     grid-template-columns: repeat(4, 1fr);
 }
 
@@ -560,6 +575,7 @@
     transform: translateY(-4px);
 }
 
+/* Hover Image Preview System */
 .producto-imagen {
     width: 100%;
     height: 200px;
@@ -568,15 +584,190 @@
     overflow: hidden;
 }
 
-.producto-imagen img {
+.producto-imagen .image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.producto-imagen .preview-images {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.producto-imagen .preview-images img {
+    position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.producto-card:hover .producto-imagen img {
-    transform: scale(1.05);
+.producto-imagen .preview-images img.active {
+    opacity: 1;
+}
+
+/* Image navigation arrows */
+.producto-imagen .nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.2s ease;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.producto-imagen .nav-arrow:hover {
+    transform: translateY(-50%) scale(1.1);
+    background: white;
+}
+
+.producto-imagen:hover .nav-arrow {
+    opacity: 1;
+}
+
+.producto-imagen .nav-arrow.prev {
+    left: 8px;
+}
+
+.producto-imagen .nav-arrow.next {
+    right: 8px;
+}
+
+.producto-imagen .nav-arrow svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--color-text);
+}
+
+/* Image dots/indicators */
+.producto-imagen .image-dots {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.producto-imagen:hover .image-dots {
+    opacity: 1;
+}
+
+.producto-imagen .image-dots .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.producto-imagen .image-dots .dot.active {
+    background: white;
+    width: 16px;
+    border-radius: 3px;
+}
+
+/* Gallery arrows (for product cards) */
+.gallery-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.2s ease;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-arrow:hover {
+    transform: translateY(-50%) scale(1.1);
+    background: white;
+}
+
+.producto-card:hover .gallery-arrow {
+    opacity: 1;
+}
+
+.gallery-arrow.prev {
+    left: 8px;
+}
+
+.gallery-arrow.next {
+    right: 8px;
+}
+
+.gallery-arrow svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--color-text);
+}
+
+/* Gallery dots */
+.gallery-dots {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.producto-card:hover .gallery-dots {
+    opacity: 1;
+}
+
+.gallery-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.gallery-dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.gallery-dot.active {
+    background: white;
+    width: 14px;
+    border-radius: 4px;
 }
 
 .producto-badge {
@@ -803,7 +994,7 @@
 }
 
 .producto-imagen img {
-    
+
     aspect-ratio: 1;
     object-fit: cover;
     background: var(--color-border);
