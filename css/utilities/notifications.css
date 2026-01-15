@@ -1,0 +1,80 @@
+/* ===================================
+   NOTIFICATIONS
+   Toasts, site notices
+=================================== */
+
+/* ===== NOTIFICACIONES TOAST ===== */
+.notification-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    box-shadow: var(--shadow-lg);
+    z-index: var(--z-toast);
+    transform: translateX(120%);
+    transition: transform var(--transition-normal);
+}
+
+.notification-toast.show {
+    transform: translateX(0);
+}
+
+.notification-success {
+    background: var(--color-success);
+}
+
+.notification-error {
+    background: var(--color-error);
+}
+
+.notification-warning {
+    background: var(--color-warning);
+    color: var(--color-text);
+}
+
+.notification-info {
+    background: var(--color-info);
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: var(--font-size-xl);
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.notification-close:hover {
+    opacity: 1;
+}
+
+/* ===== SITE NOTICE (BANNER) ===== */
+.site-notice {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-notification);
+    background: var(--color-background-alt);
+    border-top: 1px solid var(--color-border);
+    box-shadow: 0 -2px 8px var(--shadow-sm);
+}
+
+.site-notice__inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-2xl);
+}
+
+.site-notice__text {
+    color: var(--color-text);
+    font-size: var(--font-size-base);
+    text-align: center;
+}

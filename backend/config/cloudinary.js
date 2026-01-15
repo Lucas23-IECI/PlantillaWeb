@@ -1,0 +1,54 @@
+const cloudinary = require('cloudinary').v2;
+
+// Configurar Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+/**
+ * Sube una imagen a Cloudinary
+ * @param {Buffer|string} file - Buffer de la imagen o path
+ * @param {Object} options - Opciones adicionales
+ */
+async function uploadImage(file, options = {}) {
+    const defaultOptions = {
+        folder: 'productos',
+        transformation: [
+            { width: 800, height: 800, crop: 'limit' },
+            { quality: 'auto:good' },
+            { fetch_format: 'auto' }
+        ]
+    };
+
+    return new Promise((resolve, reject) => {
+        const uploadOptions = { ...defaultOptions, ...options };
+
+        if (Buffer.isBuffer(file)) {
+            cloudinary.uploader.upload_stream(uploadOptions, (error, result) => {
+                if (error) reject(error);
+                else resolve(result);
+            }).end(file);
+        } else {
+            cloudinary.uploader.upload(file, uploadOptions, (error, result) => {
+                if (error) reject(error);
+                else resolve(result);
+            });
+        }
+    });
+}
+
+/**
+ * Elimina una imagen de Cloudinary
+ * @param {string} publicId - ID público de la imagen
+ */
+async function deleteImage(publicId) {
+    return cloudinary.uploader.destroy(publicId);
+}
+
+module.exports = {
+    cloudinary,
+    uploadImage,
+    deleteImage
+};

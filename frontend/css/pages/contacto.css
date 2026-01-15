@@ -1,0 +1,441 @@
+/* ===================================
+   PÁGINA DE CONTACTO
+=================================== */
+
+/* Hero */
+.page-hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark, #1a1a2e) 100%);
+    color: var(--color-text-inverse);
+    padding: var(--spacing-3xl) 0;
+    text-align: center;
+}
+
+.page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: var(--spacing-sm);
+}
+
+.hero-subtitle {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+}
+
+/* Sección Principal */
+.contacto-section {
+    padding: var(--spacing-3xl) 0;
+}
+
+.contacto-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--spacing-2xl);
+}
+
+/* Contact Form Container */
+.contacto-form-container {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+.contacto-form-container h2 {
+    margin-bottom: var(--spacing-xl);
+    color: var(--color-text);
+}
+
+/* Contact Form Styles */
+.contacto-form .form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.contacto-form label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+}
+
+.contacto-form input,
+.contacto-form textarea {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    color: var(--color-text);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    outline: none;
+}
+
+.contacto-form input:focus,
+.contacto-form textarea:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+}
+
+.contacto-form textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Hero Section Contacto */
+.contacto-hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    color: var(--color-text-inverse);
+    padding: var(--spacing-3xl) 0;
+    text-align: center;
+}
+
+.contacto-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: var(--spacing-sm);
+}
+
+.contacto-hero p {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+}
+
+/* Info Cards */
+.contacto-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.info-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-primary);
+}
+
+.info-header h3 {
+    font-size: var(--font-size-lg);
+    margin: 0;
+}
+
+.info-header svg {
+    flex-shrink: 0;
+}
+
+.info-content p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.direccion-nombre {
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+    color: var(--color-text);
+}
+
+.direccion-calle,
+.direccion-ciudad {
+    color: var(--color-text-muted);
+}
+
+/* Horarios */
+.horario-item {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.horario-item:last-child {
+    border-bottom: none;
+}
+
+.dia {
+    font-weight: 500;
+}
+
+.hora {
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.hora.cerrado {
+    color: var(--color-error, #ef4444);
+}
+
+/* Métodos de Contacto */
+.contacto-metodos h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-lg);
+}
+
+.metodos-grid {
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+.metodo-card {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition-normal);
+}
+
+.metodo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.metodo-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.metodo-icon.telefono {
+    background: var(--color-primary);
+}
+
+.metodo-icon.whatsapp {
+    background: #25d366;
+}
+
+.metodo-icon.email {
+    background: var(--color-accent);
+}
+
+.metodo-info h4 {
+    font-size: var(--font-size-base);
+    margin: 0 0 var(--spacing-xs);
+}
+
+.metodo-info p {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin: 0;
+    color: var(--color-text);
+}
+
+.metodo-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Redes Sociales */
+.redes-sociales {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.redes-sociales h4 {
+    margin-bottom: var(--spacing-lg);
+}
+
+.redes-grid {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.red-social {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+}
+
+.red-social.facebook {
+    background: #1877f2;
+}
+
+.red-social.facebook:hover {
+    background: #165dd8;
+}
+
+.red-social.instagram {
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+.red-social.instagram:hover {
+    filter: brightness(1.1);
+}
+
+/* Mapa */
+.mapa-section {
+    padding: var(--spacing-2xl) 0;
+    background: var(--color-background-alt);
+}
+
+.mapa-section h3 {
+    text-align: center;
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.mapa-container {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: var(--spacing-xl);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.mapa-wrapper {
+    min-height: 400px;
+}
+
+.mapa-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.mapa-info {
+    padding: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mapa-info h4 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.mapa-info p {
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-lg);
+}
+
+.mapa-info .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* CTA */
+.contacto-cta {
+    padding: var(--spacing-3xl) 0;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    color: white;
+    text-align: center;
+}
+
+.cta-content h3 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-sm);
+}
+
+.cta-content p {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+    margin-bottom: var(--spacing-xl);
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.cta-buttons .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.cta-buttons .btn-outline {
+    border-color: white;
+    color: white;
+}
+
+.cta-buttons .btn-outline:hover {
+    background: white;
+    color: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .contacto-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .mapa-container {
+        grid-template-columns: 1fr;
+    }
+
+    .mapa-info {
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .metodo-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .redes-grid {
+        flex-direction: column;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* ===================================
+   DARK MODE
+=================================== */
+[data-theme="dark"] .info-card {
+    background: var(--color-surface);
+}
+
+[data-theme="dark"] .info-header {
+    color: var(--color-accent);
+}
+
+[data-theme="dark"] .metodo-card {
+    background: var(--color-surface);
+}
+
+[data-theme="dark"] .mapa-container {
+    background: var(--color-surface);
+}
+
+[data-theme="dark"] .mapa-info h4 {
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .cta-buttons .btn-outline:hover {
+    background: var(--color-surface);
+    color: var(--color-text);
+}

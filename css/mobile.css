@@ -1,0 +1,226 @@
+/* ===================================
+   ESTILOS RESPONSIVE MOBILE
+   Media queries para diferentes
+   tamaños de pantalla
+=================================== */
+
+/* ===== TABLET LANDSCAPE (max: 968px) ===== */
+@media (max-width: 968px) {
+
+    .container,
+    .container-small {
+        padding: 0 var(--spacing-lg);
+    }
+
+    .hero-title {
+        font-size: var(--font-size-4xl);
+    }
+
+    .productos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: var(--spacing-lg);
+    }
+}
+
+/* ===== TABLET PORTRAIT (max: 768px) ===== */
+@media (max-width: 768px) {
+    :root {
+        --header-height: 100px;
+    }
+
+    .header-nav .container {
+        padding: 0 var(--spacing-md);
+        gap: var(--spacing-sm);
+    }
+
+    .header-logo img {
+        height: 40px;
+    }
+
+    .hero {
+        min-height: 500px;
+        padding: var(--spacing-3xl) var(--spacing-lg);
+    }
+
+    .hero-title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .hero-description {
+        font-size: var(--font-size-base);
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .section {
+        padding: var(--spacing-3xl) 0;
+    }
+
+    .section-title {
+        font-size: var(--font-size-2xl);
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .productos-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .site-notice__inner {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .site-notice__text {
+        font-size: var(--font-size-sm);
+    }
+
+    .nav-links a {
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+}
+
+/* ===== MOBILE LARGE (max: 520px) ===== */
+@media (max-width: 520px) {
+
+    .container,
+    .container-small {
+        padding: 0 var(--spacing-md);
+    }
+
+    .header-actions {
+        gap: var(--spacing-sm);
+    }
+
+    .search-btn,
+    .cart-btn {
+        padding: var(--spacing-xs);
+        min-width: 40px;
+        min-height: 40px;
+    }
+
+    .hero {
+        min-height: 400px;
+        padding: var(--spacing-2xl) var(--spacing-md);
+    }
+
+    .hero-title {
+        font-size: var(--font-size-2xl);
+    }
+
+    .productos-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .producto-card {
+        max-width: 100%;
+    }
+
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: var(--font-size-xs);
+    }
+
+    .btn-lg {
+        padding: var(--spacing-md) var(--spacing-xl);
+        font-size: var(--font-size-sm);
+    }
+
+    .page-title {
+        font-size: var(--font-size-xl);
+    }
+
+    .notification-toast {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .whatsapp-float {
+        width: 48px;
+        height: 48px;
+        bottom: 15px;
+        left: 15px;
+    }
+}
+
+/* ===== MOBILE SMALL (max: 375px) ===== */
+@media (max-width: 375px) {
+    :root {
+        --header-height: 90px;
+    }
+
+    .header-logo {
+        font-size: var(--font-size-lg);
+    }
+
+    .header-logo img {
+        height: 36px;
+    }
+
+    .menu-toggle {
+        min-width: 40px;
+        min-height: 40px;
+        padding: var(--spacing-xs);
+    }
+
+    .hero-title {
+        font-size: var(--font-size-xl);
+    }
+
+    .section-title {
+        font-size: var(--font-size-xl);
+    }
+}
+
+/* ===== PREFERS REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+
+    .header,
+    .footer,
+    .whatsapp-float,
+    .search-overlay,
+    .site-notice,
+    .notification-toast {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+}

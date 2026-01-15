@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Avisos | Mi Tienda</title>
+    <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <style>
+        .admin-container {
+            margin-top: var(--header-height);
+            padding: var(--spacing-xl) 0;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .admin-nav a {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            color: var(--color-text);
+            font-size: var(--font-size-sm);
+        }
+
+        .admin-nav a.active {
+            background: var(--color-primary);
+            color: var(--color-text-inverse);
+            border-color: var(--color-primary);
+        }
+
+        .notice-card {
+            background: var(--color-surface);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border);
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .notice-text {
+            flex: 1;
+        }
+
+        .notice-status {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: var(--z-modal);
+            padding: var(--spacing-lg);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            width: 100%;
+            max-width: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo"><a href="../index.html"><img src="../images/logo-placeholder.svg" width="48" height="48" alt="Mi Tienda"></a></div>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-xl); flex-wrap: wrap; gap: var(--spacing-md);">
+                <h1>Gestión de Avisos</h1>
+                <button class="btn btn-primary" onclick="openModal()">+ Nuevo Aviso</button>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="admin.html">Pedidos</a>
+                <a href="admin-productos.html">Productos</a>
+                <a href="admin-avisos.html" class="active">Avisos</a>
+                <a href="admin-descuentos.html">Descuentos</a>
+            </nav>
+
+            <div id="noticesContainer">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="noticeModal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: var(--spacing-lg);" id="modalTitle">Nuevo Aviso</h2>
+            <form id="noticeForm">
+                <input type="hidden" id="noticeId">
+                <div class="form-group">
+                    <label class="form-label">Mensaje *</label>
+                    <textarea class="form-textarea" id="noticeMessage" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                        <input type="checkbox" id="noticeActive" checked> Activo
+                    </label>
+                </div>
+                <div style="display: flex; gap: var(--spacing-md);">
+                    <button type="submit" class="btn btn-primary" style="flex:1;">Guardar</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        if (!requireAdmin()) { }
+        let editingId = null;
+
+        async function loadNotices() {
+            const container = document.getElementById('noticesContainer');
+            try {
+                const result = await api.adminListNotices();
+                const notices = result.notices || [];
+                if (!notices.length) {
+                    container.innerHTML = '<div class="empty-state"><p>No hay avisos</p></div>';
+                    return;
+                }
+                container.innerHTML = notices.map(n => `
+                    <div class="notice-card">
+                        <div class="notice-text">${escapeHtml(n.message)}</div>
+                        <span class="notice-status ${n.active ? 'status-active' : 'status-inactive'}">${n.active ? 'Activo' : 'Inactivo'}</span>
+                        <div>
+                            <button class="btn btn-sm btn-outline" onclick='editNotice(${JSON.stringify(n)})'>Editar</button>
+                            <button class="btn btn-sm" style="background:var(--color-error);color:white;" onclick="deleteNotice('${n.notice_id}')">Eliminar</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                container.innerHTML = '<p>Error al cargar avisos</p>';
+            }
+        }
+
+        function openModal() {
+            editingId = null;
+            document.getElementById('modalTitle').textContent = 'Nuevo Aviso';
+            document.getElementById('noticeForm').reset();
+            document.getElementById('noticeActive').checked = true;
+            document.getElementById('noticeModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('noticeModal').classList.remove('active');
+        }
+
+        function editNotice(notice) {
+            editingId = notice.notice_id;
+            document.getElementById('modalTitle').textContent = 'Editar Aviso';
+            document.getElementById('noticeMessage').value = notice.message;
+            document.getElementById('noticeActive').checked = notice.active;
+            document.getElementById('noticeModal').classList.add('active');
+        }
+
+        async function deleteNotice(id) {
+            if (!confirm('¿Eliminar este aviso?')) return;
+            try {
+                await api.adminDeleteNotice(id);
+                showNotification('Aviso eliminado', 'success');
+                loadNotices();
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        document.getElementById('noticeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                message: document.getElementById('noticeMessage').value,
+                active: document.getElementById('noticeActive').checked
+            };
+            try {
+                if (editingId) {
+                    await api.adminUpdateNotice(editingId, data);
+                    showNotification('Aviso actualizado', 'success');
+                } else {
+                    await api.adminCreateNotice(data);
+                    showNotification('Aviso creado', 'success');
+                }
+                closeModal();
+                loadNotices();
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        });
+
+        loadNotices();
+    </script>
+</body>
+
+</html>

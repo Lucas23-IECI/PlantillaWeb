@@ -1,0 +1,257 @@
+/* ===================================
+   SOCIAL FLOAT COMPONENT
+   Botones flotantes de redes sociales
+=================================== */
+
+/* ===================================
+   CONTAINER
+=================================== */
+.social-float-container {
+    position: fixed;
+    left: 20px;
+    bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    z-index: var(--z-fixed);
+    transition: all 0.3s ease;
+}
+
+/* Ocultar cuando está cerca del footer */
+.social-float-container.hidden-near-footer {
+    opacity: 0;
+    transform: translateX(-100px);
+    pointer-events: none;
+}
+
+/* ===================================
+   FLOAT BUTTON
+=================================== */
+.social-float {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-xl);
+    color: var(--color-text-inverse);
+    text-decoration: none;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    max-width: 48px;
+}
+
+.social-float:hover {
+    max-width: 200px;
+    padding-right: var(--spacing-md);
+    transform: translateX(5px);
+    box-shadow: var(--shadow-xl);
+}
+
+/* ===================================
+   ICON Y TEXT
+=================================== */
+.social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+}
+
+.social-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.social-text {
+    white-space: nowrap;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    letter-spacing: 0.5px;
+}
+
+.social-float:hover .social-text {
+    opacity: 1;
+}
+
+/* ===================================
+   COLORES POR RED SOCIAL
+=================================== */
+.social-whatsapp {
+    background: var(--color-whatsapp);
+}
+
+.social-whatsapp:hover {
+    background: #20bd5a;
+}
+
+.social-facebook {
+    background: var(--color-facebook);
+}
+
+.social-facebook:hover {
+    background: #166fe5;
+}
+
+.social-instagram {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.social-instagram:hover {
+    background: linear-gradient(45deg, #e08428 0%, #d45c35 25%, #c9223c 50%, #ba1f5c 75%, #aa167c 100%);
+}
+
+.social-twitter {
+    background: var(--color-twitter);
+}
+
+.social-twitter:hover {
+    background: #1a94da;
+}
+
+.social-email {
+    background: var(--color-primary);
+}
+
+.social-email:hover {
+    background: var(--color-primary-light);
+}
+
+/* ===================================
+   VARIANTE SIMPLE (SIN EXPAND)
+=================================== */
+.social-float-simple {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-full);
+    color: var(--color-text-inverse);
+    text-decoration: none;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+}
+
+.social-float-simple:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-xl);
+}
+
+/* ===================================
+   PULSE ANIMATION
+=================================== */
+.social-float-pulse {
+    animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+    }
+
+    70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+
+/* ===================================
+   TOOLTIP
+=================================== */
+.social-float-tooltip {
+    position: relative;
+}
+
+.social-float-tooltip::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: var(--spacing-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--color-text);
+    color: var(--color-text-inverse);
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+    border-radius: var(--radius-sm);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+}
+
+.social-float-tooltip:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===================================
+   POSITION VARIANTS
+=================================== */
+.social-float-container.position-right {
+    left: auto;
+    right: 20px;
+}
+
+.social-float-container.position-right .social-float:hover {
+    transform: translateX(-5px);
+}
+
+.social-float-container.position-bottom {
+    bottom: 20px;
+    flex-direction: row;
+}
+
+/* ===================================
+   DARK MODE
+=================================== */
+[data-theme="dark"] .social-float {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .social-email {
+    background: var(--color-accent);
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+@media (max-width: 768px) {
+    .social-float-container {
+        left: 10px;
+        bottom: 25%;
+    }
+
+    .social-float {
+        max-width: 44px;
+        padding: var(--spacing-xs);
+    }
+
+    .social-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .social-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* En mobile no expandir al hover */
+    .social-float:hover {
+        max-width: 44px;
+        padding-right: var(--spacing-xs);
+    }
+
+    .social-float:hover .social-text {
+        display: none;
+    }
+}

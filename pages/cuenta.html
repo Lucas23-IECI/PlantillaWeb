@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta | Mi Tienda</title>
+    <meta name="description" content="Administra tu cuenta en Mi Tienda.">
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+    <link rel="stylesheet" href="../css/main.css?v=3.0">
+    <style>
+        .cuenta-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: var(--spacing-2xl);
+        }
+
+        @media (max-width: 768px) {
+            .cuenta-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .cuenta-sidebar {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            height: fit-content;
+        }
+
+        .cuenta-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .cuenta-nav li {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .cuenta-nav a {
+            display: block;
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            color: var(--color-text);
+            transition: background var(--transition-fast);
+        }
+
+        .cuenta-nav a:hover,
+        .cuenta-nav a.active {
+            background: var(--color-background-alt);
+        }
+
+        .cuenta-content {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+        }
+
+        .order-card {
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .order-id {
+            font-weight: 600;
+        }
+
+        .order-status {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Component -->
+    <header class="header-container">
+        <!-- Info Banner -->
+        <div class="header-info">
+            <p>Envío gratis en compras sobre $50.000 | Lunes a Viernes 9:00 - 18:00hrs</p>
+        </div>
+
+        <!-- Navbar -->
+        <nav class="header-nav">
+            <div class="container">
+                <button class="menu-toggle" aria-label="Menú">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
+
+                <a href="/home.html" class="header-logo">MT</a>
+
+                <ul class="nav-links">
+                    <li><a href="/home.html">Inicio</a></li>
+                    <li><a href="productos.html">Productos</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                    </button>
+
+                    <a href="carrito.html" class="cart-btn" aria-label="Carrito">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="9" cy="21" r="1" />
+                            <circle cx="20" cy="21" r="1" />
+                            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                        </svg>
+                        <span class="cart-count" id="cartCount" style="display:none;">0</span>
+                    </a>
+
+                    <button class="user-btn" aria-label="Usuario">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                            <circle cx="12" cy="7" r="4" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <span>Menú</span>
+            <button class="mobile-close" aria-label="Cerrar">&times;</button>
+        </div>
+        <nav class="mobile-nav">
+            <a href="/home.html">Inicio</a>
+            <a href="productos.html">Productos</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="contacto.html">Contacto</a>
+        </nav>
+    </div>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Main Content -->
+    <main id="main">
+        <section class="section">
+            <div class="container">
+                <div class="cuenta-grid">
+                    <aside class="cuenta-sidebar">
+                        <h3 style="margin-bottom: var(--spacing-lg);">Mi Cuenta</h3>
+                        <ul class="cuenta-nav">
+                            <li><a href="#" class="active" data-section="orders">Mis Pedidos</a></li>
+                            <li><a href="#" data-section="password">Cambiar Contraseña</a></li>
+                            <li data-admin-show style="display:none;"><a href="admin.html">Panel Admin</a></li>
+                            <li><a href="#" id="logoutBtn" style="color: var(--color-error);">Cerrar Sesión</a></li>
+                        </ul>
+                    </aside>
+                    <div class="cuenta-content" id="cuentaContent">
+                        <!-- Content loads here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 Mi Tienda. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/config.js?v=3.0"></script>
+    <script src="/js/utils.js?v=3.0"></script>
+    <script src="/js/auth.js?v=3.0"></script>
+    <script src="/js/cart.js?v=3.0"></script>
+    <script src="/js/api.js?v=3.0"></script>
+    <script src="/js/header.js?v=3.0"></script>
+    <script>
+        if (!requireAuth()) { /* redirected */ }
+
+        const user = getStoredUser();
+        const content = document.getElementById('cuentaContent');
+
+        async function loadOrders() {
+            content.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+            try {
+                const result = await api.getMyTransactions();
+                const orders = result.transactions || [];
+
+                if (orders.length === 0) {
+                    content.innerHTML = `
+                        <h2>Mis Pedidos</h2>
+                        <div class="empty-state">
+                            <p class="empty-state-text">Aún no tienes pedidos</p>
+                            <a href="productos.html" class="btn btn-primary">Ver Productos</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                content.innerHTML = `
+                    <h2 style="margin-bottom: var(--spacing-xl);">Mis Pedidos</h2>
+                    ${orders.map(order => `
+                        <div class="order-card">
+                            <div class="order-header">
+                                <span class="order-id">#${order.order_id}</span>
+                                <span class="order-status status-${order.status}">${order.status}</span>
+                            </div>
+                            <p style="font-size: var(--font-size-sm); color: var(--color-text-light);">
+                                ${typeof formatDateTime === 'function' ? formatDateTime(order.createdAt) : order.createdAt} • ${typeof formatPrice === 'function' ? formatPrice(order.amount || order.total_amount) : '$' + (order.amount || order.total_amount)}
+                            </p>
+                        </div>
+                    `).join('')}
+                `;
+            } catch (error) {
+                content.innerHTML = `
+                    <h2>Mis Pedidos</h2>
+                    <div class="empty-state">
+                        <p class="empty-state-text">Aún no tienes pedidos</p>
+                        <a href="productos.html" class="btn btn-primary">Ver Productos</a>
+                    </div>
+                `;
+            }
+        }
+
+        function loadPasswordForm() {
+            content.innerHTML = `
+                <h2 style="margin-bottom: var(--spacing-xl);">Cambiar Contraseña</h2>
+                <form id="passwordForm" style="max-width: 400px;">
+                    <div class="form-group">
+                        <label class="form-label">Contraseña actual</label>
+                        <input type="password" class="form-input" id="currentPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Nueva contraseña</label>
+                        <input type="password" class="form-input" id="newPassword" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirmar nueva contraseña</label>
+                        <input type="password" class="form-input" id="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+                </form>
+            `;
+
+            document.getElementById('passwordForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (newPassword !== confirmPassword) {
+                    if (typeof showNotification === 'function') {
+                        showNotification('Las contraseñas no coinciden', 'error');
+                    } else {
+                        alert('Las contraseñas no coinciden');
+                    }
+                    return;
+                }
+
+                try {
+                    await api.changePassword(currentPassword, newPassword);
+                    if (typeof showNotification === 'function') {
+                        showNotification('Contraseña actualizada', 'success');
+                    }
+                    e.target.reset();
+                } catch (error) {
+                    if (typeof showNotification === 'function') {
+                        showNotification(error.message || 'Error al cambiar contraseña', 'error');
+                    } else {
+                        alert(error.message || 'Error al cambiar contraseña');
+                    }
+                }
+            });
+        }
+
+        document.querySelectorAll('.cuenta-nav a[data-section]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('.cuenta-nav a').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+
+                const section = link.dataset.section;
+                if (section === 'orders') loadOrders();
+                else if (section === 'password') loadPasswordForm();
+            });
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            handleLogout();
+            if (typeof showNotification === 'function') {
+                showNotification('Sesión cerrada', 'info');
+            }
+            setTimeout(() => window.location.href = '../home.html', 500);
+        });
+
+        loadOrders();
+        updateAuthLinks();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,464 @@
+/* ===================================
+   HEADER COMPONENT
+   Navbar sticky solo en homepage
+   
+   Usa variables de variables.css
+=================================== */
+
+/* ===================================
+   CONTAINER PRINCIPAL
+=================================== */
+.header-container {
+    width: 100%;
+    z-index: var(--z-fixed, 1000);
+    background: var(--color-header-bg, var(--color-surface));
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    top: 0;
+}
+
+/* Sticky solo para homepage */
+body.homepage .header-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+/* Compensar altura del header fixed */
+body.homepage {
+    padding-top: var(--header-height, 120px);
+}
+
+/* Páginas internas: header no es fixed pero necesitan espacio */
+body:not(.homepage) {
+    padding-top: 0;
+}
+
+/* Hero de páginas internas ya no necesita margin-top */
+body:not(.homepage) .productos-hero,
+body:not(.homepage) .contacto-hero,
+body:not(.homepage) .nosotros-hero,
+body:not(.homepage) .section-hero {
+    margin-top: 0;
+}
+
+/* ===================================
+   BANNER INFO SUPERIOR
+=================================== */
+.header-info {
+    background: var(--color-header-info-bg, var(--color-primary));
+    color: var(--color-header-info-text, var(--color-text-inverse));
+    text-align: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+}
+
+.header-info p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* ===================================
+   NAVBAR PRINCIPAL
+=================================== */
+.header-nav {
+    background: var(--color-header-bg, var(--color-surface));
+    border-bottom: 1px solid var(--color-header-border, var(--color-border));
+}
+
+.header-nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    gap: var(--spacing-lg);
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+/* ===================================
+   LOGO
+=================================== */
+.header-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--color-nav-link, var(--color-text));
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    flex-shrink: 0;
+    transition: color var(--transition-fast);
+}
+
+.header-logo:hover {
+    color: var(--color-nav-link-hover, var(--color-accent));
+}
+
+.header-logo img {
+    height: 50px;
+    width: auto;
+}
+
+/* ===================================
+   NAVIGATION LINKS
+=================================== */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: var(--spacing-lg);
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.nav-links li {
+    margin: 0;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--color-nav-link, var(--color-text));
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-base);
+    transition: color var(--transition-fast);
+    white-space: nowrap;
+    padding: var(--spacing-xs) 0;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-nav-link-active, var(--color-accent));
+    transition: width var(--transition-fast);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--color-nav-link-hover, var(--color-accent));
+}
+
+/* ===================================
+   SEARCH EXPANDIBLE
+=================================== */
+.header-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: all var(--transition-normal);
+    max-width: 40px;
+}
+
+.header-search.expanded {
+    max-width: 300px;
+}
+
+.search-icon {
+    background: transparent;
+    border: none;
+    color: var(--color-nav-link, var(--color-text));
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+.search-icon:hover {
+    background-color: var(--color-surface-hover);
+    color: var(--color-nav-link-hover, var(--color-accent));
+}
+
+.header-search input {
+    width: 100%;
+    padding: var(--spacing-sm) 40px var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--input-border, var(--color-border));
+    border-radius: var(--radius-full);
+    background-color: var(--input-bg, var(--color-surface));
+    color: var(--input-text, var(--color-text));
+    font-size: var(--font-size-base);
+    outline: none;
+    opacity: 0;
+    transform: translateX(-100%);
+    position: absolute;
+    left: 0;
+    transition: all var(--transition-normal);
+    pointer-events: none;
+}
+
+.header-search.expanded input {
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
+    pointer-events: auto;
+}
+
+.header-search.expanded .search-icon {
+    position: absolute;
+    right: 4px;
+    z-index: 1;
+}
+
+.header-search input::placeholder {
+    color: var(--input-placeholder, var(--color-text-muted));
+}
+
+.header-search input:focus {
+    border-color: var(--input-border-focus, var(--color-primary));
+    box-shadow: var(--input-shadow-focus);
+}
+
+/* ===================================
+   HEADER ACTIONS
+=================================== */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    flex-shrink: 0;
+}
+
+.theme-toggle,
+.cart-btn,
+.user-btn {
+    background: transparent;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-full);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+/* Asegurar visibilidad sobre cualquier fondo */
+.theme-toggle svg,
+.cart-btn svg,
+.user-btn svg {
+    stroke: currentColor;
+}
+
+.theme-toggle:hover,
+.cart-btn:hover,
+.user-btn:hover {
+    background-color: var(--color-accent);
+    color: var(--color-text-inverse);
+}
+
+.cart-count {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: var(--color-accent);
+    color: var(--color-text-inverse);
+    border-radius: var(--radius-full);
+    width: 18px;
+    height: 18px;
+    font-size: var(--font-size-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+}
+
+/* ===================================
+   MENU TOGGLE (MOBILE)
+=================================== */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--color-nav-link, var(--color-text));
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.menu-toggle:hover {
+    background-color: var(--color-surface-hover);
+}
+
+/* ===================================
+   MOBILE MENU OVERLAY
+=================================== */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: var(--color-surface);
+    z-index: var(--z-max);
+    transition: right var(--transition-normal);
+    box-shadow: var(--shadow-xl);
+    overflow-y: auto;
+}
+
+.mobile-menu.open {
+    right: 0;
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+}
+
+.mobile-close {
+    background: transparent;
+    border: none;
+    font-size: var(--font-size-3xl);
+    cursor: pointer;
+    color: var(--color-text-light);
+    line-height: 1;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.mobile-close:hover {
+    background-color: var(--color-surface-hover);
+    color: var(--color-text);
+}
+
+.mobile-nav {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.mobile-nav a {
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border-light);
+    transition: all var(--transition-fast);
+    display: block;
+}
+
+.mobile-nav a:last-child {
+    border-bottom: none;
+}
+
+.mobile-nav a:hover {
+    color: var(--color-accent);
+    padding-left: var(--spacing-sm);
+}
+
+/* Mobile Overlay Background */
+.mobile-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-backdrop);
+    z-index: calc(var(--z-max) - 1);
+}
+
+.mobile-overlay.show {
+    display: block;
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+@media (max-width: 968px) {
+    .nav-links {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .header-search {
+        max-width: 36px;
+    }
+
+    .header-search.expanded {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-info {
+        font-size: var(--font-size-xs);
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .header-nav .container {
+        padding: var(--spacing-sm) var(--spacing-md);
+        gap: var(--spacing-sm);
+    }
+
+    .header-logo {
+        font-size: var(--font-size-xl);
+    }
+
+    .header-logo img {
+        height: 40px;
+    }
+
+    body.homepage {
+        padding-top: var(--header-height-mobile, 100px);
+    }
+
+    .header-actions {
+        gap: var(--spacing-xs);
+    }
+}
+
+@media (max-width: 480px) {
+    .header-search.expanded {
+        max-width: 150px;
+    }
+
+    .theme-toggle,
+    .cart-btn,
+    .user-btn {
+        width: 36px;
+        height: 36px;
+        padding: var(--spacing-xs);
+    }
+
+    /* Ocultar algunos botones en pantallas muy pequeñas */
+    .theme-toggle {
+        display: none;
+    }
+}

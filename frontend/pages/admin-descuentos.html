@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Descuentos | Mi Tienda</title>
+    <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <style>
+        .admin-container {
+            margin-top: var(--header-height);
+            padding: var(--spacing-xl) 0;
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .admin-nav a {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            color: var(--color-text);
+            font-size: var(--font-size-sm);
+        }
+
+        .admin-nav a.active {
+            background: var(--color-primary);
+            color: var(--color-text-inverse);
+            border-color: var(--color-primary);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .admin-table th {
+            background: var(--color-background-alt);
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+        }
+
+        .status-badge {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: var(--z-modal);
+            padding: var(--spacing-lg);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            width: 100%;
+            max-width: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo"><a href="../index.html"><img src="../images/logo-placeholder.svg" width="48" height="48" alt="Mi Tienda"></a></div>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-xl); flex-wrap: wrap; gap: var(--spacing-md);">
+                <h1>Códigos de Descuento</h1>
+                <button class="btn btn-primary" onclick="openModal()">+ Nuevo Código</button>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="admin.html">Pedidos</a>
+                <a href="admin-productos.html">Productos</a>
+                <a href="admin-avisos.html">Avisos</a>
+                <a href="admin-descuentos.html" class="active">Descuentos</a>
+            </nav>
+
+            <div id="codesContainer" style="overflow-x: auto;">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal" id="codeModal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: var(--spacing-lg);" id="modalTitle">Nuevo Código</h2>
+            <form id="codeForm">
+                <input type="hidden" id="editingCode">
+                <div class="form-group">
+                    <label class="form-label">Código *</label>
+                    <input type="text" class="form-input" id="codeValue" required style="text-transform: uppercase;">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tipo de descuento</label>
+                    <select class="form-select" id="discountType">
+                        <option value="percentage">Porcentaje (%)</option>
+                        <option value="fixed">Monto fijo ($)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Valor del descuento *</label>
+                    <input type="number" class="form-input" id="discountValue" required min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Compra mínima ($)</label>
+                    <input type="number" class="form-input" id="minPurchase" value="0" min="0">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Usos máximos (vacío = ilimitado)</label>
+                    <input type="number" class="form-input" id="maxUses" min="1">
+                </div>
+                <div class="form-group">
+                    <label style="display: flex; align-items: center; gap: var(--spacing-sm);">
+                        <input type="checkbox" id="codeActive" checked> Activo
+                    </label>
+                </div>
+                <div style="display: flex; gap: var(--spacing-md);">
+                    <button type="submit" class="btn btn-primary" style="flex:1;">Guardar</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        if (!requireAdmin()) { }
+        let isEditing = false;
+
+        async function loadCodes() {
+            const container = document.getElementById('codesContainer');
+            try {
+                const result = await api.adminListDiscountCodes();
+                const codes = result.codes || [];
+                if (!codes.length) {
+                    container.innerHTML = '<div class="empty-state"><p>No hay códigos de descuento</p></div>';
+                    return;
+                }
+                container.innerHTML = `
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Descuento</th>
+                                <th>Mín. compra</th>
+                                <th>Usos</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${codes.map(c => `
+                                <tr>
+                                    <td><strong>${c.code}</strong></td>
+                                    <td>${c.discount_type === 'percentage' ? c.discount_value + '%' : formatPrice(c.discount_value)}</td>
+                                    <td>${c.min_purchase ? formatPrice(c.min_purchase) : '-'}</td>
+                                    <td>${c.uses_count || 0}${c.max_uses ? '/' + c.max_uses : ''}</td>
+                                    <td><span class="status-badge ${c.active ? 'status-active' : 'status-inactive'}">${c.active ? 'Activo' : 'Inactivo'}</span></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline" onclick='editCode(${JSON.stringify(c)})'>Editar</button>
+                                        <button class="btn btn-sm" style="background:var(--color-error);color:white;" onclick="deleteCode('${c.code}')">Eliminar</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            } catch (error) {
+                container.innerHTML = '<p>Error al cargar códigos</p>';
+            }
+        }
+
+        function openModal() {
+            isEditing = false;
+            document.getElementById('modalTitle').textContent = 'Nuevo Código';
+            document.getElementById('codeForm').reset();
+            document.getElementById('codeValue').disabled = false;
+            document.getElementById('codeActive').checked = true;
+            document.getElementById('codeModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('codeModal').classList.remove('active');
+        }
+
+        function editCode(code) {
+            isEditing = true;
+            document.getElementById('modalTitle').textContent = 'Editar Código';
+            document.getElementById('editingCode').value = code.code;
+            document.getElementById('codeValue').value = code.code;
+            document.getElementById('codeValue').disabled = true;
+            document.getElementById('discountType').value = code.discount_type || 'percentage';
+            document.getElementById('discountValue').value = code.discount_value;
+            document.getElementById('minPurchase').value = code.min_purchase || 0;
+            document.getElementById('maxUses').value = code.max_uses || '';
+            document.getElementById('codeActive').checked = code.active;
+            document.getElementById('codeModal').classList.add('active');
+        }
+
+        async function deleteCode(code) {
+            if (!confirm('¿Eliminar este código?')) return;
+            try {
+                await api.adminDeleteDiscountCode(code);
+                showNotification('Código eliminado', 'success');
+                loadCodes();
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        document.getElementById('codeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                code: document.getElementById('codeValue').value.toUpperCase(),
+                discount_type: document.getElementById('discountType').value,
+                discount_value: parseFloat(document.getElementById('discountValue').value),
+                min_purchase: parseFloat(document.getElementById('minPurchase').value) || 0,
+                max_uses: document.getElementById('maxUses').value ? parseInt(document.getElementById('maxUses').value) : null,
+                active: document.getElementById('codeActive').checked
+            };
+            try {
+                if (isEditing) {
+                    const editingCode = document.getElementById('editingCode').value;
+                    await api.adminUpdateDiscountCode(editingCode, data);
+                    showNotification('Código actualizado', 'success');
+                } else {
+                    await api.adminCreateDiscountCode(data);
+                    showNotification('Código creado', 'success');
+                }
+                closeModal();
+                loadCodes();
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        });
+
+        loadCodes();
+    </script>
+</body>
+
+</html>

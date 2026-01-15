@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado del Pago | Mi Tienda</title>
+    <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <style>
+        .resultado-container {
+            margin-top: var(--header-height);
+            min-height: calc(100vh - var(--header-height) - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-2xl);
+        }
+
+        .resultado-card {
+            text-align: center;
+            max-width: 500px;
+            background: var(--color-surface);
+            padding: var(--spacing-3xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .resultado-icon {
+            font-size: 64px;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .resultado-title {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .resultado-details {
+            background: var(--color-background-alt);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            margin: var(--spacing-xl) 0;
+            text-align: left;
+        }
+
+        .resultado-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+        }
+
+        .success {
+            color: var(--color-success);
+        }
+
+        .error {
+            color: var(--color-error);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo" style="position: static; transform: none;">
+                <a href="../index.html"><img src="../images/logo-placeholder.svg" width="48" height="48" alt="Mi Tienda"></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="resultado-container">
+        <div class="resultado-card" id="resultadoCard">
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+            <p>Procesando pago...</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 Mi Tienda</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        const card = document.getElementById('resultadoCard');
+        const urlParams = new URLSearchParams(window.location.search);
+
+        async function processPayment() {
+            const token = urlParams.get('token_ws');
+            const status = urlParams.get('status');
+
+            if (status === 'cancelled') {
+                showCancelled();
+                return;
+            }
+
+            if (status === 'error') {
+                showError('Ocurrió un error al procesar el pago');
+                return;
+            }
+
+            if (!token) {
+                showError('Token de pago no encontrado');
+                return;
+            }
+
+            try {
+                const result = await api.webpayCommit(token);
+
+                if (result.success) {
+                    showSuccess(result);
+                    cart.clear(); // Limpiar carrito
+                } else {
+                    showError(result.message || 'Pago rechazado');
+                }
+            } catch (error) {
+                showError(error.message || 'Error al procesar el pago');
+            }
+        }
+
+        function showSuccess(data) {
+            card.innerHTML = `
+                <div class="resultado-icon success">✓</div>
+                <h1 class="resultado-title success">¡Pago Exitoso!</h1>
+                <p>Tu pedido ha sido confirmado.</p>
+                
+                <div class="resultado-details">
+                    <div class="resultado-row">
+                        <span>Orden:</span>
+                        <strong>#${data.order_id || data.buy_order}</strong>
+                    </div>
+                    <div class="resultado-row">
+                        <span>Monto:</span>
+                        <strong>${formatPrice(data.amount)}</strong>
+                    </div>
+                    ${data.authorization_code ? `
+                    <div class="resultado-row">
+                        <span>Código autorización:</span>
+                        <strong>${data.authorization_code}</strong>
+                    </div>
+                    ` : ''}
+                    ${data.card_detail?.card_number ? `
+                    <div class="resultado-row">
+                        <span>Tarjeta:</span>
+                        <strong>**** ${data.card_detail.card_number}</strong>
+                    </div>
+                    ` : ''}
+                </div>
+                
+                <p style="font-size: var(--font-size-sm); color: var(--color-text-light); margin-bottom: var(--spacing-xl);">
+                    Te enviaremos un email con los detalles de tu pedido.
+                </p>
+                
+                <a href="../index.html" class="btn btn-primary">Volver al Inicio</a>
+            `;
+        }
+
+        function showError(message) {
+            card.innerHTML = `
+                <div class="resultado-icon error">✗</div>
+                <h1 class="resultado-title error">Pago No Procesado</h1>
+                <p>${escapeHtml(message)}</p>
+                <p style="margin: var(--spacing-xl) 0; font-size: var(--font-size-sm); color: var(--color-text-light);">
+                    Tu carrito sigue guardado. Puedes intentar nuevamente.
+                </p>
+                <a href="carrito.html" class="btn btn-primary">Volver al Carrito</a>
+            `;
+        }
+
+        function showCancelled() {
+            card.innerHTML = `
+                <div class="resultado-icon" style="color: var(--color-warning);">↩</div>
+                <h1 class="resultado-title">Pago Cancelado</h1>
+                <p>Has cancelado el proceso de pago.</p>
+                <p style="margin: var(--spacing-xl) 0; font-size: var(--font-size-sm); color: var(--color-text-light);">
+                    Tu carrito sigue guardado. Puedes completar tu compra cuando quieras.
+                </p>
+                <a href="carrito.html" class="btn btn-primary">Volver al Carrito</a>
+            `;
+        }
+
+        processPayment();
+    </script>
+</body>
+
+</html>

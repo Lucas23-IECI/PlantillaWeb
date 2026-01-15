@@ -1,0 +1,445 @@
+/* ===================================
+   SISTEMA DE DISEÑO - VARIABLES CSS
+   Tokens unificados para todo el sitio
+   
+   Basado en: OpticaDanniels + WildGarden
+   
+   CÓMO PERSONALIZAR:
+   1. Cambia los colores en :root para light mode
+   2. Cambia los colores en [data-theme="dark"] para dark mode
+   3. Las variables semánticas se actualizan automáticamente
+=================================== */
+
+:root {
+   /* ===================================
+       COLORES BASE (Cambia estos primero)
+    =================================== */
+
+   /* Colores de marca */
+   --hue-primary: 230;
+   /* Azul */
+   --hue-accent: 350;
+   /* Rosa/Rojo */
+   --hue-success: 145;
+   /* Verde */
+
+   /* Paleta primaria */
+   --color-primary: hsl(var(--hue-primary), 35%, 15%);
+   /* #1a1a2e */
+   --color-primary-light: hsl(var(--hue-primary), 30%, 22%);
+   /* #2d2d44 */
+   --color-primary-dark: hsl(var(--hue-primary), 40%, 8%);
+   /* #0f0f1a */
+
+   /* Paleta secundaria */
+   --color-secondary: hsl(var(--hue-primary), 20%, 35%);
+   /* #4a4a6a */
+
+   /* Paleta de acento */
+   --color-accent: hsl(var(--hue-accent), 80%, 55%);
+   /* #e94560 */
+   --color-accent-dark: hsl(var(--hue-accent), 70%, 50%);
+   /* #c73e54 */
+   --color-accent-light: hsl(var(--hue-accent), 85%, 65%);
+   /* #f06b83 */
+
+   /* Colores semánticos */
+   --color-success: #28a745;
+   --color-success-light: #34ce57;
+   --color-warning: #ffc107;
+   --color-warning-light: #ffcd39;
+   --color-error: #dc3545;
+   --color-error-light: #e4606d;
+   --color-info: #17a2b8;
+   --color-info-light: #3fc0d3;
+
+   /* WhatsApp y Redes Sociales */
+   --color-whatsapp: #25D366;
+   --color-facebook: #1877f2;
+   --color-instagram: #e1306c;
+   --color-twitter: #1da1f2;
+
+   /* ===================================
+       COLORES DE INTERFAZ - LIGHT MODE
+    =================================== */
+
+   /* Fondos */
+   --color-background: #ffffff;
+   --color-background-alt: #f8f9fa;
+   --color-surface: #ffffff;
+   --color-surface-hover: #f5f5f5;
+   --color-surface-active: #ebebeb;
+
+   /* Textos */
+   --color-text: #1a1a2e;
+   --color-text-light: #6c757d;
+   --color-text-muted: #adb5bd;
+   --color-text-inverse: #ffffff;
+
+   /* Bordes */
+   --color-border: #dee2e6;
+   --color-border-light: #e9ecef;
+   --color-border-dark: #adb5bd;
+   --color-border-focus: var(--color-primary);
+
+   /* Overlays */
+   --color-overlay: rgba(26, 26, 46, 0.95);
+   --color-overlay-light: rgba(26, 26, 46, 0.5);
+   --color-backdrop: rgba(0, 0, 0, 0.5);
+
+   /* ===================================
+       NAVBAR Y HEADER
+    =================================== */
+   --color-header-bg: var(--color-surface);
+   --color-header-text: var(--color-text);
+   --color-header-border: var(--color-border);
+   --color-header-info-bg: var(--color-primary);
+   --color-header-info-text: var(--color-text-inverse);
+
+   --color-nav-link: var(--color-text);
+   --color-nav-link-hover: var(--color-accent);
+   --color-nav-link-active: var(--color-accent);
+
+   /* ===================================
+       BOTONES
+    =================================== */
+   --btn-primary-bg: var(--color-primary);
+   --btn-primary-text: var(--color-text-inverse);
+   --btn-primary-hover: var(--color-primary-light);
+
+   --btn-secondary-bg: var(--color-secondary);
+   --btn-secondary-text: var(--color-text-inverse);
+   --btn-secondary-hover: hsl(var(--hue-primary), 25%, 40%);
+
+   --btn-accent-bg: var(--color-accent);
+   --btn-accent-text: var(--color-text-inverse);
+   --btn-accent-hover: var(--color-accent-dark);
+
+   --btn-outline-border: var(--color-primary);
+   --btn-outline-text: var(--color-primary);
+   --btn-outline-hover-bg: var(--color-primary);
+   --btn-outline-hover-text: var(--color-text-inverse);
+
+   /* ===================================
+       CARDS Y SUPERFICIES
+    =================================== */
+   --card-bg: var(--color-surface);
+   --card-border: var(--color-border);
+   --card-shadow: var(--shadow-sm);
+   --card-shadow-hover: var(--shadow-md);
+
+   /* ===================================
+       INPUTS Y FORMULARIOS
+    =================================== */
+   --input-bg: var(--color-surface);
+   --input-text: var(--color-text);
+   --input-placeholder: var(--color-text-muted);
+   --input-border: var(--color-border);
+   --input-border-focus: var(--color-primary);
+   --input-shadow-focus: 0 0 0 3px rgba(26, 26, 46, 0.1);
+
+   /* ===================================
+       SOMBRAS
+    =================================== */
+   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.12);
+   --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.15);
+   --shadow-2xl: 0 25px 60px rgba(0, 0, 0, 0.2);
+
+   /* Sombras de color */
+   --shadow-primary: 0 4px 14px rgba(26, 26, 46, 0.25);
+   --shadow-accent: 0 4px 14px rgba(233, 69, 96, 0.25);
+   --shadow-success: 0 4px 14px rgba(40, 167, 69, 0.25);
+
+   /* ===================================
+       TIPOGRAFÍA
+    =================================== */
+   --font-primary: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+   --font-secondary: Georgia, 'Times New Roman', serif;
+   --font-mono: 'SF Mono', Monaco, Consolas, 'Liberation Mono', monospace;
+
+   /* Escala tipográfica */
+   --font-size-xs: 0.75rem;
+   /* 12px */
+   --font-size-sm: 0.875rem;
+   /* 14px */
+   --font-size-base: 1rem;
+   /* 16px */
+   --font-size-lg: 1.125rem;
+   /* 18px */
+   --font-size-xl: 1.25rem;
+   /* 20px */
+   --font-size-2xl: 1.5rem;
+   /* 24px */
+   --font-size-3xl: 1.875rem;
+   /* 30px */
+   --font-size-4xl: 2.25rem;
+   /* 36px */
+   --font-size-5xl: 3rem;
+   /* 48px */
+   --font-size-6xl: 3.75rem;
+   /* 60px */
+
+   /* Pesos */
+   --font-weight-normal: 400;
+   --font-weight-medium: 500;
+   --font-weight-semibold: 600;
+   --font-weight-bold: 700;
+
+   /* Line heights */
+   --line-height-tight: 1.25;
+   --line-height-normal: 1.5;
+   --line-height-relaxed: 1.75;
+
+   /* ===================================
+       ESPACIADO
+    =================================== */
+   --spacing-0: 0;
+   --spacing-xs: 0.25rem;
+   /* 4px */
+   --spacing-sm: 0.5rem;
+   /* 8px */
+   --spacing-md: 1rem;
+   /* 16px */
+   --spacing-lg: 1.5rem;
+   /* 24px */
+   --spacing-xl: 2rem;
+   /* 32px */
+   --spacing-2xl: 2.5rem;
+   /* 40px */
+   --spacing-3xl: 3rem;
+   /* 48px */
+   --spacing-4xl: 4rem;
+   /* 64px */
+   --spacing-5xl: 5rem;
+   /* 80px */
+
+   /* ===================================
+       BORDES
+    =================================== */
+   --radius-none: 0;
+   --radius-sm: 0.25rem;
+   /* 4px */
+   --radius-md: 0.5rem;
+   /* 8px */
+   --radius-lg: 0.75rem;
+   /* 12px */
+   --radius-xl: 1rem;
+   /* 16px */
+   --radius-2xl: 1.5rem;
+   /* 24px */
+   --radius-full: 9999px;
+
+   /* ===================================
+       TRANSICIONES
+    =================================== */
+   --transition-fast: 150ms ease;
+   --transition-normal: 300ms ease;
+   --transition-slow: 500ms ease;
+   --transition-bounce: 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+   /* ===================================
+       LAYOUT
+    =================================== */
+   --max-width: 1400px;
+   --max-width-content: 800px;
+   --max-width-narrow: 600px;
+   --header-height: 120px;
+   --header-height-mobile: 100px;
+   --footer-min-height: 300px;
+   --sidebar-width: 280px;
+
+   /* ===================================
+       Z-INDEX
+    =================================== */
+   --z-dropdown: 100;
+   --z-sticky: 200;
+   --z-fixed: 300;
+   --z-modal-backdrop: 400;
+   --z-modal: 500;
+   --z-popover: 600;
+   --z-tooltip: 700;
+   --z-toast: 800;
+   --z-notification: 900;
+   --z-max: 9999;
+}
+
+/* ===================================
+   DARK MODE
+   Se activa con [data-theme="dark"]
+=================================== */
+
+[data-theme="dark"] {
+   /* Fondos oscuros */
+   --color-background: #0f0f1a;
+   --color-background-alt: #1a1a2e;
+   --color-surface: #1e1e30;
+   --color-surface-hover: #26263b;
+   --color-surface-active: #2d2d44;
+
+   /* Textos claros */
+   --color-text: #e8e8ec;
+   --color-text-light: #a0a0b0;
+   --color-text-muted: #6c6c7c;
+   --color-text-inverse: #ffffff;
+
+   /* Bordes oscuros */
+   --color-border: #2d2d44;
+   --color-border-light: #3a3a52;
+   --color-border-dark: #4a4a6a;
+
+   /* Overlays */
+   --color-overlay: rgba(0, 0, 0, 0.95);
+   --color-backdrop: rgba(0, 0, 0, 0.75);
+
+   /* Header dark */
+   --color-header-bg: var(--color-surface);
+   --color-header-border: var(--color-border);
+   --color-header-info-bg: var(--color-primary-light);
+
+   /* Botones dark - más contraste */
+   --btn-primary-bg: var(--color-accent);
+   --btn-primary-hover: var(--color-accent-dark);
+   --btn-outline-border: var(--color-text-light);
+   --btn-outline-text: var(--color-text);
+   --btn-outline-hover-bg: var(--color-surface-hover);
+   --btn-outline-hover-text: var(--color-text);
+
+   /* Cards dark */
+   --card-bg: var(--color-surface);
+   --card-border: var(--color-border);
+
+   /* Inputs dark */
+   --input-bg: var(--color-surface-hover);
+   --input-text: var(--color-text);
+   --input-border: var(--color-border);
+   --input-border-focus: var(--color-accent);
+   --input-shadow-focus: 0 0 0 3px rgba(233, 69, 96, 0.2);
+
+   /* Sombras más intensas en dark */
+   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+   --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+   --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+/* Auto dark mode basado en preferencia del sistema */
+@media (prefers-color-scheme: dark) {
+   :root:not([data-theme="light"]) {
+      /* Aplicar dark mode automáticamente si no hay preferencia explícita de light */
+      --color-background: #0f0f1a;
+      --color-background-alt: #1a1a2e;
+      --color-surface: #1e1e30;
+      --color-surface-hover: #26263b;
+      --color-surface-active: #2d2d44;
+
+      --color-text: #e8e8ec;
+      --color-text-light: #a0a0b0;
+      --color-text-muted: #6c6c7c;
+
+      --color-border: #2d2d44;
+      --color-border-light: #3a3a52;
+      --color-border-dark: #4a4a6a;
+
+      --color-header-bg: var(--color-surface);
+      --color-header-border: var(--color-border);
+      --color-header-info-bg: #2d2d44;
+
+      --card-bg: #1e1e30;
+      --card-border: #2d2d44;
+
+      --input-bg: #26263b;
+      --input-border: #2d2d44;
+
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+   }
+}
+
+/* ===================================
+   THEME TOGGLE BUTTON
+   Funciona con #themeToggle o .theme-toggle
+=================================== */
+
+#themeToggle,
+.theme-toggle,
+.theme-toggle-btn {
+   background: transparent;
+   border: none;
+   color: var(--color-text);
+   cursor: pointer;
+   padding: var(--spacing-sm);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: var(--radius-full);
+   transition: background-color var(--transition-fast), color var(--transition-fast);
+   width: 40px;
+   height: 40px;
+}
+
+#themeToggle:hover,
+.theme-toggle:hover,
+.theme-toggle-btn:hover {
+   background-color: var(--color-surface-hover);
+}
+
+/* Iconos Sol/Luna - Por defecto mostrar sol */
+#themeToggle .icon-sun,
+.theme-toggle .icon-sun,
+.theme-toggle-btn .icon-sun {
+   display: block !important;
+}
+
+#themeToggle .icon-moon,
+.theme-toggle .icon-moon,
+.theme-toggle-btn .icon-moon {
+   display: none !important;
+}
+
+/* En dark mode mostrar luna */
+[data-theme="dark"] #themeToggle .icon-sun,
+[data-theme="dark"] .theme-toggle .icon-sun,
+[data-theme="dark"] .theme-toggle-btn .icon-sun {
+   display: none !important;
+}
+
+[data-theme="dark"] #themeToggle .icon-moon,
+[data-theme="dark"] .theme-toggle .icon-moon,
+[data-theme="dark"] .theme-toggle-btn .icon-moon {
+   display: block !important;
+}
+
+/* Auto dark mode: si sistema prefiere dark y no hay override light */
+@media (prefers-color-scheme: dark) {
+
+   :root:not([data-theme="light"]) #themeToggle .icon-sun,
+   :root:not([data-theme="light"]) .theme-toggle .icon-sun,
+   :root:not([data-theme="light"]) .theme-toggle-btn .icon-sun {
+      display: none;
+   }
+
+   :root:not([data-theme="light"]) #themeToggle .icon-moon,
+   :root:not([data-theme="light"]) .theme-toggle .icon-moon,
+   :root:not([data-theme="light"]) .theme-toggle-btn .icon-moon {
+      display: block;
+   }
+}
+
+/* ===================================
+   TRANSICIÓN GLOBAL DE TEMA
+   Suaviza el cambio entre light/dark
+=================================== */
+
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+   transition: background-color 300ms ease,
+      color 300ms ease,
+      border-color 300ms ease,
+      box-shadow 300ms ease !important;
+}

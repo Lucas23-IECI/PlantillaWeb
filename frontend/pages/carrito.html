@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito | Mi Tienda</title>
+    <meta name="description" content="Tu carrito de compras en Mi Tienda.">
+    <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <style>
+        .carrito-container {
+            margin-top: var(--header-height);
+            padding: var(--spacing-2xl) 0;
+        }
+
+        .carrito-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: var(--spacing-2xl);
+        }
+
+        @media (max-width: 768px) {
+            .carrito-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .carrito-items {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+        }
+
+        .carrito-item {
+            display: flex;
+            gap: var(--spacing-lg);
+            padding: var(--spacing-lg) 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .carrito-item:last-child {
+            border-bottom: none;
+        }
+
+        .carrito-item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .carrito-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carrito-item-info {
+            flex: 1;
+        }
+
+        .carrito-item-name {
+            font-weight: 500;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .carrito-item-price {
+            color: var(--color-text-light);
+            font-size: var(--font-size-sm);
+        }
+
+        .carrito-item-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--color-border);
+            background: var(--color-surface);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+        }
+
+        .qty-input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            padding: var(--spacing-xs);
+        }
+
+        .carrito-item-remove {
+            background: none;
+            border: none;
+            color: var(--color-error);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            margin-left: auto;
+        }
+
+        .carrito-summary {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            position: sticky;
+            top: calc(var(--header-height) + 20px);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .summary-total {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            border-top: 1px solid var(--color-border);
+            padding-top: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .discount-input {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .discount-input input {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="logo">
+                <a href="../index.html"><img src="../images/logo-placeholder.svg" width="48" height="48" alt="Mi Tienda"></a>
+            </div>
+            <div class="header-actions">
+                <button class="cart-btn" aria-label="Carrito">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M3 3h2l.4 2M5.4 5h12.3l-1.7 8H7L5.4 5z" stroke="currentColor" stroke-width="1.5" />
+                        <circle cx="8" cy="18" r="1" fill="currentColor" />
+                        <circle cx="16" cy="18" r="1" fill="currentColor" />
+                    </svg>
+                    <span class="cart-badge" style="display: none;">0</span>
+                </button>
+            </div>
+        </div>
+        <nav class="nav-menu" id="navMenu">
+            <ul class="nav-links">
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="carrito-container">
+        <div class="container">
+            <h1 class="section-title">Tu Carrito</h1>
+            <div class="carrito-grid">
+                <div class="carrito-items" id="carritoItems">
+                    <!-- Items render here -->
+                </div>
+                <div class="carrito-summary">
+                    <h3 style="margin-bottom: var(--spacing-lg);">Resumen</h3>
+                    <div class="discount-input">
+                        <input type="text" class="form-input" id="discountCode" placeholder="Código de descuento">
+                        <button class="btn btn-outline btn-sm" id="applyDiscount">Aplicar</button>
+                    </div>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">$0</span>
+                    </div>
+                    <div class="summary-row" id="discountRow" style="display: none;">
+                        <span>Descuento</span>
+                        <span id="discountAmount">-$0</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span id="total">$0</span>
+                    </div>
+                    <button class="btn btn-accent" style="width: 100%; margin-top: var(--spacing-lg);" id="checkoutBtn">
+                        Proceder al Pago
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 Mi Tienda</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        let appliedDiscount = 0;
+        let discountCode = null;
+
+        function renderCarrito() {
+            const container = document.getElementById('carritoItems');
+            const items = cart.getAll();
+
+            if (items.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🛒</div>
+                        <h3 class="empty-state-title">Tu carrito está vacío</h3>
+                        <p class="empty-state-text">Agrega productos para continuar</p>
+                        <a href="productos.html" class="btn btn-primary">Ver Productos</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = items.map(item => `
+                <div class="carrito-item" data-id="${item.product_id}">
+                    <div class="carrito-item-image">
+                        <img src="${item.image_url || '../images/products/placeholder.png'}" alt="${escapeHtml(item.name)}">
+                    </div>
+                    <div class="carrito-item-info">
+                        <div class="carrito-item-name">${escapeHtml(item.name)}</div>
+                        <div class="carrito-item-price">${formatPrice(item.price)}</div>
+                        <div class="carrito-item-actions">
+                            <button class="qty-btn" onclick="updateQty('${item.product_id}', -1)">-</button>
+                            <input type="number" class="qty-input" value="${item.quantity}" min="1" 
+                                onchange="setQty('${item.product_id}', this.value)">
+                            <button class="qty-btn" onclick="updateQty('${item.product_id}', 1)">+</button>
+                            <button class="carrito-item-remove" onclick="removeItem('${item.product_id}')">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            updateSummary();
+        }
+
+        function updateQty(id, delta) {
+            const item = cart.getAll().find(i => i.product_id === id);
+            if (item) {
+                cart.updateQuantity(id, item.quantity + delta);
+                renderCarrito();
+            }
+        }
+
+        function setQty(id, value) {
+            cart.updateQuantity(id, parseInt(value) || 1);
+            renderCarrito();
+        }
+
+        function removeItem(id) {
+            cart.remove(id);
+            renderCarrito();
+        }
+
+        function updateSummary() {
+            const subtotal = cart.getSubtotal();
+            const total = cart.getTotal(appliedDiscount);
+
+            document.getElementById('subtotal').textContent = formatPrice(subtotal);
+            document.getElementById('total').textContent = formatPrice(total);
+
+            if (appliedDiscount > 0) {
+                document.getElementById('discountRow').style.display = 'flex';
+                document.getElementById('discountAmount').textContent = '-' + formatPrice(appliedDiscount);
+            } else {
+                document.getElementById('discountRow').style.display = 'none';
+            }
+        }
+
+        document.getElementById('applyDiscount').addEventListener('click', async () => {
+            const code = document.getElementById('discountCode').value.trim();
+            if (!code) return;
+
+            try {
+                const result = await api.validateDiscountCode(code);
+                if (result.valid) {
+                    discountCode = result.code;
+                    const subtotal = cart.getSubtotal();
+
+                    if (result.discount_type === 'percentage') {
+                        appliedDiscount = Math.round(subtotal * (result.discount_value / 100));
+                    } else {
+                        appliedDiscount = result.discount_value;
+                    }
+
+                    updateSummary();
+                    showNotification(`Código ${result.code} aplicado: ${result.discount_value}${result.discount_type === 'percentage' ? '%' : ''} de descuento`, 'success');
+                }
+            } catch (error) {
+                showNotification(error.message || 'Código no válido', 'error');
+            }
+        });
+
+        document.getElementById('checkoutBtn').addEventListener('click', async () => {
+            if (!isLoggedIn()) {
+                showNotification('Debes iniciar sesión para continuar', 'warning');
+                setTimeout(() => window.location.href = 'login.html', 1000);
+                return;
+            }
+
+            if (cart.isEmpty()) {
+                showNotification('Tu carrito está vacío', 'error');
+                return;
+            }
+
+            try {
+                const result = await api.createTransaction({
+                    items: cart.getItemsForApi(),
+                    discount_code: discountCode,
+                    discount_amount: appliedDiscount
+                });
+
+                // Iniciar pago Webpay
+                const paymentResult = await api.webpayCreate(result.order_id);
+
+                // Redirigir a Webpay
+                if (paymentResult.url && paymentResult.token) {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = paymentResult.url;
+
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'token_ws';
+                    input.value = paymentResult.token;
+
+                    form.appendChild(input);
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            } catch (error) {
+                showNotification(error.message || 'Error al procesar el pago', 'error');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', renderCarrito);
+        document.addEventListener('cartUpdated', renderCarrito);
+    </script>
+</body>
+
+</html>

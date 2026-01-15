@@ -1,0 +1,328 @@
+/* ===================================
+   CARDS COMPONENT
+   Sistema de tarjetas unificado
+=================================== */
+
+/* ===================================
+   BASE CARD
+=================================== */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+}
+
+.card:hover {
+    box-shadow: var(--card-shadow-hover);
+}
+
+/* ===================================
+   CARD INTERACTIVA
+=================================== */
+.card-interactive {
+    cursor: pointer;
+}
+
+.card-interactive:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===================================
+   CARD STRUCTURE
+=================================== */
+.card-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--card-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+}
+
+.card-body {
+    padding: var(--spacing-lg);
+}
+
+.card-footer {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-top: 1px solid var(--card-border);
+    background-color: var(--color-background-alt);
+}
+
+.card-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin: 0;
+}
+
+.card-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    margin-top: var(--spacing-xs);
+}
+
+.card-text {
+    color: var(--color-text-light);
+    line-height: var(--line-height-relaxed);
+}
+
+/* ===================================
+   CARD IMAGE
+=================================== */
+.card-image {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background-color: var(--color-background-alt);
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.card-interactive:hover .card-image img {
+    transform: scale(1.05);
+}
+
+.card-image-square {
+    aspect-ratio: 1/1;
+}
+
+.card-image-portrait {
+    aspect-ratio: 3/4;
+}
+
+/* ===================================
+   CARD BADGES
+=================================== */
+.card-badge {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--color-accent);
+    color: var(--color-text-inverse);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-full);
+    z-index: 1;
+}
+
+.card-badge-success {
+    background-color: var(--color-success);
+}
+
+.card-badge-warning {
+    background-color: var(--color-warning);
+    color: var(--color-text);
+}
+
+.card-badge-error {
+    background-color: var(--color-error);
+}
+
+/* ===================================
+   PRODUCTO CARD
+=================================== */
+.producto-card {
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--card-border);
+}
+
+.producto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.producto-image {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    background-color: var(--color-background-alt);
+}
+
+.producto-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.producto-card:hover .producto-image img {
+    transform: scale(1.08);
+}
+
+.producto-badge {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: var(--color-accent);
+    color: var(--color-text-inverse);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    border-radius: var(--radius-full);
+}
+
+.producto-info {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    flex: 1;
+}
+
+.producto-categoria {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.producto-nombre {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin: 0;
+    line-height: var(--line-height-tight);
+}
+
+.producto-precio {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: auto;
+}
+
+.precio-actual {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-accent);
+}
+
+.precio-original {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+}
+
+.producto-btn {
+    margin-top: var(--spacing-md);
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.producto-btn:hover {
+    background-color: var(--color-primary-light);
+}
+
+/* ===================================
+   FEATURE CARD
+=================================== */
+.feature-card {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background-color: var(--card-bg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--card-border);
+    transition: all var(--transition-normal);
+}
+
+.feature-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+}
+
+.feature-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background-color: var(--color-background-alt);
+    border-radius: var(--radius-full);
+    color: var(--color-accent);
+}
+
+.feature-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-sm);
+}
+
+.feature-text {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+}
+
+/* ===================================
+   VARIANTES DE TAMAÑO
+=================================== */
+.card-compact .card-header,
+.card-compact .card-body,
+.card-compact .card-footer {
+    padding: var(--spacing-md);
+}
+
+.card-large .card-header,
+.card-large .card-body {
+    padding: var(--spacing-xl);
+}
+
+/* ===================================
+   VARIANTES DE ESTILO
+=================================== */
+.card-flat {
+    box-shadow: none;
+    border: 2px solid var(--card-border);
+}
+
+.card-elevated {
+    box-shadow: var(--shadow-lg);
+    border: none;
+}
+
+.card-elevated:hover {
+    box-shadow: var(--shadow-xl);
+}
+
+/* ===================================
+   DARK MODE
+=================================== */
+[data-theme="dark"] .card,
+[data-theme="dark"] .producto-card,
+[data-theme="dark"] .feature-card {
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+}
+
+[data-theme="dark"] .card-footer {
+    background-color: var(--color-surface-hover);
+}
+
+[data-theme="dark"] .feature-icon {
+    background-color: var(--color-surface-hover);
+}

@@ -1,0 +1,306 @@
+/* ===================================
+   PÁGINA NOSOTROS (QUIÉNES SOMOS)
+=================================== */
+
+/* Hero */
+.nosotros-hero {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark, #1a1a2e) 100%);
+    color: var(--color-text-inverse);
+    padding: var(--spacing-3xl) 0;
+    text-align: center;
+}
+
+.nosotros-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: var(--spacing-sm);
+}
+
+.nosotros-hero .hero-subtitle {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+}
+
+/* Historia */
+.historia-section {
+    padding: var(--spacing-3xl) 0;
+}
+
+.historia-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: center;
+}
+
+.historia-text h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-primary);
+}
+
+.historia-text p {
+    font-size: var(--font-size-base);
+    line-height: 1.8;
+    color: var(--color-text-muted);
+    margin-bottom: var(--spacing-md);
+}
+
+.historia-image {
+    display: flex;
+    justify-content: center;
+}
+
+.imagen-placeholder {
+    width: 100%;
+    max-width: 400px;
+    aspect-ratio: 4/3;
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    color: var(--color-text-muted);
+    border: 2px dashed var(--color-border);
+}
+
+/* Misión, Visión, Objetivo */
+.mision-vision-section {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-background-alt);
+}
+
+.mvo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xl);
+}
+
+.mvo-card {
+    background: var(--color-surface);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-normal);
+}
+
+.mvo-card:hover {
+    transform: translateY(-5px);
+}
+
+.mvo-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-lg);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mision .mvo-icon {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.vision .mvo-icon {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    color: white;
+}
+
+.objetivo .mvo-icon {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: white;
+}
+
+.mvo-card h3 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-md);
+}
+
+.mvo-card p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+}
+
+/* Valores */
+.valores-section {
+    padding: var(--spacing-3xl) 0;
+}
+
+.valores-section h2 {
+    text-align: center;
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.valores-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.valor-item {
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+.valor-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--spacing-md);
+    border-radius: var(--radius-full);
+    background: var(--color-accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.valor-item h4 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-sm);
+}
+
+.valor-item p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* Por qué elegirnos */
+.porque-section {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-background-alt);
+}
+
+.porque-section h2 {
+    text-align: center;
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.porque-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xl);
+}
+
+.porque-item {
+    text-align: center;
+    padding: var(--spacing-lg);
+}
+
+.porque-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    opacity: 0.3;
+    margin-bottom: var(--spacing-sm);
+}
+
+.porque-item h4 {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-sm);
+}
+
+.porque-item p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* CTA */
+.nosotros-cta {
+    padding: var(--spacing-3xl) 0;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+    color: white;
+    text-align: center;
+}
+
+.nosotros-cta h2 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-sm);
+}
+
+.nosotros-cta p {
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+    margin-bottom: var(--spacing-xl);
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.cta-buttons .btn-outline {
+    border-color: white;
+    color: white;
+}
+
+.cta-buttons .btn-outline:hover {
+    background: white;
+    color: var(--color-primary);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .historia-content {
+        grid-template-columns: 1fr;
+    }
+
+    .mvo-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .valores-grid,
+    .porque-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+
+    .valores-grid,
+    .porque-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* ===================================
+   DARK MODE
+=================================== */
+[data-theme="dark"] .mvo-card {
+    background: var(--color-surface);
+    box-shadow: var(--shadow-lg);
+}
+
+[data-theme="dark"] .mvo-card h3 {
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .valor-item h4 {
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .porque-item h4 {
+    color: var(--color-text);
+}
+
+[data-theme="dark"] .imagen-placeholder {
+    background: var(--color-surface);
+    border-color: var(--color-border);
+}
+
+[data-theme="dark"] .cta-buttons .btn-outline:hover {
+    background: var(--color-surface);
+    color: var(--color-text);
+}

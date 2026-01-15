@@ -1,0 +1,81 @@
+/* ===================================
+   OVERLAYS
+   Search overlay, modals
+=================================== */
+
+/* ===== SEARCH OVERLAY ===== */
+.search-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--color-overlay, rgba(0, 0, 0, 0.95));
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+}
+
+.search-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.search-content {
+    width: 100%;
+    max-width: 600px;
+    padding: var(--spacing-2xl);
+}
+
+.search-input {
+    width: 100%;
+    padding: var(--spacing-lg);
+    font-size: var(--font-size-xl);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--color-text-inverse);
+    color: var(--color-text-inverse);
+    text-align: center;
+}
+
+.search-input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+.search-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--color-text-inverse);
+    font-size: 32px;
+    cursor: pointer;
+}
+
+/* ===== WHATSAPP FLOAT ===== */
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 56px;
+    height: 56px;
+    background: var(--color-whatsapp, #25D366);
+    color: var(--color-text-inverse);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    z-index: var(--z-fixed);
+    transition: transform var(--transition-normal);
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}

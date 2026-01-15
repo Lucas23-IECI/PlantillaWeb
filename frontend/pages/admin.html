@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración | Mi Tienda</title>
+    <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <style>
+        .admin-container {
+            margin-top: var(--header-height);
+            padding: var(--spacing-xl) 0;
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+            gap: var(--spacing-md);
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .admin-nav a {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            color: var(--color-text);
+            font-size: var(--font-size-sm);
+        }
+
+        .admin-nav a.active {
+            background: var(--color-primary);
+            color: var(--color-text-inverse);
+            border-color: var(--color-primary);
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: var(--spacing-md);
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .admin-table th {
+            background: var(--color-background-alt);
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+        }
+
+        .admin-table tr:hover {
+            background: var(--color-surface-hover);
+        }
+
+        .status-badge {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .action-btn {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: var(--font-size-xs);
+            margin-right: var(--spacing-xs);
+        }
+
+        .action-btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .action-btn-danger {
+            background: var(--color-error);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .admin-table {
+                font-size: var(--font-size-sm);
+            }
+
+            .admin-table th,
+            .admin-table td {
+                padding: var(--spacing-sm);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú"><span></span><span></span><span></span></button>
+            <div class="logo"><a href="../index.html"><img src="../images/logo-placeholder.svg" width="48" height="48" alt="Mi Tienda"></a></div>
+            <div class="header-actions">
+                <button class="cart-btn" aria-label="Carrito" onclick="location.href='carrito.html'">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M3 3h2l.4 2M5.4 5h12.3l-1.7 8H7L5.4 5z" stroke="currentColor" stroke-width="1.5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <nav class="nav-menu" id="navMenu">
+            <ul class="nav-links">
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="cuenta.html">Mi Cuenta</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="admin-container">
+        <div class="container">
+            <div class="admin-header">
+                <h1>Panel de Administración</h1>
+            </div>
+
+            <nav class="admin-nav">
+                <a href="admin.html" class="active">Pedidos</a>
+                <a href="admin-productos.html">Productos</a>
+                <a href="admin-avisos.html">Avisos</a>
+                <a href="admin-descuentos.html">Descuentos</a>
+            </nav>
+
+            <div id="ordersContainer">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        if (!requireAdmin()) { /* redirected */ }
+
+        const container = document.getElementById('ordersContainer');
+
+        async function loadOrders() {
+            try {
+                const result = await api.getAdminOrders();
+                const orders = result.orders || [];
+
+                if (orders.length === 0) {
+                    container.innerHTML = '<div class="empty-state"><p>No hay pedidos</p></div>';
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div style="overflow-x: auto;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Orden</th>
+                                    <th>Cliente</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${orders.map(order => `
+                                    <tr>
+                                        <td><strong>${order.order_id}</strong></td>
+                                        <td>${escapeHtml(order.customer_name || order.customer_email || 'N/A')}</td>
+                                        <td>${formatPrice(order.amount || order.total_amount)}</td>
+                                        <td><span class="status-badge status-${order.status}">${order.status}</span></td>
+                                        <td>${formatDateTime(order.createdAt)}</td>
+                                        <td>
+                                            <select class="action-btn" onchange="updateStatus('${order.order_id}', this.value)">
+                                                <option value="">Cambiar estado</option>
+                                                <option value="pending">Pendiente</option>
+                                                <option value="confirmed">Confirmado</option>
+                                                <option value="processing">Procesando</option>
+                                                <option value="shipped">Enviado</option>
+                                                <option value="delivered">Entregado</option>
+                                                <option value="cancelled">Cancelado</option>
+                                            </select>
+                                            <button class="action-btn action-btn-danger" onclick="deleteOrder('${order.order_id}')">Eliminar</button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            } catch (error) {
+                container.innerHTML = '<p>Error al cargar pedidos</p>';
+            }
+        }
+
+        async function updateStatus(orderId, status) {
+            if (!status) return;
+            try {
+                await api.adminUpdateOrderStatus(orderId, status);
+                showNotification('Estado actualizado', 'success');
+                loadOrders();
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        async function deleteOrder(orderId) {
+            if (!confirm('¿Eliminar este pedido?')) return;
+            try {
+                await api.adminDeleteOrder(orderId);
+                showNotification('Pedido eliminado', 'success');
+                loadOrders();
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        loadOrders();
+    </script>
+</body>
+
+</html>

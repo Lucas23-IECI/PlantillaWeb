@@ -1,0 +1,94 @@
+/* ===================================
+   SECTIONS
+   Hero, secciones genéricas, page headers
+=================================== */
+
+/* ===== HERO ===== */
+.hero {
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-4xl) var(--spacing-2xl);
+    background: var(--color-background-alt);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 800px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-subtitle {
+    font-size: var(--font-size-sm);
+    letter-spacing: 3px;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-md);
+    text-transform: uppercase;
+}
+
+.hero-title {
+    font-size: var(--font-size-5xl);
+    font-weight: 300;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.2;
+}
+
+.hero-description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-2xl);
+    font-weight: 300;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ===== SECCIONES ===== */
+.section {
+    padding: var(--spacing-4xl) 0;
+}
+
+.section-alt {
+    background: var(--color-background-alt);
+}
+
+.section-title {
+    font-size: var(--font-size-3xl);
+    font-weight: 400;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-3xl);
+    letter-spacing: 1px;
+}
+
+.section-title-center {
+    text-align: center;
+}
+
+/* ===== PAGE HEADER ===== */
+.page-header {
+    margin-top: var(--header-height);
+    text-align: center;
+    padding: var(--spacing-2xl) 0;
+    background: var(--color-background-alt);
+}
+
+.page-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.page-subtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+}
