@@ -1,230 +1,292 @@
+/* ===================================
+   BUTTONS - VELOCITY DESIGN
+   Bold, Dynamic, High-Impact
+=================================== */
+
+/* ===================================
+   BASE BUTTON
+=================================== */
 .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-lg);
-    font-family: var(--font-primary);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    line-height: 1.2;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    text-decoration: none;
-    border: 2px solid transparent;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all var(--transition-normal);
-    white-space: nowrap;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   gap: var(--spacing-sm);
+   padding: var(--spacing-md) var(--spacing-xl);
+   font-family: var(--font-primary);
+   font-size: var(--font-size-sm);
+   font-weight: var(--font-weight-semibold);
+   text-decoration: none;
+   border: none;
+   border-radius: var(--radius-xl);
+   cursor: pointer;
+   transition: all var(--transition-normal);
+   position: relative;
+   overflow: hidden;
+   white-space: nowrap;
 }
 
-.btn:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+.btn:disabled {
+   opacity: 0.5;
+   cursor: not-allowed;
+   transform: none !important;
 }
 
-.btn:disabled,
-.btn.disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none !important;
-    box-shadow: none !important;
+.btn svg {
+   width: 18px;
+   height: 18px;
+   flex-shrink: 0;
 }
 
+/* ===================================
+   PRIMARY BUTTON
+=================================== */
 .btn-primary {
-    background-color: var(--btn-primary-bg);
-    color: var(--btn-primary-text);
-    border-color: var(--btn-primary-bg);
+   background: var(--gradient-accent);
+   color: var(--color-text-inverse);
+   box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);
 }
 
-.btn-primary:hover:not(:disabled) {
-    background-color: var(--btn-primary-hover);
-    border-color: var(--btn-primary-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-primary);
+.btn-primary::before {
+   content: '';
+   position: absolute;
+   inset: 0;
+   background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+   opacity: 0;
+   transition: opacity var(--transition-fast);
 }
 
+.btn-primary:hover {
+   transform: translateY(-3px);
+   box-shadow: var(--shadow-accent-lg);
+}
+
+.btn-primary:hover::before {
+   opacity: 1;
+}
+
+.btn-primary:active {
+   transform: translateY(-1px);
+}
+
+/* ===================================
+   SECONDARY BUTTON
+=================================== */
 .btn-secondary {
-    background-color: var(--btn-secondary-bg);
-    color: var(--btn-secondary-text);
-    border-color: var(--btn-secondary-bg);
+   background: var(--color-primary);
+   color: var(--color-text-inverse);
+   box-shadow: var(--shadow-md);
 }
 
-.btn-secondary:hover:not(:disabled) {
-    background-color: var(--btn-secondary-hover);
-    border-color: var(--btn-secondary-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+.btn-secondary:hover {
+   background: var(--color-primary-light);
+   transform: translateY(-3px);
+   box-shadow: var(--shadow-primary);
 }
 
-.btn-accent {
-    background-color: var(--btn-accent-bg);
-    color: var(--btn-accent-text);
-    border-color: var(--btn-accent-bg);
-}
-
-.btn-accent:hover:not(:disabled) {
-    background-color: var(--btn-accent-hover);
-    border-color: var(--btn-accent-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-accent);
-}
-
-.btn-success {
-    background-color: var(--color-success);
-    color: var(--color-text-inverse);
-    border-color: var(--color-success);
-}
-
-.btn-success:hover:not(:disabled) {
-    background-color: var(--color-success-light);
-    border-color: var(--color-success-light);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-success);
-}
-
-.btn-danger {
-    background-color: var(--color-error);
-    color: var(--color-text-inverse);
-    border-color: var(--color-error);
-}
-
-.btn-danger:hover:not(:disabled) {
-    background-color: var(--color-error-light);
-    border-color: var(--color-error-light);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
+/* ===================================
+   OUTLINE BUTTON
+=================================== */
 .btn-outline {
-    background-color: transparent;
-    color: var(--btn-outline-text);
-    border-color: var(--btn-outline-border);
+   background: transparent;
+   color: var(--color-text-inverse);
+   border: 2px solid currentColor;
 }
 
-.btn-outline:hover:not(:disabled) {
-    background-color: var(--btn-outline-hover-bg);
-    color: var(--btn-outline-hover-text);
-    border-color: var(--btn-outline-hover-bg);
+.btn-outline:hover {
+   background: var(--color-text-inverse);
+   color: var(--color-primary);
+   transform: translateY(-3px);
+   box-shadow: var(--shadow-lg);
 }
 
+/* En modo scroll/light */
+.header-container.scrolled .btn-outline,
+.section .btn-outline,
+.footer .btn-outline {
+   color: var(--color-primary);
+   border-color: var(--color-primary);
+}
+
+.header-container.scrolled .btn-outline:hover,
+.section .btn-outline:hover {
+   background: var(--color-primary);
+   color: var(--color-text-inverse);
+}
+
+/* ===================================
+   GHOST BUTTON
+=================================== */
 .btn-ghost {
-    background-color: transparent;
-    color: var(--color-text);
-    border-color: transparent;
+   background: transparent;
+   color: var(--color-text);
+   border: none;
 }
 
-.btn-ghost:hover:not(:disabled) {
-    background-color: var(--color-surface-hover);
+.btn-ghost:hover {
+   background: var(--color-surface-hover);
+   color: var(--color-accent);
 }
 
-.btn-link {
-    background: transparent;
-    color: var(--color-accent);
-    border: none;
-    padding: 0;
-    text-transform: none;
-    font-weight: var(--font-weight-medium);
+/* ===================================
+   ACCENT BUTTON
+=================================== */
+.btn-accent {
+   background: var(--color-accent);
+   color: var(--color-text-inverse);
 }
 
-.btn-link:hover:not(:disabled) {
-    color: var(--color-accent-dark);
-    text-decoration: underline;
-    transform: none;
+.btn-accent:hover {
+   background: var(--color-accent-dark);
+   transform: translateY(-3px);
+   box-shadow: var(--shadow-accent);
 }
 
-.btn-xs {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-xs);
+/* ===================================
+   SUCCESS BUTTON
+=================================== */
+.btn-success {
+   background: var(--color-success);
+   color: var(--color-text-inverse);
 }
 
+.btn-success:hover {
+   background: var(--color-success-light);
+   transform: translateY(-3px);
+   box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+}
+
+/* ===================================
+   DANGER BUTTON
+=================================== */
+.btn-danger {
+   background: var(--color-error);
+   color: var(--color-text-inverse);
+}
+
+.btn-danger:hover {
+   background: var(--color-error-light);
+   transform: translateY(-3px);
+   box-shadow: 0 8px 24px rgba(239, 68, 68, 0.35);
+}
+
+/* ===================================
+   BUTTON SIZES
+=================================== */
 .btn-sm {
-    padding: var(--spacing-xs) var(--spacing-md);
-    font-size: var(--font-size-xs);
+   padding: var(--spacing-sm) var(--spacing-md);
+   font-size: var(--font-size-xs);
+   border-radius: var(--radius-lg);
+}
+
+.btn-sm svg {
+   width: 16px;
+   height: 16px;
 }
 
 .btn-lg {
-    padding: var(--spacing-md) var(--spacing-xl);
-    font-size: var(--font-size-base);
+   padding: var(--spacing-md) var(--spacing-2xl);
+   font-size: var(--font-size-base);
+   border-radius: var(--radius-2xl);
+}
+
+.btn-lg svg {
+   width: 20px;
+   height: 20px;
 }
 
 .btn-xl {
-    padding: var(--spacing-lg) var(--spacing-2xl);
-    font-size: var(--font-size-lg);
+   padding: var(--spacing-lg) var(--spacing-3xl);
+   font-size: var(--font-size-lg);
+   border-radius: var(--radius-2xl);
 }
 
-.btn-full {
-    width: 100%;
-}
-
-.btn-icon {
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border-radius: var(--radius-full);
-}
-
-.btn-icon.btn-sm {
-    width: 32px;
-    height: 32px;
-}
-
-.btn-icon.btn-lg {
-    width: 48px;
-    height: 48px;
-}
-
-.btn-icon.btn-xl {
-    width: 56px;
-    height: 56px;
+/* ===================================
+   BUTTON VARIANTS
+=================================== */
+.btn-block {
+   width: 100%;
 }
 
 .btn-rounded {
-    border-radius: var(--radius-full);
+   border-radius: var(--radius-full);
 }
 
+.btn-icon {
+   padding: var(--spacing-sm);
+   width: 44px;
+   height: 44px;
+}
+
+.btn-icon.btn-sm {
+   width: 36px;
+   height: 36px;
+}
+
+.btn-icon.btn-lg {
+   width: 52px;
+   height: 52px;
+}
+
+/* ===================================
+   LOADING STATE
+=================================== */
 .btn-loading {
-    position: relative;
-    color: transparent !important;
-    pointer-events: none;
+   pointer-events: none;
+   position: relative;
 }
 
 .btn-loading::after {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    border: 2px solid currentColor;
-    border-right-color: transparent;
-    border-radius: var(--radius-full);
-    animation: spin 0.6s linear infinite;
+   content: '';
+   position: absolute;
+   width: 18px;
+   height: 18px;
+   border: 2px solid transparent;
+   border-top-color: currentColor;
+   border-radius: var(--radius-full);
+   animation: spin 0.6s linear infinite;
 }
 
+.btn-loading span {
+   opacity: 0;
+}
+
+/* ===================================
+   BUTTON GROUP
+=================================== */
 .btn-group {
-    display: inline-flex;
+   display: inline-flex;
 }
 
 .btn-group .btn {
-    border-radius: 0;
+   border-radius: 0;
 }
 
 .btn-group .btn:first-child {
-    border-radius: var(--radius-md) 0 0 var(--radius-md);
+   border-radius: var(--radius-xl) 0 0 var(--radius-xl);
 }
 
 .btn-group .btn:last-child {
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+   border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
 }
 
-.btn-group .btn:not(:first-child) {
-    margin-left: -2px;
+.btn-group .btn:not(:last-child) {
+   border-right: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-[data-theme="dark"] .btn-outline {
-    border-color: var(--btn-outline-border);
-    color: var(--btn-outline-text);
-}
+/* ===================================
+   RESPONSIVE
+=================================== */
+@media (max-width: 768px) {
+   .btn {
+      padding: var(--spacing-sm) var(--spacing-lg);
+   }
 
-[data-theme="dark"] .btn-ghost:hover:not(:disabled) {
-    background-color: var(--color-surface-hover);
+   .btn-lg {
+      padding: var(--spacing-md) var(--spacing-xl);
+   }
+
+   .btn-xl {
+      padding: var(--spacing-md) var(--spacing-2xl);
+      font-size: var(--font-size-base);
+   }
 }

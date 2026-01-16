@@ -242,6 +242,218 @@ class APIClient {
     async adminDeleteDiscountCode(code) {
         return this.delete(`/admin/discount-codes/${code}`);
     }
+
+    // ==========================================
+    // ALIAS METHODS FOR ADMIN PANEL
+    // ==========================================
+
+    // Products aliases
+    async createProduct(product) {
+        return this.adminCreateProduct(product);
+    }
+
+    async updateProduct(productId, patch) {
+        return this.adminUpdateProduct(productId, patch);
+    }
+
+    async deleteProduct(productId) {
+        return this.adminDeleteProduct(productId);
+    }
+
+    // Discount codes aliases
+    async getDiscountCodes() {
+        return this.adminListDiscountCodes();
+    }
+
+    async createDiscountCode(payload) {
+        return this.adminCreateDiscountCode(payload);
+    }
+
+    async updateDiscountCode(code, patch) {
+        return this.adminUpdateDiscountCode(code, patch);
+    }
+
+    async deleteDiscountCode(code) {
+        return this.adminDeleteDiscountCode(code);
+    }
+
+    // Notices aliases
+    async getNotices() {
+        return this.adminListNotices();
+    }
+
+    async createNotice(notice) {
+        return this.adminCreateNotice(notice);
+    }
+
+    async updateNotice(noticeId, patch) {
+        return this.adminUpdateNotice(noticeId, patch);
+    }
+
+    async deleteNotice(noticeId) {
+        return this.adminDeleteNotice(noticeId);
+    }
+
+    // Admin stats endpoint
+    async getAdminStats() {
+        return this.get('/admin/stats');
+    }
+
+    // ==========================================
+    // CATEGORIES
+    // ==========================================
+    async adminGetCategories() {
+        return this.get('/admin/categories');
+    }
+
+    async adminCreateCategory(data) {
+        return this.post('/admin/categories', data);
+    }
+
+    async adminUpdateCategory(id, data) {
+        return this.patch(`/admin/categories/${id}`, data);
+    }
+
+    async adminDeleteCategory(id) {
+        return this.delete(`/admin/categories/${id}`);
+    }
+
+    async adminReorderCategories(order) {
+        return this.put('/admin/categories/reorder', { order });
+    }
+
+    // ==========================================
+    // SUPPLIERS
+    // ==========================================
+    async adminGetSuppliers() {
+        return this.get('/admin/suppliers');
+    }
+
+    async adminCreateSupplier(data) {
+        return this.post('/admin/suppliers', data);
+    }
+
+    async adminUpdateSupplier(id, data) {
+        return this.patch(`/admin/suppliers/${id}`, data);
+    }
+
+    async adminDeleteSupplier(id) {
+        return this.delete(`/admin/suppliers/${id}`);
+    }
+
+    // ==========================================
+    // INVENTORY HISTORY
+    // ==========================================
+    async adminGetInventoryHistory(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return this.get(`/admin/inventory-history${query ? `?${query}` : ''}`);
+    }
+
+    async adminCreateInventoryMovement(data) {
+        return this.post('/admin/inventory-history', data);
+    }
+
+    // ==========================================
+    // STOCK ALERTS
+    // ==========================================
+    async adminGetStockAlerts() {
+        return this.get('/admin/alerts');
+    }
+
+    async adminDismissAlert(id) {
+        return this.patch(`/admin/alerts/${id}/dismiss`, {});
+    }
+
+    async adminUpdateAlertSettings(settings) {
+        return this.put('/admin/settings/stock-threshold', settings);
+    }
+
+    async adminRestockProduct(productId, data) {
+        return this.post(`/admin/products/${productId}/restock`, data);
+    }
+
+    // ==========================================
+    // PRODUCT VARIANTS
+    // ==========================================
+    async adminGetProductVariants(productId) {
+        return this.get(`/admin/products/${productId}/variants`);
+    }
+
+    async adminCreateVariant(productId, data) {
+        return this.post(`/admin/products/${productId}/variants`, data);
+    }
+
+    async adminUpdateVariant(productId, variantId, data) {
+        return this.patch(`/admin/products/${productId}/variants/${variantId}`, data);
+    }
+
+    async adminDeleteVariant(productId, variantId) {
+        return this.delete(`/admin/products/${productId}/variants/${variantId}`);
+    }
+
+    // ==========================================
+    // BULK OPERATIONS
+    // ==========================================
+    async adminBulkUpdateProducts(ids, updates) {
+        return this.post('/admin/products/bulk-update', { ids, updates });
+    }
+
+    async adminBulkDeleteProducts(ids) {
+        return this.post('/admin/products/bulk-delete', { ids });
+    }
+
+    async adminBulkCreateProducts(products, options = {}) {
+        const query = options.updateExisting ? '?updateExisting=true' : '';
+        return this.post(`/admin/products/bulk-create${query}`, { products });
+    }
+
+    // ==========================================
+    // IMPORT/EXPORT
+    // ==========================================
+    async adminExportProducts(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return this.get(`/admin/products/export${query ? `?${query}` : ''}`);
+    }
+
+    async adminImportProducts(file, options = {}) {
+        const formData = new FormData();
+        formData.append('file', file);
+        if (options.updateExisting) {
+            formData.append('updateExisting', 'true');
+        }
+        return this.requestForm('/admin/products/import', formData);
+    }
+
+    async adminGetImportTemplate() {
+        return this.get('/admin/products/import-template');
+    }
+
+    // ==========================================
+    // USER PROFILE & ADDRESSES
+    // ==========================================
+    async getUserProfile() {
+        return this.get('/user/profile');
+    }
+
+    async updateUserProfile(data) {
+        return this.put('/user/profile', data);
+    }
+
+    async getUserAddresses() {
+        return this.get('/user/addresses');
+    }
+
+    async createUserAddress(data) {
+        return this.post('/user/addresses', data);
+    }
+
+    async updateUserAddress(addressId, data) {
+        return this.put(`/user/addresses/${addressId}`, data);
+    }
+
+    async deleteUserAddress(addressId) {
+        return this.delete(`/user/addresses/${addressId}`);
+    }
 }
 
 const api = new APIClient();

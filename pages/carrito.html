@@ -164,9 +164,91 @@
                     <div class="carrito-summary">
                         <h3>Resumen del Pedido</h3>
 
-                        <div class="discount-input">
-                            <input type="text" class="form-input" id="discountCode" placeholder="Código de descuento">
-                            <button class="btn btn-outline btn-sm" id="applyDiscount">Aplicar</button>
+                        <!-- Formulario de Checkout -->
+                        <form id="checkoutForm" class="checkout-details" autocomplete="on">
+                            <h4 class="checkout-section-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                    <circle cx="12" cy="7" r="4" />
+                                </svg>
+                                Datos de Contacto
+                            </h4>
+
+                            <div class="checkout-field">
+                                <label for="customerName">Nombre completo *</label>
+                                <input type="text" id="customerName" name="name" required autocomplete="name" placeholder="Ej: Juan Pérez">
+                            </div>
+
+                            <div class="checkout-field">
+                                <label for="customerPhone">Teléfono *</label>
+                                <input type="tel" id="customerPhone" name="phone" required autocomplete="tel" placeholder="Ej: +56 9 1234 5678">
+                            </div>
+
+                            <div class="checkout-field">
+                                <label for="customerEmail">Email (opcional)</label>
+                                <input type="email" id="customerEmail" name="email" autocomplete="email" placeholder="correo@ejemplo.com">
+                            </div>
+
+                            <div class="checkout-checkbox">
+                                <input type="checkbox" id="needsShipping" name="needs_shipping">
+                                <label for="needsShipping">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="1" y="3" width="15" height="13"></rect>
+                                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                    </svg>
+                                    Necesito envío a domicilio
+                                </label>
+                            </div>
+
+                            <div id="shippingFields" class="checkout-shipping" hidden>
+                                <h4 class="checkout-section-title">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    Dirección de Envío
+                                </h4>
+
+                                <div class="checkout-field">
+                                    <label for="customerAddress">Dirección *</label>
+                                    <input type="text" id="customerAddress" name="address" autocomplete="street-address" placeholder="Ej: Av. Principal 123, Depto 45">
+                                </div>
+
+                                <div class="checkout-field">
+                                    <label for="customerCity">Comuna / Ciudad *</label>
+                                    <input type="text" id="customerCity" name="city" autocomplete="address-level2" placeholder="Ej: Santiago Centro">
+                                </div>
+
+                                <div class="checkout-field">
+                                    <label for="deliveryDate">Fecha de entrega</label>
+                                    <input type="date" id="deliveryDate" name="delivery_date">
+                                </div>
+
+                                <div class="checkout-field">
+                                    <label for="deliveryNotes">Indicaciones adicionales</label>
+                                    <input type="text" id="deliveryNotes" name="delivery_notes" autocomplete="off" placeholder="Ej: Tocar timbre, dejar con conserje...">
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Código de Descuento -->
+                        <div class="checkout-discount">
+                            <h4 class="checkout-section-title">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M8.5 14.5l7-7"></path>
+                                    <circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"></circle>
+                                    <circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"></circle>
+                                </svg>
+                                Código de Descuento
+                            </h4>
+                            <div class="discount-input">
+                                <input type="text" class="form-input" id="discountCode" placeholder="Ingresa tu código" autocomplete="off">
+                                <button type="button" class="btn btn-outline btn-sm" id="applyDiscount">Aplicar</button>
+                            </div>
+                            <p id="discountStatus" class="discount-status"></p>
                         </div>
 
                         <div class="summary-details">
@@ -298,9 +380,18 @@
     <script src="../js/wishlist.js?v=3.0"></script>
     <script src="../js/script.js?v=3.0"></script>
     <script>
+        // ============================================
+        // CHECKOUT STATE
+        // ============================================
         let appliedDiscount = 0;
         let discountCode = null;
+        let discountType = null;
+        let discountValue = 0;
+        const SHIPPING_COST = 5000; // Costo de envío fijo
 
+        // ============================================
+        // CART RENDERING
+        // ============================================
         function renderCarrito() {
             const container = document.getElementById('carritoItems');
             const items = cart.getAll();
@@ -413,23 +504,190 @@
             }
         }
 
+        // ============================================
+        // SUMMARY & TOTALS
+        // ============================================
         function updateSummary() {
             const subtotal = cart.getSubtotal();
-            const total = cart.getTotal(appliedDiscount);
+            const needsShipping = document.getElementById('needsShipping')?.checked || false;
+            const shippingCost = needsShipping ? SHIPPING_COST : 0;
             const freeShipping = subtotal >= 50000;
+            const actualShipping = freeShipping ? 0 : shippingCost;
+            
+            // Calculate discount
+            let discountAmount = 0;
+            if (appliedDiscount > 0) {
+                discountAmount = appliedDiscount;
+            }
+            
+            const total = Math.max(0, subtotal - discountAmount + actualShipping);
 
             document.getElementById('subtotal').textContent = formatPrice(subtotal);
             document.getElementById('total').textContent = formatPrice(total);
-            document.getElementById('shippingCost').textContent = freeShipping ? 'Gratis' : 'Por calcular';
-            document.getElementById('shippingCost').classList.toggle('free-shipping', freeShipping);
+            
+            // Update shipping display
+            const shippingEl = document.getElementById('shippingCost');
+            if (needsShipping) {
+                shippingEl.textContent = freeShipping ? 'Gratis' : formatPrice(actualShipping);
+                shippingEl.classList.toggle('free-shipping', freeShipping);
+            } else {
+                shippingEl.textContent = 'Retiro en tienda';
+                shippingEl.classList.remove('free-shipping');
+            }
 
+            // Discount row
             if (appliedDiscount > 0) {
                 document.getElementById('discountRow').style.display = 'flex';
-                document.getElementById('discountAmount').textContent = '-' + formatPrice(appliedDiscount);
+                document.getElementById('discountAmount').textContent = '-' + formatPrice(discountAmount);
             } else {
                 document.getElementById('discountRow').style.display = 'none';
             }
         }
+
+        // ============================================
+        // CHECKOUT FORM INITIALIZATION
+        // ============================================
+        function initCheckoutForm() {
+            const needsShippingCheckbox = document.getElementById('needsShipping');
+            const shippingFields = document.getElementById('shippingFields');
+            const deliveryDateInput = document.getElementById('deliveryDate');
+
+            // Toggle shipping fields
+            needsShippingCheckbox.addEventListener('change', () => {
+                shippingFields.hidden = !needsShippingCheckbox.checked;
+                
+                // Update required fields
+                const addressInput = document.getElementById('customerAddress');
+                const cityInput = document.getElementById('customerCity');
+                
+                if (needsShippingCheckbox.checked) {
+                    addressInput.setAttribute('required', '');
+                    cityInput.setAttribute('required', '');
+                } else {
+                    addressInput.removeAttribute('required');
+                    cityInput.removeAttribute('required');
+                }
+                
+                updateSummary();
+            });
+
+            // Set minimum date for delivery (tomorrow)
+            if (deliveryDateInput) {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                deliveryDateInput.min = tomorrow.toISOString().split('T')[0];
+            }
+
+            // Pre-fill form if user is logged in
+            prefillUserData();
+        }
+
+        function prefillUserData() {
+            try {
+                const userData = localStorage.getItem('user');
+                if (userData) {
+                    const user = JSON.parse(userData);
+                    
+                    if (user.name) {
+                        document.getElementById('customerName').value = user.name;
+                    }
+                    if (user.email) {
+                        document.getElementById('customerEmail').value = user.email;
+                    }
+                    if (user.phone) {
+                        document.getElementById('customerPhone').value = user.phone;
+                    }
+                    if (user.address) {
+                        document.getElementById('customerAddress').value = user.address;
+                    }
+                    if (user.city) {
+                        document.getElementById('customerCity').value = user.city;
+                    }
+                }
+            } catch (e) {
+                console.debug('No se pudieron precargar datos del usuario');
+            }
+        }
+
+        // ============================================
+        // FORM VALIDATION
+        // ============================================
+        function validateCheckoutForm() {
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            const needsShipping = document.getElementById('needsShipping').checked;
+
+            if (!customerName) {
+                showNotification('Por favor ingresa tu nombre completo', 'error');
+                document.getElementById('customerName').focus();
+                return false;
+            }
+
+            if (!customerPhone) {
+                showNotification('Por favor ingresa tu número de teléfono', 'error');
+                document.getElementById('customerPhone').focus();
+                return false;
+            }
+
+            if (needsShipping) {
+                const customerAddress = document.getElementById('customerAddress').value.trim();
+                const customerCity = document.getElementById('customerCity').value.trim();
+
+                if (!customerAddress) {
+                    showNotification('Por favor ingresa tu dirección de envío', 'error');
+                    document.getElementById('customerAddress').focus();
+                    return false;
+                }
+
+                if (!customerCity) {
+                    showNotification('Por favor ingresa tu comuna o ciudad', 'error');
+                    document.getElementById('customerCity').focus();
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function getCheckoutFormData() {
+            const needsShipping = document.getElementById('needsShipping').checked;
+            const subtotal = cart.getSubtotal();
+            const freeShipping = subtotal >= 50000;
+            const shippingCost = (needsShipping && !freeShipping) ? SHIPPING_COST : 0;
+
+            return {
+                customer_name: document.getElementById('customerName').value.trim(),
+                customer_phone: document.getElementById('customerPhone').value.trim(),
+                customer_email: document.getElementById('customerEmail').value.trim() || null,
+                needs_shipping: needsShipping,
+                customer_address: needsShipping ? document.getElementById('customerAddress').value.trim() : null,
+                customer_city: needsShipping ? document.getElementById('customerCity').value.trim() : null,
+                delivery_date: needsShipping ? document.getElementById('deliveryDate').value || null : null,
+                delivery_notes: needsShipping ? document.getElementById('deliveryNotes').value.trim() || null : null,
+                shipping_cost: shippingCost
+            };
+        }
+
+        // ============================================
+        // DISCOUNT STATUS
+        // ============================================
+        function setDiscountStatus(text, type = 'info') {
+            const statusEl = document.getElementById('discountStatus');
+            if (statusEl) {
+                statusEl.textContent = text;
+                statusEl.className = 'discount-status ' + type;
+            }
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCarrito();
+            initCheckoutForm();
+        });
+
+        document.addEventListener('cartUpdated', renderCarrito);
 
         // Clear cart button
         document.getElementById('clearCartBtn').addEventListener('click', clearCart);
@@ -437,12 +695,19 @@
         // Discount code
         document.getElementById('applyDiscount').addEventListener('click', async () => {
             const code = document.getElementById('discountCode').value.trim();
-            if (!code) return;
+            if (!code) {
+                setDiscountStatus('Ingresa un código de descuento', 'error');
+                return;
+            }
 
             try {
+                setDiscountStatus('Validando código...', 'info');
                 const result = await api.validateDiscountCode(code);
+                
                 if (result.valid) {
                     discountCode = result.code;
+                    discountType = result.discount_type;
+                    discountValue = result.discount_value;
                     const subtotal = cart.getSubtotal();
 
                     if (result.discount_type === 'percentage') {
@@ -452,36 +717,70 @@
                     }
 
                     updateSummary();
-                    showNotification(`Código ${result.code} aplicado: ${result.discount_value}${result.discount_type === 'percentage' ? '%' : ''} de descuento`, 'success');
+                    const discountText = result.discount_type === 'percentage' 
+                        ? `${result.discount_value}% de descuento`
+                        : formatPrice(result.discount_value) + ' de descuento';
+                    setDiscountStatus(`${result.code}: ${discountText}`, 'success');
+                    showNotification(`Código aplicado correctamente`, 'success');
                 }
             } catch (error) {
-                showNotification(error.message || 'Código no válido', 'error');
+                setDiscountStatus(error.message || 'Código no válido', 'error');
             }
         });
 
         // Checkout
         document.getElementById('checkoutBtn').addEventListener('click', async () => {
-            if (!isLoggedIn()) {
-                showNotification('Debes iniciar sesión para continuar', 'warning');
-                setTimeout(() => window.location.href = 'login.html', 1000);
-                return;
-            }
-
+            // Validate cart
             if (cart.isEmpty()) {
                 showNotification('Tu carrito está vacío', 'error');
                 return;
             }
 
+            // Validate form
+            if (!validateCheckoutForm()) {
+                return;
+            }
+
+            // Check login (optional - can allow guest checkout)
+            if (!isLoggedIn()) {
+                showNotification('Debes iniciar sesión para continuar', 'warning');
+                setTimeout(() => window.location.href = 'login.html', 1500);
+                return;
+            }
+
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const originalText = checkoutBtn.innerHTML;
+            
             try {
+                // Disable button and show loading
+                checkoutBtn.disabled = true;
+                checkoutBtn.innerHTML = `
+                    <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" stroke-dasharray="31.416" stroke-dashoffset="10"></circle>
+                    </svg>
+                    Procesando...
+                `;
+
+                // Get form data
+                const formData = getCheckoutFormData();
+                const subtotal = cart.getSubtotal();
+                const total = Math.max(0, subtotal - appliedDiscount + formData.shipping_cost);
+
+                // Create transaction
                 const result = await api.createTransaction({
                     items: cart.getItemsForApi(),
+                    amount: total,
+                    ...formData,
                     discount_code: discountCode,
                     discount_amount: appliedDiscount
                 });
 
-                const paymentResult = await api.webpayCreate(result.order_id);
+                // Create Webpay payment
+                const orderId = result.order_id || result.transaction?.order_id;
+                const paymentResult = await api.webpayCreate(orderId);
 
                 if (paymentResult.url && paymentResult.token) {
+                    // Redirect to Webpay
                     const form = document.createElement('form');
                     form.method = 'POST';
                     form.action = paymentResult.url;
@@ -494,14 +793,15 @@
                     form.appendChild(input);
                     document.body.appendChild(form);
                     form.submit();
+                } else {
+                    throw new Error('No se pudo iniciar el proceso de pago');
                 }
             } catch (error) {
                 showNotification(error.message || 'Error al procesar el pago', 'error');
+                checkoutBtn.disabled = false;
+                checkoutBtn.innerHTML = originalText;
             }
         });
-
-        document.addEventListener('DOMContentLoaded', renderCarrito);
-        document.addEventListener('cartUpdated', renderCarrito);
     </script>
 </body>
 

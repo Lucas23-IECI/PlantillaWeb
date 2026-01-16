@@ -1,32 +1,20 @@
-/**
- * CLIENTE API
- * Maneja todas las comunicaciones con el backend
- */
-
 class APIClient {
     constructor(baseURL) {
         this._customBaseURL = baseURL;
         this.cache = new Map();
-        this.cacheTimeout = 5 * 60 * 1000; // 5 minutos
+        this.cacheTimeout = 5 * 60 * 1000;
     }
 
     get baseURL() {
         if (this._customBaseURL) return this._customBaseURL;
-        // Intentar leer config global, fallback a /api
         return (typeof window !== 'undefined' && window.CONFIG?.API_URL) || '/api';
     }
 
-    /**
-     * Obtener headers de autenticación
-     */
     getAuthHeaders() {
         const token = localStorage.getItem('auth_token');
         return token ? { 'Authorization': `Bearer ${token}` } : {};
     }
 
-    /**
-     * Request base
-     */
     async request(endpoint, options = {}) {
         const url = `${this.baseURL}${endpoint}`;
         const headers = {
@@ -49,7 +37,7 @@ class APIClient {
 
             return data;
         } catch (error) {
-            console.error(`API Error [${endpoint}]:`, error.message);
+            console.debug(`API [${endpoint}]:`, error.message);
             throw error;
         }
     }
@@ -83,13 +71,9 @@ class APIClient {
         return this.request(endpoint, { method: 'DELETE' });
     }
 
-    /**
-     * Request con FormData (para uploads)
-     */
     async requestForm(endpoint, formData) {
         const url = `${this.baseURL}${endpoint}`;
         const headers = this.getAuthHeaders();
-        // No incluir Content-Type, fetch lo maneja automáticamente para FormData
 
         const response = await fetch(url, {
             method: 'POST',
@@ -106,10 +90,6 @@ class APIClient {
         return data;
     }
 
-    // =============================================
-    // AUTENTICACIÓN
-    // =============================================
-
     async register(email, name, password, phone = '', address = '', city = '') {
         return this.post('/auth/register', { email, name, password, phone, address, city });
     }
@@ -125,10 +105,6 @@ class APIClient {
     async changePassword(currentPassword, newPassword) {
         return this.post('/auth/change-password', { currentPassword, newPassword });
     }
-
-    // =============================================
-    // PRODUCTOS
-    // =============================================
 
     async getProducts(forceRefresh = false) {
         const cacheKey = 'products';
@@ -153,10 +129,6 @@ class APIClient {
         return this.get('/products/home-featured');
     }
 
-    // =============================================
-    // TRANSACCIONES
-    // =============================================
-
     async createTransaction(transactionData) {
         return this.post('/transactions', transactionData);
     }
@@ -173,10 +145,6 @@ class APIClient {
         return this.patch(`/transactions/${orderId}/status`, { status });
     }
 
-    // =============================================
-    // PAGOS (WEBPAY)
-    // =============================================
-
     async webpayCreate(orderId) {
         return this.post('/webpay/create', { order_id: orderId });
     }
@@ -185,25 +153,13 @@ class APIClient {
         return this.post('/webpay/commit', { token_ws: token, order_id: orderId });
     }
 
-    // =============================================
-    // AVISOS
-    // =============================================
-
     async getActiveNotices() {
         return this.get('/notices/active');
     }
 
-    // =============================================
-    // CÓDIGOS DE DESCUENTO
-    // =============================================
-
     async validateDiscountCode(code) {
         return this.get(`/discount-codes/validate?code=${encodeURIComponent(code)}`);
     }
-
-    // =============================================
-    // ADMIN: PEDIDOS
-    // =============================================
 
     async getAdminOrders() {
         return this.get('/admin/orders');
@@ -216,10 +172,6 @@ class APIClient {
     async adminDeleteOrder(orderId) {
         return this.delete(`/admin/orders/${orderId}`);
     }
-
-    // =============================================
-    // ADMIN: PRODUCTOS
-    // =============================================
 
     async getAdminProducts() {
         return this.get('/admin/products');
@@ -259,10 +211,6 @@ class APIClient {
         return this.put('/admin/catalog-product-order', { catalog_product_ids: ids });
     }
 
-    // =============================================
-    // ADMIN: AVISOS
-    // =============================================
-
     async adminListNotices() {
         return this.get('/admin/notices');
     }
@@ -279,10 +227,6 @@ class APIClient {
         return this.delete(`/admin/notices/${noticeId}`);
     }
 
-    // =============================================
-    // ADMIN: CÓDIGOS DE DESCUENTO
-    // =============================================
-
     async adminListDiscountCodes() {
         return this.get('/admin/discount-codes');
     }
@@ -298,7 +242,218 @@ class APIClient {
     async adminDeleteDiscountCode(code) {
         return this.delete(`/admin/discount-codes/${code}`);
     }
+
+    // ==========================================
+    // ALIAS METHODS FOR ADMIN PANEL
+    // ==========================================
+
+    // Products aliases
+    async createProduct(product) {
+        return this.adminCreateProduct(product);
+    }
+
+    async updateProduct(productId, patch) {
+        return this.adminUpdateProduct(productId, patch);
+    }
+
+    async deleteProduct(productId) {
+        return this.adminDeleteProduct(productId);
+    }
+
+    // Discount codes aliases
+    async getDiscountCodes() {
+        return this.adminListDiscountCodes();
+    }
+
+    async createDiscountCode(payload) {
+        return this.adminCreateDiscountCode(payload);
+    }
+
+    async updateDiscountCode(code, patch) {
+        return this.adminUpdateDiscountCode(code, patch);
+    }
+
+    async deleteDiscountCode(code) {
+        return this.adminDeleteDiscountCode(code);
+    }
+
+    // Notices aliases
+    async getNotices() {
+        return this.adminListNotices();
+    }
+
+    async createNotice(notice) {
+        return this.adminCreateNotice(notice);
+    }
+
+    async updateNotice(noticeId, patch) {
+        return this.adminUpdateNotice(noticeId, patch);
+    }
+
+    async deleteNotice(noticeId) {
+        return this.adminDeleteNotice(noticeId);
+    }
+
+    // Admin stats endpoint
+    async getAdminStats() {
+        return this.get('/admin/stats');
+    }
+
+    // ==========================================
+    // CATEGORIES
+    // ==========================================
+    async adminGetCategories() {
+        return this.get('/admin/categories');
+    }
+
+    async adminCreateCategory(data) {
+        return this.post('/admin/categories', data);
+    }
+
+    async adminUpdateCategory(id, data) {
+        return this.patch(`/admin/categories/${id}`, data);
+    }
+
+    async adminDeleteCategory(id) {
+        return this.delete(`/admin/categories/${id}`);
+    }
+
+    async adminReorderCategories(order) {
+        return this.put('/admin/categories/reorder', { order });
+    }
+
+    // ==========================================
+    // SUPPLIERS
+    // ==========================================
+    async adminGetSuppliers() {
+        return this.get('/admin/suppliers');
+    }
+
+    async adminCreateSupplier(data) {
+        return this.post('/admin/suppliers', data);
+    }
+
+    async adminUpdateSupplier(id, data) {
+        return this.patch(`/admin/suppliers/${id}`, data);
+    }
+
+    async adminDeleteSupplier(id) {
+        return this.delete(`/admin/suppliers/${id}`);
+    }
+
+    // ==========================================
+    // INVENTORY HISTORY
+    // ==========================================
+    async adminGetInventoryHistory(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return this.get(`/admin/inventory-history${query ? `?${query}` : ''}`);
+    }
+
+    async adminCreateInventoryMovement(data) {
+        return this.post('/admin/inventory-history', data);
+    }
+
+    // ==========================================
+    // STOCK ALERTS
+    // ==========================================
+    async adminGetStockAlerts() {
+        return this.get('/admin/alerts');
+    }
+
+    async adminDismissAlert(id) {
+        return this.patch(`/admin/alerts/${id}/dismiss`, {});
+    }
+
+    async adminUpdateAlertSettings(settings) {
+        return this.put('/admin/settings/stock-threshold', settings);
+    }
+
+    async adminRestockProduct(productId, data) {
+        return this.post(`/admin/products/${productId}/restock`, data);
+    }
+
+    // ==========================================
+    // PRODUCT VARIANTS
+    // ==========================================
+    async adminGetProductVariants(productId) {
+        return this.get(`/admin/products/${productId}/variants`);
+    }
+
+    async adminCreateVariant(productId, data) {
+        return this.post(`/admin/products/${productId}/variants`, data);
+    }
+
+    async adminUpdateVariant(productId, variantId, data) {
+        return this.patch(`/admin/products/${productId}/variants/${variantId}`, data);
+    }
+
+    async adminDeleteVariant(productId, variantId) {
+        return this.delete(`/admin/products/${productId}/variants/${variantId}`);
+    }
+
+    // ==========================================
+    // BULK OPERATIONS
+    // ==========================================
+    async adminBulkUpdateProducts(ids, updates) {
+        return this.post('/admin/products/bulk-update', { ids, updates });
+    }
+
+    async adminBulkDeleteProducts(ids) {
+        return this.post('/admin/products/bulk-delete', { ids });
+    }
+
+    async adminBulkCreateProducts(products, options = {}) {
+        const query = options.updateExisting ? '?updateExisting=true' : '';
+        return this.post(`/admin/products/bulk-create${query}`, { products });
+    }
+
+    // ==========================================
+    // IMPORT/EXPORT
+    // ==========================================
+    async adminExportProducts(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return this.get(`/admin/products/export${query ? `?${query}` : ''}`);
+    }
+
+    async adminImportProducts(file, options = {}) {
+        const formData = new FormData();
+        formData.append('file', file);
+        if (options.updateExisting) {
+            formData.append('updateExisting', 'true');
+        }
+        return this.requestForm('/admin/products/import', formData);
+    }
+
+    async adminGetImportTemplate() {
+        return this.get('/admin/products/import-template');
+    }
+
+    // ==========================================
+    // USER PROFILE & ADDRESSES
+    // ==========================================
+    async getUserProfile() {
+        return this.get('/user/profile');
+    }
+
+    async updateUserProfile(data) {
+        return this.put('/user/profile', data);
+    }
+
+    async getUserAddresses() {
+        return this.get('/user/addresses');
+    }
+
+    async createUserAddress(data) {
+        return this.post('/user/addresses', data);
+    }
+
+    async updateUserAddress(addressId, data) {
+        return this.put(`/user/addresses/${addressId}`, data);
+    }
+
+    async deleteUserAddress(addressId) {
+        return this.delete(`/user/addresses/${addressId}`);
+    }
 }
 
-// Instancia global
 const api = new APIClient();

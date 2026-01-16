@@ -46,13 +46,15 @@ async function getProductById(req, res) {
 
 async function getHomeFeaturedProducts(req, res) {
     try {
-        const db = getDb();
+        const db = getDb();
+
         const settingsDoc = await db.collection(SETTINGS_COLLECTION).doc('home').get();
         const featuredIds = settingsDoc.exists
             ? (settingsDoc.data().featured_product_ids || [])
             : [];
 
-        if (!featuredIds.length) {
+        if (!featuredIds.length) {
+
             const snapshot = await db.collection(PRODUCTS_COLLECTION)
                 .where('active', '==', true)
                 .orderBy('createdAt', 'desc')
@@ -65,7 +67,8 @@ async function getHomeFeaturedProducts(req, res) {
             }));
 
             return res.json(products);
-        }
+        }
+
         const products = [];
         for (const id of featuredIds.slice(0, 5)) {
             const doc = await db.collection(PRODUCTS_COLLECTION).doc(id).get();
@@ -86,7 +89,7 @@ async function getHomeFeaturedProducts(req, res) {
 
 async function createProduct(req, res) {
     try {
-        const { name, description, price, image_url, category = '', stock = 0 } = req.body;
+        const { name, description, price, image_url, category = '', stock = 0, sku, featured, originalPrice, variants, active } = req.body;
 
         if (!name || !price) {
             return res.status(400).json({ error: 'Nombre y precio son requeridos' });
@@ -98,9 +101,13 @@ async function createProduct(req, res) {
             description: (description || '').trim(),
             price: Number(price),
             image_url: image_url || '',
-            category: category.trim(),
-            stock: Number(stock),
-            active: true,
+            category: (category || '').trim(),
+            stock: Number(stock) || 0,
+            sku: (sku || '').trim(),
+            featured: featured === true,
+            originalPrice: originalPrice ? Number(originalPrice) : null,
+            variants: Array.isArray(variants) ? variants : [],
+            active: active !== false,
             createdAt: new Date(),
             updatedAt: new Date()
         };
@@ -129,8 +136,9 @@ async function updateProduct(req, res) {
 
         if (!doc.exists) {
             return res.status(404).json({ error: 'Producto no encontrado' });
-        }
-        const allowedFields = ['name', 'description', 'price', 'image_url', 'category', 'stock', 'active'];
+        }
+
+        const allowedFields = ['name', 'description', 'price', 'image_url', 'category', 'stock', 'active', 'featured', 'originalPrice', 'variants', 'sku'];
         const filteredUpdates = {};
         for (const key of allowedFields) {
             if (updates[key] !== undefined) {

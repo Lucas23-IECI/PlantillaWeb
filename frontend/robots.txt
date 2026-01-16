@@ -1,0 +1,50 @@
+# robots.txt para Mi Tienda
+# https://tu-dominio.com/robots.txt
+
+# Reglas generales
+User-agent: *
+Allow: /
+
+# Permitir archivos estáticos
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Bloquear páginas de administración
+Disallow: /pages/admin.html
+Disallow: /pages/admin-*.html
+Disallow: /js/admin/
+
+# Bloquear páginas de proceso de compra (no indexar)
+Disallow: /pages/resultado-pago.html
+Disallow: /pages/checkout.html
+
+# Bloquear búsquedas internas (evitar contenido duplicado)
+Disallow: /*?*q=
+Disallow: /*?*search=
+
+# Bloquear páginas de sesión
+Disallow: /pages/login.html
+Disallow: /pages/registro.html
+Disallow: /pages/recuperar-password.html
+Disallow: /pages/reset-password.html
+Disallow: /pages/cuenta.html
+
+# Permitir a Google y Bing rastrear CSS y JS
+User-agent: Googlebot
+Allow: /css/
+Allow: /js/
+
+User-agent: Bingbot
+Allow: /css/
+Allow: /js/
+
+# Crawl-delay para bots que lo soportan (cortesía)
+User-agent: *
+Crawl-delay: 1
+
+# Ubicación del sitemap
+Sitemap: https://tu-dominio.com/sitemap.xml
+
+# Host canónico
+Host: https://tu-dominio.com

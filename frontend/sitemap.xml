@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+    <!-- Página Principal -->
+    <url>
+        <loc>https://tu-dominio.com/</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Home -->
+    <url>
+        <loc>https://tu-dominio.com/home.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Catálogo de Productos -->
+    <url>
+        <loc>https://tu-dominio.com/pages/productos.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Carrito -->
+    <url>
+        <loc>https://tu-dominio.com/pages/carrito.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Checkout -->
+    <url>
+        <loc>https://tu-dominio.com/pages/checkout.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Contacto -->
+    <url>
+        <loc>https://tu-dominio.com/pages/contacto.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Nosotros -->
+    <url>
+        <loc>https://tu-dominio.com/pages/nosotros.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+
+    <!-- Login -->
+    <url>
+        <loc>https://tu-dominio.com/pages/login.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+    <!-- Registro -->
+    <url>
+        <loc>https://tu-dominio.com/pages/registro.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+    <!-- Mi Cuenta -->
+    <url>
+        <loc>https://tu-dominio.com/pages/cuenta.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Wishlist -->
+    <url>
+        <loc>https://tu-dominio.com/pages/wishlist.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Mis Pedidos -->
+    <url>
+        <loc>https://tu-dominio.com/pages/mis-pedidos.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+
+    <!-- Recuperar Contraseña -->
+    <url>
+        <loc>https://tu-dominio.com/pages/recuperar-password.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+    <!-- Páginas Legales -->
+    <url>
+        <loc>https://tu-dominio.com/pages/privacidad.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+    <url>
+        <loc>https://tu-dominio.com/pages/terminos.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+
+    <!-- Resultado de Pago -->
+    <url>
+        <loc>https://tu-dominio.com/pages/resultado-pago.html</loc>
+        <lastmod>2025-01-16</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+</urlset>

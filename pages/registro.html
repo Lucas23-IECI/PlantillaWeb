@@ -140,12 +140,20 @@
     <script src="/js/api.js?v=3.0"></script>
     <script src="/js/header.js?v=3.0"></script>
     <script>
+        // Obtener URL de redirección si existe
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectUrl = urlParams.get('redirect') || '/home.html';
+
         if (isLoggedIn()) {
-            window.location.href = 'cuenta.html';
+            window.location.href = redirectUrl;
         }
 
         document.getElementById('registerForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Creando cuenta...';
 
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
@@ -154,6 +162,8 @@
             const password2 = document.getElementById('password2').value;
 
             if (password !== password2) {
+                btn.disabled = false;
+                btn.textContent = originalText;
                 if (typeof showNotification === 'function') {
                     showNotification('Las contraseñas no coinciden', 'error');
                 } else {
@@ -163,6 +173,8 @@
             }
 
             if (password.length < 6) {
+                btn.disabled = false;
+                btn.textContent = originalText;
                 if (typeof showNotification === 'function') {
                     showNotification('La contraseña debe tener al menos 6 caracteres', 'error');
                 } else {
@@ -177,10 +189,13 @@
                 if (typeof showNotification === 'function') {
                     showNotification('¡Cuenta creada exitosamente!', 'success');
                 }
+                // Redirigir al home después de registrarse
                 setTimeout(() => {
-                    window.location.href = 'cuenta.html';
+                    window.location.href = redirectUrl;
                 }, 500);
             } catch (error) {
+                btn.disabled = false;
+                btn.textContent = originalText;
                 if (typeof showNotification === 'function') {
                     showNotification(error.message || 'Error al crear cuenta', 'error');
                 } else {

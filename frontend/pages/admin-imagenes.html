@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Imágenes | Mi Tienda</title>
+    <link rel="icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/mobile.css">
+    <link rel="stylesheet" href="../css/pages/image-manager.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú"><span></span><span></span><span></span></button>
+            <div class="logo"><a href="../index.html"><img src="../images/logo-placeholder.svg" width="48" height="48" alt="Mi Tienda"></a></div>
+            <div class="header-actions"></div>
+        </div>
+        <nav class="nav-menu" id="navMenu">
+            <ul class="nav-links">
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="cuenta.html">Mi Cuenta</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="admin-container">
+        <div class="container">
+            <!-- Header -->
+            <div class="admin-header">
+                <h1>Gestor de Imágenes</h1>
+                <div class="header-actions-group">
+                    <button class="btn btn-outline" id="btnSelectMode">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        Seleccionar
+                    </button>
+                    <button class="btn btn-primary" id="btnUpload">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        Subir Imágenes
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="admin-nav">
+                <a href="admin.html">Pedidos</a>
+                <a href="admin-productos.html">Productos</a>
+                <a href="admin-imagenes.html" class="active">Imágenes</a>
+                <a href="admin-avisos.html">Avisos</a>
+                <a href="admin-descuentos.html">Descuentos</a>
+            </nav>
+
+            <!-- Toolbar -->
+            <div class="image-toolbar">
+                <div class="toolbar-left">
+                    <!-- Folder filter -->
+                    <div class="folder-filter">
+                        <label>Carpeta:</label>
+                        <select id="folderFilter">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Search -->
+                    <div class="search-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Buscar imágenes...">
+                    </div>
+                </div>
+                
+                <div class="toolbar-right">
+                    <!-- Selection actions (hidden by default) -->
+                    <div class="selection-actions" id="selectionActions" style="display: none;">
+                        <span class="selection-count">0 seleccionadas</span>
+                        <button class="btn btn-sm btn-outline" id="btnMoveSelected">Mover</button>
+                        <button class="btn btn-sm btn-danger" id="btnDeleteSelected">Eliminar</button>
+                        <button class="btn btn-sm" id="btnCancelSelection">Cancelar</button>
+                    </div>
+                    
+                    <!-- View toggle -->
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="grid" title="Vista cuadrícula">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                            </svg>
+                        </button>
+                        <button class="view-btn" data-view="list" title="Vista lista">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drop zone -->
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-content">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p>Arrastra imágenes aquí o haz clic para seleccionar</p>
+                    <span class="drop-zone-hint">PNG, JPG, GIF, WebP hasta 10MB</span>
+                </div>
+                <input type="file" id="fileInput" multiple accept="image/*" hidden>
+            </div>
+
+            <!-- Upload progress -->
+            <div class="upload-progress" id="uploadProgress" style="display: none;">
+                <div class="progress-header">
+                    <span>Subiendo imágenes...</span>
+                    <span class="progress-percent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+
+            <!-- Image grid -->
+            <div class="images-grid" id="imagesGrid">
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Cargando imágenes...</p>
+                </div>
+            </div>
+
+            <!-- Load more -->
+            <div class="load-more" id="loadMore" style="display: none;">
+                <button class="btn btn-outline" id="btnLoadMore">Cargar más imágenes</button>
+            </div>
+
+            <!-- Empty state -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                <h3>No hay imágenes</h3>
+                <p>Sube tu primera imagen arrastrándola aquí o usando el botón de subir</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Image Preview Modal -->
+    <div class="modal" id="previewModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content preview-modal-content">
+            <button class="modal-close" id="closePreview">&times;</button>
+            
+            <div class="preview-layout">
+                <!-- Image preview -->
+                <div class="preview-image-container">
+                    <img src="" alt="" id="previewImage">
+                </div>
+                
+                <!-- Image details sidebar -->
+                <div class="preview-sidebar">
+                    <h3 id="previewFilename">imagen.jpg</h3>
+                    
+                    <div class="preview-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Dimensiones</span>
+                            <span class="detail-value" id="previewDimensions">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Tamaño</span>
+                            <span class="detail-value" id="previewSize">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Formato</span>
+                            <span class="detail-value" id="previewFormat">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Carpeta</span>
+                            <span class="detail-value" id="previewFolder">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Fecha</span>
+                            <span class="detail-value" id="previewDate">-</span>
+                        </div>
+                    </div>
+
+                    <!-- URL variants -->
+                    <div class="url-variants">
+                        <h4>URLs disponibles</h4>
+                        <div class="url-item">
+                            <label>Original</label>
+                            <div class="url-copy">
+                                <input type="text" readonly id="urlOriginal">
+                                <button class="btn-copy" data-target="urlOriginal">Copiar</button>
+                            </div>
+                        </div>
+                        <div class="url-item">
+                            <label>Thumbnail (150px)</label>
+                            <div class="url-copy">
+                                <input type="text" readonly id="urlThumbnail">
+                                <button class="btn-copy" data-target="urlThumbnail">Copiar</button>
+                            </div>
+                        </div>
+                        <div class="url-item">
+                            <label>Mediana (600px)</label>
+                            <div class="url-copy">
+                                <input type="text" readonly id="urlMedium">
+                                <button class="btn-copy" data-target="urlMedium">Copiar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="preview-actions">
+                        <button class="btn btn-outline" id="btnEditImage">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                            Editar
+                        </button>
+                        <button class="btn btn-outline" id="btnMoveImage">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            Mover
+                        </button>
+                        <button class="btn btn-danger" id="btnDeleteImage">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Editor Modal -->
+    <div class="modal" id="editorModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content editor-modal-content">
+            <div class="modal-header">
+                <h2>Editor de Imagen</h2>
+                <button class="modal-close" id="closeEditor">&times;</button>
+            </div>
+            
+            <div class="editor-layout">
+                <div class="editor-preview">
+                    <img src="" alt="" id="editorImage">
+                </div>
+                
+                <div class="editor-controls">
+                    <div class="control-group">
+                        <label>Ancho (px)</label>
+                        <input type="number" id="editorWidth" min="50" max="4000" value="800">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Alto (px)</label>
+                        <input type="number" id="editorHeight" min="50" max="4000" value="800">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>
+                            <input type="checkbox" id="editorKeepRatio" checked>
+                            Mantener proporción
+                        </label>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Recorte</label>
+                        <select id="editorCrop">
+                            <option value="fill">Rellenar (fill)</option>
+                            <option value="fit">Ajustar (fit)</option>
+                            <option value="limit" selected>Limitar (limit)</option>
+                            <option value="scale">Escalar (scale)</option>
+                            <option value="crop">Recortar (crop)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Punto focal</label>
+                        <select id="editorGravity">
+                            <option value="auto" selected>Automático</option>
+                            <option value="face">Rostros</option>
+                            <option value="center">Centro</option>
+                            <option value="north">Arriba</option>
+                            <option value="south">Abajo</option>
+                            <option value="east">Derecha</option>
+                            <option value="west">Izquierda</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Calidad</label>
+                        <select id="editorQuality">
+                            <option value="auto" selected>Automática</option>
+                            <option value="auto:best">Máxima</option>
+                            <option value="auto:good">Buena</option>
+                            <option value="auto:eco">Económica</option>
+                            <option value="auto:low">Baja</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Formato</label>
+                        <select id="editorFormat">
+                            <option value="auto" selected>Automático</option>
+                            <option value="webp">WebP</option>
+                            <option value="jpg">JPG</option>
+                            <option value="png">PNG</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="btnGenerateUrl" style="width: 100%; margin-top: var(--spacing-md);">
+                        Generar URL
+                    </button>
+                    
+                    <div class="generated-url" id="generatedUrlContainer" style="display: none;">
+                        <label>URL generada:</label>
+                        <div class="url-copy">
+                            <input type="text" readonly id="generatedUrl">
+                            <button class="btn-copy" data-target="generatedUrl">Copiar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Move Modal -->
+    <div class="modal" id="moveModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content move-modal-content">
+            <div class="modal-header">
+                <h2>Mover Imagen</h2>
+                <button class="modal-close" id="closeMove">&times;</button>
+            </div>
+            
+            <div class="move-content">
+                <p>Selecciona la carpeta de destino:</p>
+                <div class="folder-list" id="moveFolderList">
+                    <!-- Folders will be loaded here -->
+                </div>
+                
+                <div class="new-folder-form">
+                    <input type="text" id="newFolderName" placeholder="Nueva carpeta...">
+                    <button class="btn btn-sm" id="btnCreateFolder">Crear</button>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="btnCancelMove">Cancelar</button>
+                <button class="btn btn-primary" id="btnConfirmMove">Mover</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content upload-modal-content">
+            <div class="modal-header">
+                <h2>Subir Imágenes</h2>
+                <button class="modal-close" id="closeUpload">&times;</button>
+            </div>
+            
+            <div class="upload-content">
+                <div class="upload-folder-select">
+                    <label>Carpeta de destino:</label>
+                    <select id="uploadFolder">
+                        <option value="productos">Productos</option>
+                        <option value="banners">Banners</option>
+                        <option value="categorias">Categorías</option>
+                        <option value="general">General</option>
+                    </select>
+                </div>
+                
+                <div class="upload-drop-area" id="uploadDropArea">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p>Arrastra imágenes aquí</p>
+                    <span>o</span>
+                    <button class="btn btn-outline" id="btnSelectFiles">Seleccionar archivos</button>
+                    <input type="file" id="uploadFileInput" multiple accept="image/*" hidden>
+                </div>
+                
+                <div class="upload-preview-list" id="uploadPreviewList">
+                    <!-- Preview items will be added here -->
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="btnCancelUpload">Cancelar</button>
+                <button class="btn btn-primary" id="btnStartUpload" disabled>Subir (0)</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/api.js"></script>
+    <script src="../js/admin/image-manager.js"></script>
+</body>
+
+</html>

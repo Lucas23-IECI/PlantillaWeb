@@ -1,0 +1,51 @@
+# ==========================================
+# CONFIGURACIÓN DEL BACKEND
+# ==========================================
+# INSTRUCCIONES:
+# 1. Copia este archivo
+# 2. Renómbralo a ".env" (con el punto al inicio)
+# 3. Rellena los valores con tus credenciales
+
+# Puerto del servidor
+PORT=3001
+
+# ==========================================
+# CLOUDINARY (Gestor de Imágenes) - GRATIS
+# ==========================================
+# Pasos para obtener estos valores:
+# 1. Ve a https://cloudinary.com/users/register_free
+# 2. Crea tu cuenta gratis (no pide tarjeta)
+# 3. Una vez dentro, en el Dashboard verás:
+#    - Cloud Name (algo como "dxxxxxx")
+#    - API Key (números)
+#    - API Secret (letras y números)
+# 4. Copia esos valores aquí abajo:
+
+CLOUDINARY_CLOUD_NAME=aqui_tu_cloud_name
+CLOUDINARY_API_KEY=aqui_tu_api_key
+CLOUDINARY_API_SECRET=aqui_tu_api_secret
+
+# ==========================================
+# FIREBASE (Base de datos y Auth)
+# ==========================================
+# Ya deberías tener esto configurado si usas Firebase
+# Si no, ve a https://console.firebase.google.com
+
+FIREBASE_SERVICE_ACCOUNT_JSON={"type":"service_account","project_id":"tu-proyecto"...}
+FIREBASE_PROJECT_ID=tu_project_id
+
+# ==========================================
+# JWT (Autenticación)
+# ==========================================
+# Genera una clave secreta aleatoria
+# Puedes inventar cualquier texto largo y aleatorio
+
+JWT_SECRET=MiClaveSecretaMuyLargaYSegura123456789
+
+# ==========================================
+# OPCIONALES
+# ==========================================
+# EMAIL_HOST=smtp.gmail.com
+# EMAIL_PORT=587
+# EMAIL_USER=tu_email@gmail.com
+# EMAIL_PASS=tu_contraseña

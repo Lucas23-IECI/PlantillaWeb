@@ -37,3 +37,4 @@ Thumbs.db
 
 # Uploads (local development)
 uploads/
+backend/firebase-service-account.json

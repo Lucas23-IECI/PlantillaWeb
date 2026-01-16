@@ -37,6 +37,11 @@
             border-radius: var(--radius-md);
             color: var(--color-text);
             font-size: var(--font-size-sm);
+            text-decoration: none;
+        }
+
+        .admin-nav a:hover {
+            background: var(--color-surface);
         }
 
         .admin-nav a.active {
@@ -83,6 +88,13 @@
             gap: var(--spacing-sm);
         }
 
+        .product-image-count {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* Modal Styles */
         .modal {
             position: fixed;
             inset: 0;
@@ -103,7 +115,7 @@
             border-radius: var(--radius-lg);
             padding: var(--spacing-xl);
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -121,13 +133,246 @@
             cursor: pointer;
         }
 
-        .image-preview {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
+        /* Image Gallery Selector */
+        .images-section {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .images-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .images-section-header h4 {
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+
+        .images-actions {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .images-actions button {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            font-size: var(--font-size-xs);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            background: var(--color-background);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .images-actions button:hover {
+            background: var(--color-surface);
+            border-color: var(--color-primary);
+        }
+
+        .product-images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: var(--spacing-sm);
+            min-height: 80px;
+            padding: var(--spacing-sm);
+            border: 2px dashed var(--color-border);
             border-radius: var(--radius-md);
+            background: var(--color-background);
+        }
+
+        .product-images-grid.empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        .product-image-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 2px solid transparent;
+            cursor: move;
+        }
+
+        .product-image-item.main {
+            border-color: var(--color-primary);
+        }
+
+        .product-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-image-item-actions {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            display: flex;
+            gap: 2px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .product-image-item:hover .product-image-item-actions {
+            opacity: 1;
+        }
+
+        .product-image-item-actions button {
+            width: 24px;
+            height: 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .btn-set-main {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-remove-img {
+            background: var(--color-error);
+            color: white;
+        }
+
+        .product-image-item .main-badge {
+            position: absolute;
+            bottom: 4px;
+            left: 4px;
+            background: var(--color-primary);
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Image Selector Modal */
+        .image-selector-modal .modal-content {
+            max-width: 900px;
+        }
+
+        .selector-toolbar {
+            display: flex;
+            gap: var(--spacing-md);
             margin-bottom: var(--spacing-md);
-            background: var(--color-background-alt);
+            flex-wrap: wrap;
+        }
+
+        .selector-toolbar select,
+        .selector-toolbar input {
+            padding: var(--spacing-sm);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+        }
+
+        .selector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: var(--spacing-sm);
+            max-height: 400px;
+            overflow-y: auto;
+            padding: var(--spacing-sm);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+        }
+
+        .selector-image {
+            aspect-ratio: 1;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .selector-image:hover {
+            border-color: var(--color-primary-light);
+        }
+
+        .selector-image.selected {
+            border-color: var(--color-primary);
+        }
+
+        .selector-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .selector-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--spacing-md);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--color-border);
+        }
+
+        .selector-count {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        /* Upload area in selector */
+        .selector-upload-area {
+            border: 2px dashed var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            text-align: center;
+            margin-bottom: var(--spacing-md);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .selector-upload-area:hover,
+        .selector-upload-area.dragover {
+            border-color: var(--color-primary);
+            background: rgba(var(--color-primary-rgb), 0.05);
+        }
+
+        .selector-upload-area svg {
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-text-secondary);
+        }
+
+        /* Loading state */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-2xl);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--color-border);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: var(--spacing-2xl);
+            color: var(--color-text-secondary);
         }
     </style>
 </head>
@@ -157,6 +402,7 @@
             <nav class="admin-nav">
                 <a href="admin.html">Pedidos</a>
                 <a href="admin-productos.html" class="active">Productos</a>
+                <a href="admin-imagenes.html">Imágenes</a>
                 <a href="admin-avisos.html">Avisos</a>
                 <a href="admin-descuentos.html">Descuentos</a>
             </nav>
@@ -169,7 +415,7 @@
         </div>
     </main>
 
-    <!-- Modal -->
+    <!-- Product Modal -->
     <div class="modal" id="productModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -178,7 +424,36 @@
             </div>
             <form id="productForm">
                 <input type="hidden" id="productId">
-                <img src="" alt="" class="image-preview" id="imagePreview" style="display: none;">
+                
+                <!-- Images Section -->
+                <div class="images-section">
+                    <div class="images-section-header">
+                        <h4>Imágenes del producto</h4>
+                        <div class="images-actions">
+                            <button type="button" onclick="openImageSelector()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                </svg>
+                                Galería
+                            </button>
+                            <button type="button" onclick="triggerFileUpload()">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                                Subir
+                            </button>
+                        </div>
+                    </div>
+                    <div class="product-images-grid empty" id="productImagesGrid">
+                        Sin imágenes. Usa los botones de arriba para agregar.
+                    </div>
+                    <input type="file" id="productImageInput" accept="image/*" multiple hidden>
+                </div>
+
                 <div class="form-group">
                     <label class="form-label">Nombre *</label>
                     <input type="text" class="form-input" id="productName" required>
@@ -199,12 +474,57 @@
                     <label class="form-label">Stock</label>
                     <input type="number" class="form-input" id="productStock" value="0" min="0">
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Imagen</label>
-                    <input type="file" class="form-input" id="productImage" accept="image/*">
-                </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Guardar</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Image Selector Modal -->
+    <div class="modal image-selector-modal" id="imageSelectorModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Seleccionar Imágenes</h2>
+                <button class="modal-close" onclick="closeImageSelector()">&times;</button>
+            </div>
+            
+            <!-- Upload area -->
+            <div class="selector-upload-area" id="selectorUploadArea">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <p>Arrastra imágenes aquí o haz clic para subir</p>
+                <input type="file" id="selectorFileInput" accept="image/*" multiple hidden>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="selector-toolbar">
+                <select id="selectorFolder">
+                    <option value="">Todas las carpetas</option>
+                    <option value="productos">Productos</option>
+                    <option value="banners">Banners</option>
+                    <option value="categorias">Categorías</option>
+                    <option value="general">General</option>
+                </select>
+                <input type="text" id="selectorSearch" placeholder="Buscar imágenes...">
+            </div>
+
+            <!-- Images grid -->
+            <div class="selector-grid" id="selectorGrid">
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="selector-footer">
+                <span class="selector-count" id="selectorCount">0 seleccionadas</span>
+                <div>
+                    <button class="btn btn-outline" onclick="closeImageSelector()">Cancelar</button>
+                    <button class="btn btn-primary" onclick="confirmImageSelection()">Agregar seleccionadas</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -218,7 +538,13 @@
 
         const grid = document.getElementById('productsGrid');
         let editingId = null;
+        let productImages = []; // Array of { url, publicId, isMain }
+        let selectorImages = []; // Images loaded in selector
+        let selectedInSelector = new Set(); // Selected images in selector
 
+        // ==========================================
+        // PRODUCTS CRUD
+        // ==========================================
         async function loadProducts() {
             try {
                 const products = await api.getProducts(true);
@@ -226,29 +552,34 @@
                     grid.innerHTML = '<div class="empty-state"><p>No hay productos</p></div>';
                     return;
                 }
-                grid.innerHTML = products.map(p => `
+                grid.innerHTML = products.map(p => {
+                    const imageCount = (p.images && p.images.length) || (p.image_url ? 1 : 0);
+                    return `
                     <div class="product-admin-card">
                         <img src="${p.image_url || '../images/products/placeholder.png'}" alt="${escapeHtml(p.name)}">
                         <div class="product-admin-info">
                             <div class="product-admin-name">${escapeHtml(p.name)}</div>
                             <div class="product-admin-price">${formatPrice(p.price)}</div>
+                            <div class="product-image-count">${imageCount} imagen${imageCount !== 1 ? 'es' : ''}</div>
                             <div class="product-admin-actions">
-                                <button class="btn btn-sm btn-outline" onclick='editProduct(${JSON.stringify(p)})'>Editar</button>
+                                <button class="btn btn-sm btn-outline" onclick='editProduct(${JSON.stringify(p).replace(/'/g, "&#39;")})'>Editar</button>
                                 <button class="btn btn-sm" style="background:var(--color-error);color:white;" onclick="deleteProduct('${p.product_id}')">Eliminar</button>
                             </div>
                         </div>
                     </div>
-                `).join('');
+                `}).join('');
             } catch (error) {
+                console.error('Error loading products:', error);
                 grid.innerHTML = '<p>Error al cargar productos</p>';
             }
         }
 
         function openModal() {
             editingId = null;
+            productImages = [];
             document.getElementById('modalTitle').textContent = 'Nuevo Producto';
             document.getElementById('productForm').reset();
-            document.getElementById('imagePreview').style.display = 'none';
+            renderProductImages();
             document.getElementById('productModal').classList.add('active');
         }
 
@@ -265,14 +596,24 @@
             document.getElementById('productCategory').value = product.category || '';
             document.getElementById('productStock').value = product.stock || 0;
 
-            const preview = document.getElementById('imagePreview');
-            if (product.image_url) {
-                preview.src = product.image_url;
-                preview.style.display = 'block';
+            // Load images
+            if (product.images && product.images.length > 0) {
+                productImages = product.images.map(img => ({
+                    url: img.url,
+                    publicId: img.publicId || img.public_id,
+                    isMain: img.isMain || false
+                }));
+            } else if (product.image_url) {
+                productImages = [{
+                    url: product.image_url,
+                    publicId: null,
+                    isMain: true
+                }];
             } else {
-                preview.style.display = 'none';
+                productImages = [];
             }
 
+            renderProductImages();
             document.getElementById('productModal').classList.add('active');
         }
 
@@ -295,19 +636,19 @@
                 price: parseFloat(document.getElementById('productPrice').value),
                 description: document.getElementById('productDescription').value,
                 category: document.getElementById('productCategory').value,
-                stock: parseInt(document.getElementById('productStock').value) || 0
+                stock: parseInt(document.getElementById('productStock').value) || 0,
+                images: productImages.map((img, index) => ({
+                    url: img.url,
+                    publicId: img.publicId,
+                    isMain: img.isMain || index === 0,
+                    order: index
+                }))
             };
 
-            // Upload image if selected
-            const imageFile = document.getElementById('productImage').files[0];
-            if (imageFile) {
-                try {
-                    const uploadResult = await api.adminUploadImage(imageFile);
-                    data.image_url = uploadResult.url;
-                } catch (error) {
-                    showNotification('Error subiendo imagen', 'error');
-                    return;
-                }
+            // Set main image_url for backwards compatibility
+            const mainImage = data.images.find(img => img.isMain) || data.images[0];
+            if (mainImage) {
+                data.image_url = mainImage.url;
             }
 
             try {
@@ -325,6 +666,222 @@
             }
         });
 
+        // ==========================================
+        // PRODUCT IMAGES MANAGEMENT
+        // ==========================================
+        function renderProductImages() {
+            const container = document.getElementById('productImagesGrid');
+            
+            if (productImages.length === 0) {
+                container.innerHTML = 'Sin imágenes. Usa los botones de arriba para agregar.';
+                container.classList.add('empty');
+                return;
+            }
+
+            container.classList.remove('empty');
+            container.innerHTML = productImages.map((img, index) => `
+                <div class="product-image-item ${img.isMain ? 'main' : ''}" data-index="${index}">
+                    <img src="${img.url}" alt="Imagen ${index + 1}">
+                    <div class="product-image-item-actions">
+                        ${!img.isMain ? `<button type="button" class="btn-set-main" onclick="setMainImage(${index})" title="Establecer como principal">★</button>` : ''}
+                        <button type="button" class="btn-remove-img" onclick="removeProductImage(${index})" title="Eliminar">✕</button>
+                    </div>
+                    ${img.isMain ? '<span class="main-badge">Principal</span>' : ''}
+                </div>
+            `).join('');
+        }
+
+        function setMainImage(index) {
+            productImages.forEach((img, i) => {
+                img.isMain = (i === index);
+            });
+            renderProductImages();
+        }
+
+        function removeProductImage(index) {
+            productImages.splice(index, 1);
+            // If we removed the main image, set first one as main
+            if (productImages.length > 0 && !productImages.some(img => img.isMain)) {
+                productImages[0].isMain = true;
+            }
+            renderProductImages();
+        }
+
+        function addProductImage(url, publicId = null) {
+            const isMain = productImages.length === 0;
+            productImages.push({ url, publicId, isMain });
+            renderProductImages();
+        }
+
+        // File upload
+        function triggerFileUpload() {
+            document.getElementById('productImageInput').click();
+        }
+
+        document.getElementById('productImageInput').addEventListener('change', async (e) => {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
+
+            for (const file of files) {
+                try {
+                    showNotification('Subiendo imagen...', 'info');
+                    const result = await api.adminUploadImage(file);
+                    addProductImage(result.url, result.public_id);
+                    showNotification('Imagen subida', 'success');
+                } catch (error) {
+                    showNotification('Error al subir: ' + error.message, 'error');
+                }
+            }
+            e.target.value = '';
+        });
+
+        // ==========================================
+        // IMAGE SELECTOR MODAL
+        // ==========================================
+        function openImageSelector() {
+            selectedInSelector.clear();
+            document.getElementById('selectorCount').textContent = '0 seleccionadas';
+            document.getElementById('imageSelectorModal').classList.add('active');
+            loadSelectorImages();
+        }
+
+        function closeImageSelector() {
+            document.getElementById('imageSelectorModal').classList.remove('active');
+        }
+
+        async function loadSelectorImages() {
+            const grid = document.getElementById('selectorGrid');
+            grid.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+            try {
+                const folder = document.getElementById('selectorFolder').value;
+                const search = document.getElementById('selectorSearch').value;
+
+                const response = await api.getImages({ folder, search, limit: 50 });
+                
+                if (response.success && response.data.length > 0) {
+                    selectorImages = response.data;
+                    renderSelectorImages();
+                } else {
+                    grid.innerHTML = '<div class="empty-state">No hay imágenes</div>';
+                }
+            } catch (error) {
+                console.error('Error loading images:', error);
+                grid.innerHTML = '<div class="empty-state">Error al cargar imágenes</div>';
+            }
+        }
+
+        function renderSelectorImages() {
+            const grid = document.getElementById('selectorGrid');
+            grid.innerHTML = selectorImages.map(img => {
+                const thumbnail = img.variants?.thumbnail || img.url;
+                const isSelected = selectedInSelector.has(img.publicId);
+                return `
+                    <div class="selector-image ${isSelected ? 'selected' : ''}" 
+                         onclick="toggleSelectorImage('${img.publicId}')"
+                         data-public-id="${img.publicId}">
+                        <img src="${thumbnail}" alt="${img.filename || 'Imagen'}">
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function toggleSelectorImage(publicId) {
+            if (selectedInSelector.has(publicId)) {
+                selectedInSelector.delete(publicId);
+            } else {
+                selectedInSelector.add(publicId);
+            }
+
+            // Update visual state
+            const item = document.querySelector(`.selector-image[data-public-id="${publicId}"]`);
+            if (item) {
+                item.classList.toggle('selected', selectedInSelector.has(publicId));
+            }
+
+            document.getElementById('selectorCount').textContent = `${selectedInSelector.size} seleccionadas`;
+        }
+
+        function confirmImageSelection() {
+            selectedInSelector.forEach(publicId => {
+                const img = selectorImages.find(i => i.publicId === publicId);
+                if (img && !productImages.some(p => p.publicId === publicId)) {
+                    addProductImage(img.url, img.publicId);
+                }
+            });
+            closeImageSelector();
+        }
+
+        // Selector filters
+        document.getElementById('selectorFolder').addEventListener('change', loadSelectorImages);
+
+        let searchTimeout;
+        document.getElementById('selectorSearch').addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(loadSelectorImages, 300);
+        });
+
+        // Selector upload
+        const selectorUploadArea = document.getElementById('selectorUploadArea');
+        const selectorFileInput = document.getElementById('selectorFileInput');
+
+        selectorUploadArea.addEventListener('click', () => selectorFileInput.click());
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event => {
+            selectorUploadArea.addEventListener(event, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
+
+        ['dragenter', 'dragover'].forEach(event => {
+            selectorUploadArea.addEventListener(event, () => selectorUploadArea.classList.add('dragover'));
+        });
+
+        ['dragleave', 'drop'].forEach(event => {
+            selectorUploadArea.addEventListener(event, () => selectorUploadArea.classList.remove('dragover'));
+        });
+
+        selectorUploadArea.addEventListener('drop', async (e) => {
+            const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+            await uploadFilesToSelector(files);
+        });
+
+        selectorFileInput.addEventListener('change', async (e) => {
+            const files = Array.from(e.target.files);
+            await uploadFilesToSelector(files);
+            e.target.value = '';
+        });
+
+        async function uploadFilesToSelector(files) {
+            if (files.length === 0) return;
+
+            const folder = document.getElementById('selectorFolder').value || 'productos';
+
+            for (const file of files) {
+                try {
+                    showNotification('Subiendo...', 'info');
+                    const response = await api.uploadImages([file], { folder });
+                    if (response.success && response.data.length > 0) {
+                        // Add to selector and auto-select
+                        const uploaded = response.data[0];
+                        selectorImages.unshift({
+                            publicId: uploaded.publicId,
+                            url: uploaded.url,
+                            variants: { thumbnail: uploaded.url }
+                        });
+                        selectedInSelector.add(uploaded.publicId);
+                        renderSelectorImages();
+                        document.getElementById('selectorCount').textContent = `${selectedInSelector.size} seleccionadas`;
+                        showNotification('Imagen subida', 'success');
+                    }
+                } catch (error) {
+                    showNotification('Error: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // Initialize
         loadProducts();
     </script>
 </body>

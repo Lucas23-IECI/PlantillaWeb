@@ -1,94 +1,344 @@
 /* ===================================
-   SECTIONS
+   SECTIONS - PREMIUM
    Hero, secciones genéricas, page headers
 =================================== */
 
-/* ===== HERO ===== */
-.hero {
-    min-height: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: var(--spacing-4xl) var(--spacing-2xl);
-    background: var(--color-background-alt);
-    position: relative;
-    overflow: hidden;
-}
-
-.hero-content {
-    max-width: 800px;
-    position: relative;
-    z-index: 1;
-}
-
-.hero-subtitle {
-    font-size: var(--font-size-sm);
-    letter-spacing: 3px;
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-md);
-    text-transform: uppercase;
-}
-
-.hero-title {
-    font-size: var(--font-size-5xl);
-    font-weight: 300;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-lg);
-    line-height: 1.2;
-}
-
-.hero-description {
-    font-size: var(--font-size-lg);
-    color: var(--color-text-light);
-    margin-bottom: var(--spacing-2xl);
-    font-weight: 300;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: var(--spacing-md);
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-/* ===== SECCIONES ===== */
+/* ===================================
+   SECCIONES BASE
+=================================== */
 .section {
-    padding: var(--spacing-4xl) 0;
+   padding: var(--spacing-5xl) 0;
+   position: relative;
 }
 
 .section-alt {
-    background: var(--color-background-alt);
+   background: var(--color-background-alt);
 }
 
+/* ===================================
+   SECTION TITLE - PREMIUM
+=================================== */
 .section-title {
-    font-size: var(--font-size-3xl);
-    font-weight: 400;
-    color: var(--color-text);
-    margin-bottom: var(--spacing-3xl);
-    letter-spacing: 1px;
+   font-family: var(--font-display);
+   font-size: var(--font-size-3xl);
+   font-weight: var(--font-weight-medium);
+   color: var(--color-text);
+   margin-bottom: var(--spacing-3xl);
+   letter-spacing: var(--letter-spacing-tight);
+   position: relative;
+   display: inline-block;
+}
+
+/* Línea decorativa dorada */
+.section-title::after {
+   content: '';
+   position: absolute;
+   bottom: -12px;
+   left: 0;
+   width: 60px;
+   height: 3px;
+   background: var(--color-accent);
+   border-radius: var(--radius-full);
 }
 
 .section-title-center {
-    text-align: center;
+   text-align: center;
+   display: block;
 }
 
-/* ===== PAGE HEADER ===== */
+.section-title-center::after {
+   left: 50%;
+   transform: translateX(-50%);
+}
+
+/* ===================================
+   SECTION SUBTITLE
+=================================== */
+.section-subtitle {
+   font-size: var(--font-size-sm);
+   color: var(--color-text-muted);
+   text-transform: uppercase;
+   letter-spacing: var(--letter-spacing-wider);
+   margin-bottom: var(--spacing-sm);
+   font-weight: var(--font-weight-medium);
+}
+
+/* ===================================
+   SECTION DESCRIPTION
+=================================== */
+.section-description {
+   font-size: var(--font-size-lg);
+   color: var(--color-text-light);
+   max-width: 600px;
+   line-height: var(--line-height-relaxed);
+   margin-bottom: var(--spacing-2xl);
+}
+
+.section-description-center {
+   margin-left: auto;
+   margin-right: auto;
+   text-align: center;
+}
+
+/* ===================================
+   PAGE HEADER - PREMIUM
+=================================== */
 .page-header {
-    margin-top: var(--header-height);
-    text-align: center;
-    padding: var(--spacing-2xl) 0;
-    background: var(--color-background-alt);
+   text-align: center;
+   padding: var(--spacing-4xl) var(--spacing-xl);
+   background: var(--color-background-alt);
+   position: relative;
+}
+
+.page-header::after {
+   content: '';
+   position: absolute;
+   bottom: 0;
+   left: 50%;
+   transform: translateX(-50%);
+   width: 60px;
+   height: 3px;
+   background: var(--color-accent);
+   border-radius: var(--radius-full);
 }
 
 .page-title {
-    font-size: var(--font-size-2xl);
-    font-weight: 400;
-    letter-spacing: 2px;
-    margin-bottom: var(--spacing-sm);
+   font-family: var(--font-display);
+   font-size: var(--font-size-4xl);
+   font-weight: var(--font-weight-medium);
+   letter-spacing: var(--letter-spacing-tight);
+   margin-bottom: var(--spacing-sm);
+   color: var(--color-text);
 }
 
 .page-subtitle {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-light);
+   font-size: var(--font-size-base);
+   color: var(--color-text-light);
+}
+
+/* ===================================
+   FEATURES SECTION GRID
+=================================== */
+.features-grid {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: var(--spacing-xl);
+}
+
+/* ===================================
+   HERO VARIANTS
+=================================== */
+
+/* Hero compacto para páginas internas */
+.hero-compact {
+   min-height: 40vh;
+   padding: var(--spacing-4xl) var(--spacing-xl);
+}
+
+/* Hero con imagen de fondo */
+.hero-image {
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+}
+
+.hero-image .hero-content {
+   background: rgba(255, 255, 255, 0.95);
+   padding: var(--spacing-3xl);
+   border-radius: var(--radius-2xl);
+   backdrop-filter: blur(10px);
+}
+
+[data-theme="dark"] .hero-image .hero-content {
+   background: rgba(26, 26, 26, 0.95);
+}
+
+/* Hero con video de fondo */
+.hero-video {
+   position: relative;
+}
+
+.hero-video video {
+   position: absolute;
+   inset: 0;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   z-index: 0;
+}
+
+.hero-video .hero-content {
+   z-index: 2;
+}
+
+/* ===================================
+   SECTION DIVIDERS
+=================================== */
+.section-divider {
+   width: 100%;
+   height: 1px;
+   background: var(--color-border);
+   margin: var(--spacing-4xl) 0;
+}
+
+.section-divider-accent {
+   height: 3px;
+   background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+   max-width: 200px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+/* ===================================
+   CTA SECTION
+=================================== */
+.section-cta {
+   background: var(--color-primary);
+   color: var(--color-text-inverse);
+   text-align: center;
+   padding: var(--spacing-4xl) var(--spacing-xl);
+}
+
+.section-cta .section-title {
+   color: var(--color-text-inverse);
+}
+
+.section-cta .section-title::after {
+   background: var(--color-accent);
+}
+
+.section-cta .section-description {
+   color: rgba(255, 255, 255, 0.8);
+   margin-left: auto;
+   margin-right: auto;
+}
+
+/* ===================================
+   TESTIMONIALS SECTION
+=================================== */
+.testimonials-grid {
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
+   gap: var(--spacing-xl);
+}
+
+.testimonial-card {
+   background: var(--color-surface);
+   padding: var(--spacing-2xl);
+   border-radius: var(--radius-xl);
+   border: 1px solid var(--color-border);
+   text-align: center;
+   transition: all var(--transition-normal);
+}
+
+.testimonial-card:hover {
+   transform: translateY(-4px);
+   box-shadow: var(--shadow-lg);
+}
+
+.testimonial-avatar {
+   width: 64px;
+   height: 64px;
+   border-radius: var(--radius-full);
+   margin: 0 auto var(--spacing-lg);
+   object-fit: cover;
+   border: 3px solid var(--color-accent);
+}
+
+.testimonial-text {
+   font-style: italic;
+   color: var(--color-text-light);
+   line-height: var(--line-height-relaxed);
+   margin-bottom: var(--spacing-lg);
+}
+
+.testimonial-author {
+   font-weight: var(--font-weight-semibold);
+   color: var(--color-text);
+}
+
+.testimonial-role {
+   font-size: var(--font-size-sm);
+   color: var(--color-text-muted);
+}
+
+/* ===================================
+   STATS SECTION
+=================================== */
+.stats-grid {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: var(--spacing-xl);
+   text-align: center;
+}
+
+.stat-item {
+   padding: var(--spacing-xl);
+}
+
+.stat-number {
+   font-family: var(--font-display);
+   font-size: var(--font-size-5xl);
+   font-weight: var(--font-weight-medium);
+   color: var(--color-accent);
+   line-height: 1;
+   margin-bottom: var(--spacing-sm);
+}
+
+.stat-label {
+   font-size: var(--font-size-sm);
+   color: var(--color-text-light);
+   text-transform: uppercase;
+   letter-spacing: var(--letter-spacing-wide);
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+@media (max-width: 1024px) {
+   .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+   }
+
+   .testimonials-grid {
+      grid-template-columns: repeat(2, 1fr);
+   }
+
+   .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+   }
+}
+
+@media (max-width: 768px) {
+   .section {
+      padding: var(--spacing-4xl) 0;
+   }
+
+   .section-title {
+      font-size: var(--font-size-2xl);
+   }
+
+   .page-title {
+      font-size: var(--font-size-3xl);
+   }
+
+   .page-header {
+      padding: var(--spacing-3xl) var(--spacing-md);
+   }
+}
+
+@media (max-width: 640px) {
+   .features-grid,
+   .testimonials-grid {
+      grid-template-columns: 1fr;
+   }
+
+   .stats-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+   }
+
+   .stat-number {
+      font-size: var(--font-size-4xl);
+   }
 }

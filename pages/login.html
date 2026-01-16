@@ -127,13 +127,22 @@
     <script src="/js/api.js?v=3.0"></script>
     <script src="/js/header.js?v=3.0"></script>
     <script>
+        // Obtener URL de redirección si existe
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectUrl = urlParams.get('redirect') || '/home.html';
+
         // Redirigir si ya está logueado
         if (isLoggedIn()) {
-            window.location.href = 'cuenta.html';
+            window.location.href = redirectUrl;
         }
 
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'Ingresando...';
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
@@ -143,10 +152,17 @@
                 if (typeof showNotification === 'function') {
                     showNotification('¡Bienvenido!', 'success');
                 }
+                // Redirigir: admin al panel, usuarios normales al home o URL de redirect
                 setTimeout(() => {
-                    window.location.href = result.user.admin ? 'admin.html' : 'cuenta.html';
+                    if (result.user.admin) {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = redirectUrl;
+                    }
                 }, 500);
             } catch (error) {
+                btn.disabled = false;
+                btn.textContent = originalText;
                 if (typeof showNotification === 'function') {
                     showNotification(error.message || 'Error al iniciar sesión', 'error');
                 } else {

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6b8a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Logo Icon -->
+  <g transform="translate(5, 5)">
+    <!-- Shopping bag -->
+    <rect x="5" y="15" width="40" height="35" rx="5" fill="url(#logoGradient)"/>
+    <path d="M15 15 L15 10 Q15 3 25 3 Q35 3 35 10 L35 15" fill="none" stroke="url(#logoGradient)" stroke-width="3" stroke-linecap="round"/>
+    <!-- Check mark -->
+    <circle cx="25" cy="32" r="10" fill="url(#accentGrad)"/>
+    <path d="M20 32 L23 36 L31 27" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Text: Mi Tienda -->
+  <text x="60" y="38" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="700" fill="#1a1a2e">Mi Tienda</text>
+</svg>

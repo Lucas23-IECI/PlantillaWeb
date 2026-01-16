@@ -6,6 +6,7 @@
     "scripts": {
         "start": "node server.js",
         "dev": "nodemon server.js",
+        "mock": "node mockServer.js",
         "set-admin": "node scripts/setAdmin.js",
         "seed": "node scripts/seedData.js"
     },

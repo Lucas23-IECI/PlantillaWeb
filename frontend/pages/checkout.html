@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Mi Tienda</title>
+    <meta name="description" content="Completa tu compra de forma segura en Mi Tienda.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/main.css?v=7.0">
+    <link rel="stylesheet" href="/css/pages/checkout.css?v=7.0">
+</head>
+
+<body>
+    <a href="#main" class="skip-link">Ir al contenido principal</a>
+
+    <!-- Minimal Header for Checkout -->
+    <header class="checkout-header">
+        <div class="container">
+            <a href="/home.html" class="checkout-logo">
+                <span class="logo-text">MT</span>
+                <span class="logo-name">Mi Tienda</span>
+            </a>
+            <div class="checkout-secure">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                <span>Compra Segura</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main" class="checkout-main">
+        <div class="container">
+            <!-- Progress Steps -->
+            <div class="checkout-progress">
+                <div class="progress-step active" data-step="1">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Datos</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Envío</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Pago</span>
+                </div>
+            </div>
+
+            <div class="checkout-grid">
+                <!-- Checkout Form -->
+                <div class="checkout-form-container">
+                    <!-- Step 1: Contact & Personal Info -->
+                    <section class="checkout-section" id="step1" data-step="1">
+                        <h2>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            Información de Contacto
+                        </h2>
+
+                        <div class="guest-login-toggle">
+                            <p>¿Ya tienes cuenta? <a href="login.html?redirect=checkout.html">Inicia sesión</a> para autocompletar tus datos</p>
+                        </div>
+
+                        <form id="contactForm" class="checkout-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" id="email" name="email" required placeholder="tu@email.com" autocomplete="email">
+                                    <span class="form-hint">Recibirás la confirmación de tu pedido aquí</span>
+                                </div>
+                            </div>
+
+                            <div class="form-row two-cols">
+                                <div class="form-group">
+                                    <label for="firstName">Nombre *</label>
+                                    <input type="text" id="firstName" name="firstName" required placeholder="Tu nombre" autocomplete="given-name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Apellido *</label>
+                                    <input type="text" id="lastName" name="lastName" required placeholder="Tu apellido" autocomplete="family-name">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phone">Teléfono *</label>
+                                    <input type="tel" id="phone" name="phone" required placeholder="+56 9 1234 5678" autocomplete="tel">
+                                    <span class="form-hint">Para contactarte sobre tu pedido</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="createAccount" name="createAccount">
+                                    <span class="checkmark"></span>
+                                    <span>Crear una cuenta para futuras compras</span>
+                                </label>
+                            </div>
+
+                            <div class="password-fields" id="passwordFields" style="display: none;">
+                                <div class="form-row two-cols">
+                                    <div class="form-group">
+                                        <label for="password">Contraseña *</label>
+                                        <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres" autocomplete="new-password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="passwordConfirm">Confirmar Contraseña *</label>
+                                        <input type="password" id="passwordConfirm" name="passwordConfirm" placeholder="Repite tu contraseña" autocomplete="new-password">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn-continue">
+                                Continuar a Envío
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </button>
+                        </form>
+                    </section>
+
+                    <!-- Step 2: Shipping -->
+                    <section class="checkout-section" id="step2" data-step="2" style="display: none;">
+                        <h2>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="3" width="15" height="13" />
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                                <circle cx="5.5" cy="18.5" r="2.5" />
+                                <circle cx="18.5" cy="18.5" r="2.5" />
+                            </svg>
+                            Dirección de Envío
+                        </h2>
+
+                        <form id="shippingForm" class="checkout-form">
+                            <div class="saved-addresses" id="savedAddresses" style="display: none;">
+                                <h3>Direcciones guardadas</h3>
+                                <div class="addresses-list" id="addressesList">
+                                    <!-- Populated dynamically -->
+                                </div>
+                                <button type="button" class="btn-new-address" id="btnNewAddress">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg>
+                                    Usar otra dirección
+                                </button>
+                            </div>
+
+                            <div class="new-address-form" id="newAddressForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="address">Dirección *</label>
+                                        <input type="text" id="address" name="address" required placeholder="Calle y número" autocomplete="street-address">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="addressExtra">Depto / Oficina / Referencia</label>
+                                        <input type="text" id="addressExtra" name="addressExtra" placeholder="Ej: Depto 501, Torre B">
+                                    </div>
+                                </div>
+
+                                <div class="form-row two-cols">
+                                    <div class="form-group">
+                                        <label for="region">Región *</label>
+                                        <select id="region" name="region" required>
+                                            <option value="">Selecciona región</option>
+                                            <option value="metropolitana">Región Metropolitana</option>
+                                            <option value="valparaiso">Valparaíso</option>
+                                            <option value="biobio">Biobío</option>
+                                            <option value="araucania">La Araucanía</option>
+                                            <option value="los_lagos">Los Lagos</option>
+                                            <option value="ohiggins">O'Higgins</option>
+                                            <option value="maule">Maule</option>
+                                            <option value="coquimbo">Coquimbo</option>
+                                            <option value="antofagasta">Antofagasta</option>
+                                            <option value="los_rios">Los Ríos</option>
+                                            <option value="tarapaca">Tarapacá</option>
+                                            <option value="atacama">Atacama</option>
+                                            <option value="arica">Arica y Parinacota</option>
+                                            <option value="nuble">Ñuble</option>
+                                            <option value="aysen">Aysén</option>
+                                            <option value="magallanes">Magallanes</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="city">Ciudad/Comuna *</label>
+                                        <input type="text" id="city" name="city" required placeholder="Ej: Santiago" autocomplete="address-level2">
+                                    </div>
+                                </div>
+
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="saveAddress" name="saveAddress">
+                                        <span class="checkmark"></span>
+                                        <span>Guardar esta dirección para futuras compras</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Shipping Options -->
+                            <div class="shipping-options">
+                                <h3>Método de Envío</h3>
+                                <div class="shipping-methods" id="shippingMethods">
+                                    <label class="shipping-option">
+                                        <input type="radio" name="shippingMethod" value="standard" checked>
+                                        <div class="option-content">
+                                            <div class="option-info">
+                                                <span class="option-name">Envío Estándar</span>
+                                                <span class="option-time">3-5 días hábiles</span>
+                                            </div>
+                                            <span class="option-price" id="standardPrice">$3.990</span>
+                                        </div>
+                                    </label>
+                                    <label class="shipping-option">
+                                        <input type="radio" name="shippingMethod" value="express">
+                                        <div class="option-content">
+                                            <div class="option-info">
+                                                <span class="option-name">Envío Express</span>
+                                                <span class="option-time">1-2 días hábiles</span>
+                                            </div>
+                                            <span class="option-price" id="expressPrice">$6.990</span>
+                                        </div>
+                                    </label>
+                                    <label class="shipping-option" id="freeShippingOption" style="display: none;">
+                                        <input type="radio" name="shippingMethod" value="free">
+                                        <div class="option-content">
+                                            <div class="option-info">
+                                                <span class="option-name">Envío Gratis</span>
+                                                <span class="option-time">3-5 días hábiles</span>
+                                            </div>
+                                            <span class="option-price free">GRATIS</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn-back" id="backToStep1">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                                        <polyline points="12 19 5 12 12 5"></polyline>
+                                    </svg>
+                                    Volver
+                                </button>
+                                <button type="submit" class="btn-continue">
+                                    Continuar a Pago
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <!-- Step 3: Payment -->
+                    <section class="checkout-section" id="step3" data-step="3" style="display: none;">
+                        <h2>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                                <line x1="1" y1="10" x2="23" y2="10" />
+                            </svg>
+                            Método de Pago
+                        </h2>
+
+                        <form id="paymentForm" class="checkout-form">
+                            <div class="payment-methods">
+                                <label class="payment-option">
+                                    <input type="radio" name="paymentMethod" value="webpay" checked>
+                                    <div class="option-content">
+                                        <div class="payment-logo webpay">
+                                            <img src="/images/webpay-logo.svg" alt="Webpay" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                            <span class="fallback-logo" style="display:none;">Webpay</span>
+                                        </div>
+                                        <div class="option-info">
+                                            <span class="option-name">Webpay Plus</span>
+                                            <span class="option-desc">Tarjeta de crédito o débito</span>
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="payment-option">
+                                    <input type="radio" name="paymentMethod" value="transfer">
+                                    <div class="option-content">
+                                        <div class="payment-logo transfer">
+                                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+                                                <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+                                                <path d="M18 12a2 2 0 0 0 0 4h4v-4h-4z" />
+                                            </svg>
+                                        </div>
+                                        <div class="option-info">
+                                            <span class="option-name">Transferencia Bancaria</span>
+                                            <span class="option-desc">Confirma dentro de 24h</span>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- Transfer Bank Details (shown when transfer selected) -->
+                            <div class="transfer-details" id="transferDetails" style="display: none;">
+                                <div class="info-box">
+                                    <h4>Datos para Transferencia</h4>
+                                    <ul>
+                                        <li><strong>Banco:</strong> Banco Estado</li>
+                                        <li><strong>Tipo de Cuenta:</strong> Cuenta Corriente</li>
+                                        <li><strong>Número:</strong> 123456789</li>
+                                        <li><strong>RUT:</strong> 12.345.678-9</li>
+                                        <li><strong>Nombre:</strong> Mi Tienda SpA</li>
+                                        <li><strong>Email:</strong> pagos@mitienda.cl</li>
+                                    </ul>
+                                    <p class="transfer-note">Envía el comprobante a pagos@mitienda.cl indicando tu número de pedido.</p>
+                                </div>
+                            </div>
+
+                            <!-- Billing Address -->
+                            <div class="billing-section">
+                                <h3>Dirección de Facturación</h3>
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="sameAsShipping" name="sameAsShipping" checked>
+                                        <span class="checkmark"></span>
+                                        <span>Usar la misma dirección de envío</span>
+                                    </label>
+                                </div>
+
+                                <div class="billing-address-form" id="billingAddressForm" style="display: none;">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="billingAddress">Dirección *</label>
+                                            <input type="text" id="billingAddress" name="billingAddress" placeholder="Calle y número">
+                                        </div>
+                                    </div>
+                                    <div class="form-row two-cols">
+                                        <div class="form-group">
+                                            <label for="billingCity">Ciudad *</label>
+                                            <input type="text" id="billingCity" name="billingCity" placeholder="Ciudad">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="billingRegion">Región *</label>
+                                            <input type="text" id="billingRegion" name="billingRegion" placeholder="Región">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Terms -->
+                            <div class="terms-section">
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="acceptTerms" name="acceptTerms" required>
+                                        <span class="checkmark"></span>
+                                        <span>Acepto los <a href="terminos.html" target="_blank">términos y condiciones</a> y la <a href="privacidad.html" target="_blank">política de privacidad</a> *</span>
+                                    </label>
+                                </div>
+                                <div class="form-group checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="newsletter" name="newsletter">
+                                        <span class="checkmark"></span>
+                                        <span>Quiero recibir ofertas y novedades por email</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn-back" id="backToStep2">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                                        <polyline points="12 19 5 12 12 5"></polyline>
+                                    </svg>
+                                    Volver
+                                </button>
+                                <button type="submit" class="btn-pay" id="btnPay">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                    </svg>
+                                    <span id="payButtonText">Pagar $0</span>
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+
+                <!-- Order Summary Sidebar -->
+                <aside class="order-summary">
+                    <div class="summary-header">
+                        <h3>Resumen del Pedido</h3>
+                        <button class="toggle-summary" id="toggleSummary">
+                            <span id="itemCount">0 productos</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="summary-items" id="summaryItems">
+                        <!-- Populated dynamically -->
+                    </div>
+
+                    <!-- Discount Code -->
+                    <div class="discount-section">
+                        <div class="discount-input-wrapper">
+                            <input type="text" id="discountCodeInput" placeholder="Código de descuento">
+                            <button type="button" id="applyDiscount" class="btn-apply">Aplicar</button>
+                        </div>
+                        <div class="discount-applied" id="discountApplied" style="display: none;">
+                            <span id="discountCodeText"></span>
+                            <button type="button" id="removeDiscount">&times;</button>
+                        </div>
+                    </div>
+
+                    <!-- Totals -->
+                    <div class="summary-totals">
+                        <div class="total-row">
+                            <span>Subtotal</span>
+                            <span id="subtotalAmount">$0</span>
+                        </div>
+                        <div class="total-row" id="discountRow" style="display: none;">
+                            <span>Descuento</span>
+                            <span id="discountAmount" class="discount">-$0</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Envío</span>
+                            <span id="shippingAmount">Calcular</span>
+                        </div>
+                        <div class="total-row total-final">
+                            <span>Total</span>
+                            <span id="totalAmount">$0</span>
+                        </div>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="trust-badges">
+                        <div class="badge">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                            <span>Pago 100% Seguro</span>
+                        </div>
+                        <div class="badge">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <span>Garantía de Devolución</span>
+                        </div>
+                        <div class="badge">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="1" y="3" width="15" height="13" />
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                                <circle cx="5.5" cy="18.5" r="2.5" />
+                                <circle cx="18.5" cy="18.5" r="2.5" />
+                            </svg>
+                            <span>Envío a Todo Chile</span>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Minimal Footer -->
+    <footer class="checkout-footer">
+        <div class="container">
+            <p>&copy; 2025 Mi Tienda. Todos los derechos reservados.</p>
+            <div class="footer-links">
+                <a href="terminos.html">Términos</a>
+                <a href="privacidad.html">Privacidad</a>
+                <a href="contacto.html">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/js/config.js?v=7.0"></script>
+    <script src="/js/utils.js?v=7.0"></script>
+    <script src="/js/auth.js?v=7.0"></script>
+    <script src="/js/cart.js?v=7.0"></script>
+    <script src="/js/api.js?v=7.0"></script>
+    <script src="/js/checkout.js?v=7.0"></script>
+</body>
+
+</html>

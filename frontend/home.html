@@ -5,16 +5,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Tienda | Tu tienda online de confianza</title>
-    <meta name="description" content="Descubre los mejores productos en Mi Tienda. Calidad garantizada y envío rápido a todo el país.">
+    <meta name="description" content="Descubre los mejores productos en Mi Tienda. Calidad garantizada, pago seguro y envío rápido a todo Chile. ¡Compra ahora!">
+    <meta name="keywords" content="tienda online, comprar, productos, envío gratis, ofertas, Chile">
+    <meta name="author" content="Mi Tienda">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mitienda.cl/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mitienda.cl/">
+    <meta property="og:title" content="Mi Tienda | Tu tienda online de confianza">
+    <meta property="og:description" content="Descubre los mejores productos en Mi Tienda. Calidad garantizada, pago seguro y envío rápido a todo Chile.">
+    <meta property="og:image" content="https://mitienda.cl/images/og-image.jpg">
+    <meta property="og:site_name" content="Mi Tienda">
+    <meta property="og:locale" content="es_CL">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://mitienda.cl/">
+    <meta name="twitter:title" content="Mi Tienda | Tu tienda online de confianza">
+    <meta name="twitter:description" content="Descubre los mejores productos en Mi Tienda. Calidad garantizada y envío rápido.">
+    <meta name="twitter:image" content="https://mitienda.cl/images/og-image.jpg">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#06b6d4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Mi Tienda">
 
     <!-- CSS - Sistema Modular -->
-    <link rel="stylesheet" href="css/main.css?v=6.5">
-    <link rel="stylesheet" href="css/pages/home.css?v=6.5">
-    <link rel="stylesheet" href="css/components/wishlist.css?v=6.5">
-    <link rel="stylesheet" href="css/components/mini-cart.css?v=6.5">
+    <link rel="stylesheet" href="css/variables.css?v=11.0">
+    <link rel="stylesheet" href="css/main.css?v=11.0">
+    <link rel="stylesheet" href="css/pages/home.css?v=11.0">
+    <link rel="stylesheet" href="css/components/wishlist.css?v=11.0">
+    <link rel="stylesheet" href="css/components/mini-cart.css?v=11.0">
+    <link rel="stylesheet" href="css/components/search.css?v=11.0">
 </head>
 
 <body class="homepage">
@@ -25,7 +57,7 @@
     <header class="header-container">
         <!-- Info Banner -->
         <div class="header-info">
-            <p>Envío gratis en compras sobre $50.000 | Lunes a Viernes 9:00 - 18:00hrs</p>
+            <p>🚀 Envío gratis en compras sobre $50.000 | Lunes a Viernes 9:00 - 18:00hrs</p>
         </div>
 
         <!-- Navbar -->
@@ -39,7 +71,7 @@
                     </svg>
                 </button>
 
-                <a href="/home.html" class="header-logo">MT</a>
+                <a href="/home.html" class="header-logo">Mi Tienda</a>
 
                 <ul class="nav-links">
                     <li><a href="/home.html" class="active">Inicio</a></li>
@@ -122,62 +154,119 @@
 
     <!-- Main Content -->
     <main id="main">
-        <!-- Hero Section -->
+        <!-- Hero Section - Dynamic & Bold -->
         <section class="hero">
             <div class="hero-content">
+                <span class="hero-badge">Envío Gratis sobre $50.000</span>
                 <p class="hero-subtitle">Bienvenido a</p>
-                <h1 class="hero-title">Mi Tienda Online</h1>
+                <h1 class="hero-title">Mi <span>Tienda</span> Online</h1>
                 <p class="hero-description">
-                    Descubre nuestra selección de productos de alta calidad.
-                    Personaliza este texto con tu propuesta de valor.
+                    Descubre nuestra selección exclusiva de productos premium.
+                    Calidad garantizada y entrega rápida a todo el país.
                 </p>
                 <div class="hero-buttons">
-                    <a href="pages/productos.html" class="btn btn-primary btn-lg">Ver Productos</a>
+                    <a href="pages/productos.html" class="btn btn-primary btn-lg">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                        </svg>
+                        Ver Productos
+                    </a>
                     <a href="pages/contacto.html" class="btn btn-outline btn-lg">Contactar</a>
+                </div>
+                <div class="hero-trust">
+                    <div class="hero-trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        <span>Garantía 30 días</span>
+                    </div>
+                    <div class="hero-trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        <span>Pago Seguro</span>
+                    </div>
+                    <div class="hero-trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="1" y="3" width="15" height="13"/>
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                            <circle cx="5.5" cy="18.5" r="2.5"/>
+                            <circle cx="18.5" cy="18.5" r="2.5"/>
+                        </svg>
+                        <span>Envío Express</span>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Productos Destacados -->
-        <section class="section" id="productos">
+        <section class="section featured-section" id="productos">
             <div class="container">
-                <h2 class="section-title">Productos Destacados</h2>
-                <div id="productosDestacados">
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        <p>Cargando productos...</p>
+                <div class="section-header section-title-center">
+                    <p class="section-subtitle">Lo mejor para ti</p>
+                    <h2 class="section-title">Productos Destacados</h2>
+                </div>
+                <div id="productosDestacados" class="productos-grid-home">
+                    <div class="loading-container">
+                        <div class="loading-spinner"></div>
                     </div>
                 </div>
-                <div style="text-align: center; margin-top: var(--spacing-2xl);">
+                <div class="view-all-container">
                     <a href="pages/productos.html" class="btn btn-outline">Ver Todos los Productos</a>
                 </div>
             </div>
         </section>
 
         <!-- Características -->
-        <section class="section section-alt">
+        <section class="section features-section">
             <div class="container">
-                <h2 class="section-title">¿Por qué elegirnos?</h2>
+                <div class="section-header section-title-center">
+                    <p class="section-subtitle">Nuestra promesa</p>
+                    <h2 class="section-title">¿Por qué elegirnos?</h2>
+                </div>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <div class="feature-icon">🚚</div>
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="1" y="3" width="15" height="13"/>
+                                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+                                <circle cx="5.5" cy="18.5" r="2.5"/>
+                                <circle cx="18.5" cy="18.5" r="2.5"/>
+                            </svg>
+                        </div>
                         <h3>Envío Rápido</h3>
                         <p>Entrega en 24-48 horas en todo el país</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">✅</div>
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                <polyline points="9 12 11 14 15 10"/>
+                            </svg>
+                        </div>
                         <h3>Calidad Garantizada</h3>
                         <p>Productos certificados y de alta calidad</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">💳</div>
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                                <line x1="1" y1="10" x2="23" y2="10"/>
+                            </svg>
+                        </div>
                         <h3>Pago Seguro</h3>
                         <p>Múltiples métodos de pago protegidos</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">🎁</div>
-                        <h3>Ofertas Exclusivas</h3>
-                        <p>Descuentos especiales para miembros</p>
+                        <div class="feature-icon">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
+                        </div>
+                        <h3>Soporte 24/7</h3>
+                        <p>Estamos aquí para ayudarte siempre</p>
                     </div>
                 </div>
             </div>
@@ -193,24 +282,21 @@
                         <span class="footer-logo-text">MT</span>
                         <h3>Mi Tienda</h3>
                     </div>
-                    <p class="footer-description">Tu tienda online de confianza con los mejores productos.</p>
+                    <p class="footer-description">Tu tienda online de confianza con los mejores productos y un servicio de primera calidad.</p>
                     <div class="footer-social">
                         <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                             </svg>
                         </a>
                         <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259 0-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259 0-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                             </svg>
                         </a>
                         <a href="https://wa.me/56912345678" target="_blank" rel="noopener" aria-label="WhatsApp">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.5 0 .18 5.32.18 11.88c0 2.1.55 4.15 1.6 5.97L0 24l6.32-1.74a11.86 11.86 0 0 0 5.74 1.46h.01c6.56 0 11.88-5.33 11.88-11.89 0-3.18-1.24-6.16-3.43-8.35Z" />
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                             </svg>
                         </a>
                     </div>
@@ -229,22 +315,43 @@
                 <div class="footer-section footer-contact">
                     <h4 class="footer-title">Contacto</h4>
                     <ul>
-                        <li>📍 Dirección de ejemplo 123</li>
-                        <li>📞 +56 9 1234 5678</li>
-                        <li>✉️ contacto@mitienda.cl</li>
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            <span>Dirección de ejemplo 123</span>
+                        </li>
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            <a href="tel:+56912345678">+56 9 1234 5678</a>
+                        </li>
+                        <li>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <a href="mailto:contacto@mitienda.cl">contacto@mitienda.cl</a>
+                        </li>
                     </ul>
                 </div>
 
                 <div class="footer-section footer-legal">
                     <h4 class="footer-title">Legal</h4>
                     <ul>
-                        <li><a href="pages/privacidad.html">Privacidad</a></li>
-                        <li><a href="pages/terminos.html">Términos</a></li>
+                        <li><a href="pages/privacidad.html">Política de Privacidad</a></li>
+                        <li><a href="pages/terminos.html">Términos y Condiciones</a></li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Mi Tienda. Todos los derechos reservados.</p>
+                <p>&copy; 2026 Mi Tienda. Todos los derechos reservados.</p>
+                <div class="footer-bottom-links">
+                    <a href="pages/privacidad.html">Privacidad</a>
+                    <a href="pages/terminos.html">Términos</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -254,8 +361,7 @@
         <a class="social-float social-whatsapp" href="https://wa.me/56912345678" target="_blank" rel="noopener" aria-label="WhatsApp">
             <span class="social-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M20.52 3.48A11.86 11.86 0 0 0 12.06 0C5.5 0 .18 5.32.18 11.88c0 2.1.55 4.15 1.6 5.97L0 24l6.32-1.74a11.86 11.86 0 0 0 5.74 1.46h.01c6.56 0 11.88-5.33 11.88-11.89 0-3.18-1.24-6.16-3.43-8.35Z" />
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                 </svg>
             </span>
             <span class="social-text">WhatsApp</span>
@@ -264,8 +370,7 @@
         <a class="social-float social-facebook" href="https://facebook.com/mitienda" target="_blank" rel="noopener" aria-label="Facebook">
             <span class="social-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                 </svg>
             </span>
             <span class="social-text">Facebook</span>
@@ -274,8 +379,7 @@
         <a class="social-float social-instagram" href="https://instagram.com/mitienda" target="_blank" rel="noopener" aria-label="Instagram">
             <span class="social-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path
-                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259 0-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259 0-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                 </svg>
             </span>
             <span class="social-text">Instagram</span>
@@ -283,17 +387,23 @@
     </div>
 
     <!-- Scripts -->
-    <script src="js/config.js?v=6.5"></script>
-    <script src="js/utils.js?v=6.5"></script>
-    <script src="js/auth.js?v=6.5"></script>
-    <script src="js/cart.js?v=6.5"></script>
-    <script src="js/mini-cart.js?v=6.5"></script>
-    <script src="js/api.js?v=6.5"></script>
-    <script src="js/header.js?v=6.5"></script>
-    <script src="js/productos.js?v=6.5"></script>
-    <script src="js/wishlist.js?v=6.5"></script>
-    <script src="js/home-productos.js?v=6.5"></script>
-    <script src="js/script.js?v=6.5"></script>
+    <script src="js/config.js?v=11.0"></script>
+    <script src="js/utils.js?v=11.0"></script>
+    <script src="js/auth.js?v=11.0"></script>
+    <script src="js/cart.js?v=11.0"></script>
+    <script src="js/mini-cart.js?v=11.0"></script>
+    <script src="js/api.js?v=11.0"></script>
+    <script src="js/header.js?v=11.0"></script>
+    <script src="js/productos.js?v=11.0"></script>
+    <script src="js/wishlist.js?v=11.0"></script>
+    <script src="js/home-productos.js?v=11.0"></script>
+    <script src="js/search.js?v=11.0"></script>
+    <script src="js/seo-schema.js?v=11.0"></script>
+    <script src="js/lazy-load.js?v=11.0"></script>
+    <script src="js/image-optimizer.js?v=11.0"></script>
+    <script src="js/cookie-banner.js?v=11.0"></script>
+    <script src="js/pwa.js?v=11.0"></script>
+    <script src="js/script.js?v=11.0"></script>
 </body>
 
 </html>

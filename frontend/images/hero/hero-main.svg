@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="heroGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#764ba2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f093fb;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6b8a;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="600" fill="url(#heroGradient)"/>
+  <rect width="1200" height="600" fill="url(#grid)"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="100" cy="500" r="200" fill="rgba(255,255,255,0.05)"/>
+  <circle cx="1100" cy="100" r="150" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="900" cy="450" r="100" fill="rgba(255,255,255,0.03)"/>
+  
+  <!-- Floating shapes -->
+  <g opacity="0.6">
+    <rect x="150" y="80" width="30" height="30" rx="5" fill="#fff" transform="rotate(15 165 95)" opacity="0.3">
+      <animateTransform attributeName="transform" type="rotate" from="15 165 95" to="375 165 95" dur="20s" repeatCount="indefinite"/>
+    </rect>
+    <circle cx="1050" cy="300" r="15" fill="#fff" opacity="0.4">
+      <animate attributeName="cy" values="300;280;300" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <polygon points="200,350 220,390 180,390" fill="#fff" opacity="0.25">
+      <animateTransform attributeName="transform" type="rotate" from="0 200 370" to="360 200 370" dur="15s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+  
+  <!-- Shopping bag icon -->
+  <g transform="translate(750, 150)" filter="url(#glow)">
+    <path d="M60 80 L60 200 Q60 220 80 220 L200 220 Q220 220 220 200 L220 80 Z" 
+          fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="4" stroke-linecap="round"/>
+    <path d="M100 80 L100 50 Q100 20 140 20 Q180 20 180 50 L180 80" 
+          fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="140" cy="130" r="25" fill="url(#accentGradient)"/>
+    <path d="M130 130 L138 140 L155 120" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Product boxes -->
+  <g transform="translate(850, 280)" opacity="0.8">
+    <rect x="0" y="0" width="80" height="100" rx="8" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+    <rect x="15" y="15" width="50" height="50" rx="4" fill="rgba(255,255,255,0.1)"/>
+    <rect x="15" y="75" width="40" height="8" rx="2" fill="rgba(255,255,255,0.3)"/>
+  </g>
+  
+  <g transform="translate(950, 320)" opacity="0.6">
+    <rect x="0" y="0" width="70" height="90" rx="8" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+    <rect x="12" y="12" width="46" height="46" rx="4" fill="rgba(255,255,255,0.08)"/>
+    <rect x="12" y="65" width="35" height="8" rx="2" fill="rgba(255,255,255,0.25)"/>
+  </g>
+  
+  <!-- Stars / sparkles -->
+  <g fill="#fff">
+    <path d="M300 200 L305 210 L315 210 L307 217 L310 227 L300 220 L290 227 L293 217 L285 210 L295 210 Z" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M1000 180 L1003 186 L1010 186 L1005 190 L1007 197 L1000 192 L993 197 L995 190 L990 186 L997 186 Z" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+    </path>
+    <path d="M400 450 L403 456 L410 456 L405 460 L407 467 L400 462 L393 467 L395 460 L390 456 L397 456 Z" opacity="0.4">
+      <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Wave decoration at bottom -->
+  <path d="M0 550 Q200 520 400 550 T800 550 T1200 550 L1200 600 L0 600 Z" fill="rgba(255,255,255,0.1)"/>
+  <path d="M0 570 Q300 540 600 570 T1200 570 L1200 600 L0 600 Z" fill="rgba(255,255,255,0.05)"/>
+</svg>

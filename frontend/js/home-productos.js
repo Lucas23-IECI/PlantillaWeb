@@ -6,6 +6,9 @@ if (document.readyState === 'loading') {
 
 function initHomeProductos() {
     const container = document.getElementById('productosDestacados');
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/c886fa62-262f-4a7c-838a-6453085fb132',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'home-productos.js:initHomeProductos',message:'Container found',data:{exists:!!container,id:container?.id},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
     if (!container) return;
 
     cargarProductosDestacados(container);
@@ -22,8 +25,11 @@ function cargarProductosDestacados(container) {
 
     const destacados = productos.slice(0, 6);
 
+    // #region agent log
+    fetch('http://127.0.0.1:7242/ingest/c886fa62-262f-4a7c-838a-6453085fb132',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'home-productos.js:cargarProductos',message:'Creating grid with class',data:{className:'productos-grid-home',productCount:destacados.length,runId:'post-fix'},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
     container.innerHTML = `
-        <div class="productos-home-grid">
+        <div class="productos-grid-home">
             ${destacados.map(p => crearCardProductoHome(p)).join('')}
         </div>
     `;
