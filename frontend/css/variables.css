@@ -378,6 +378,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
+
    :root:not([data-theme="light"]) #themeToggle .icon-sun,
    :root:not([data-theme="light"]) .theme-toggle .icon-sun,
    :root:not([data-theme="light"]) .theme-toggle-btn .icon-sun {

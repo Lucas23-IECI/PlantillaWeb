@@ -4,7 +4,7 @@
     const colorAccent = rootStyles.getPropertyValue('--color-accent').trim();
     const gridExists = !!document.querySelector('.productos-grid-home, .productos-home-grid');
     const swRegistered = 'serviceWorker' in navigator;
-    fetch('http://127.0.0.1:7242/ingest/c886fa62-262f-4a7c-838a-6453085fb132',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'script.js:init',message:'CSS and SW check',data:{colorAccent,gridExists,swRegistered,pageLoaded:document.readyState},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'B'})}).catch(()=>{});
+    fetch('http://127.0.0.1:7242/ingest/c886fa62-262f-4a7c-838a-6453085fb132', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'script.js:init', message: 'CSS and SW check', data: { colorAccent, gridExists, swRegistered, pageLoaded: document.readyState }, timestamp: Date.now(), sessionId: 'debug-session', hypothesisId: 'B' }) }).catch(() => { });
 })();
 // #endregion
 const menuToggle = document.querySelector('.menu-toggle');
