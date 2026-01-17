@@ -349,3 +349,28 @@
       width: 100%;
    }
 }
+
+/* ===================================
+   DARK MODE OVERRIDES
+=================================== */
+[data-theme="dark"] .footer,
+:root:not([data-theme="light"]) .footer {
+   /* Override to ensure text is visible */
+   --color-text-inverse: #ffffff;
+   color: #ffffff;
+}
+
+[data-theme="dark"] .footer-about h3,
+[data-theme="dark"] .footer-title,
+[data-theme="dark"] .footer a,
+[data-theme="dark"] .footer-description,
+[data-theme="dark"] .footer-contact li,
+[data-theme="dark"] .footer-bottom p,
+:root:not([data-theme="light"]) .footer-about h3,
+:root:not([data-theme="light"]) .footer-title,
+:root:not([data-theme="light"]) .footer a,
+:root:not([data-theme="light"]) .footer-description,
+:root:not([data-theme="light"]) .footer-contact li,
+:root:not([data-theme="light"]) .footer-bottom p {
+   color: #ffffff;
+}

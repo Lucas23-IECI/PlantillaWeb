@@ -694,8 +694,8 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     background: rgba(255, 255, 255, 0.95);
     border: none;
     border-radius: 50%;
@@ -705,13 +705,19 @@
     justify-content: center;
     opacity: 0;
     transition: all 0.2s ease;
-    z-index: 10;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 15;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    color: #1a1a2e;
 }
 
 .gallery-arrow:hover {
     transform: translateY(-50%) scale(1.1);
-    background: white;
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.gallery-arrow:active {
+    transform: translateY(-50%) scale(0.95);
 }
 
 .producto-card:hover .gallery-arrow {
@@ -719,17 +725,33 @@
 }
 
 .gallery-arrow.prev {
-    left: 8px;
+    left: 10px;
 }
 
 .gallery-arrow.next {
-    right: 8px;
+    right: 10px;
 }
 
 .gallery-arrow svg {
-    width: 14px;
-    height: 14px;
-    stroke: var(--color-text);
+    width: 16px;
+    height: 16px;
+    stroke: #1a1a2e;
+    stroke-width: 2.5;
+    fill: none;
+}
+
+/* Dark mode arrows */
+[data-theme="dark"] .gallery-arrow {
+    background: rgba(30, 41, 59, 0.95);
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .gallery-arrow:hover {
+    background: #334155;
+}
+
+[data-theme="dark"] .gallery-arrow svg {
+    stroke: #f1f5f9;
 }
 
 /* Gallery dots */
@@ -772,14 +794,33 @@
 
 .producto-badge {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    background: var(--color-accent);
-    color: var(--color-text-inverse);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
+    top: 8px;
+    left: 8px;
+    background: #cc0c39;
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    z-index: 5;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Variante para ofertas especiales */
+.producto-badge.hot {
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+}
+
+.producto-badge.new {
+    background: #10b981;
+}
+
+/* Dark mode - mantener colores fuertes */
+[data-theme="dark"] .producto-badge {
+    background: #e53e3e;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .producto-info {

@@ -15,29 +15,24 @@
    transition: all var(--transition-smooth);
 }
 
-/* Sticky para homepage */
+/* Sticky para homepage - fondo sólido */
 body.homepage .header-container {
    position: fixed;
    top: 0;
    left: 0;
    right: 0;
-   background: transparent;
+   background: var(--color-header-bg);
 }
 
-/* Header con scroll - glassmorphism */
+/* Header con scroll - glassmorphism sutil */
 .header-container.scrolled {
-   background: var(--color-header-bg);
+   background: var(--color-header-bg-scrolled);
    box-shadow: var(--shadow-md);
    backdrop-filter: blur(12px);
 }
 
 body.homepage .header-container.scrolled {
-   background: rgba(255, 255, 255, 0.95);
-}
-
-[data-theme="dark"] body.homepage .header-container.scrolled,
-body.homepage .header-container.scrolled[data-theme="dark"] {
-   background: rgba(30, 41, 59, 0.95);
+   background: var(--color-header-bg-scrolled);
 }
 
 /* Compensar altura del header fixed */
@@ -97,7 +92,7 @@ body:not(.homepage) {
    display: flex;
    align-items: center;
    text-decoration: none;
-   color: var(--color-text-inverse);
+   color: var(--color-header-text);
    font-family: var(--font-display);
    font-size: var(--font-size-xl);
    font-weight: var(--font-weight-bold);
@@ -108,7 +103,7 @@ body:not(.homepage) {
 }
 
 .header-container.scrolled .header-logo {
-   color: var(--color-text);
+   color: var(--color-header-text);
 }
 
 .header-logo:hover {
@@ -139,7 +134,7 @@ body:not(.homepage) {
 
 .nav-links a {
    text-decoration: none;
-   color: rgba(255, 255, 255, 0.9);
+   color: var(--color-nav-link);
    font-weight: var(--font-weight-medium);
    font-size: var(--font-size-sm);
    transition: all var(--transition-normal);
@@ -150,7 +145,7 @@ body:not(.homepage) {
 }
 
 .header-container.scrolled .nav-links a {
-   color: var(--color-text);
+   color: var(--color-nav-link);
 }
 
 .nav-links a::before {
@@ -192,9 +187,9 @@ body:not(.homepage) {
 }
 
 .search-icon {
-   background: rgba(255, 255, 255, 0.1);
+   background: var(--color-header-btn-bg);
    border: none;
-   color: var(--color-text-inverse);
+   color: var(--color-header-btn-text);
    cursor: pointer;
    padding: var(--spacing-sm);
    border-radius: var(--radius-lg);
@@ -208,8 +203,8 @@ body:not(.homepage) {
 }
 
 .header-container.scrolled .search-icon {
-   background: var(--color-surface-hover);
-   color: var(--color-text);
+   background: var(--color-header-btn-bg);
+   color: var(--color-header-btn-text);
 }
 
 .search-icon:hover {
@@ -274,9 +269,9 @@ body:not(.homepage) {
 .cart-btn,
 .user-btn,
 .wishlist-header-btn {
-   background: rgba(255, 255, 255, 0.1);
+   background: var(--color-header-btn-bg);
    border: none;
-   color: var(--color-text-inverse);
+   color: var(--color-header-btn-text);
    cursor: pointer;
    padding: var(--spacing-sm);
    border-radius: var(--radius-lg);
@@ -294,8 +289,8 @@ body:not(.homepage) {
 .header-container.scrolled .cart-btn,
 .header-container.scrolled .user-btn,
 .header-container.scrolled .wishlist-header-btn {
-   background: var(--color-surface-hover);
-   color: var(--color-text);
+   background: var(--color-header-btn-bg);
+   color: var(--color-header-btn-text);
 }
 
 .theme-toggle svg,
@@ -310,8 +305,8 @@ body:not(.homepage) {
 .cart-btn:hover,
 .user-btn:hover,
 .wishlist-header-btn:hover {
-   background: var(--color-accent);
-   color: var(--color-text-inverse);
+   background: var(--color-header-btn-hover-bg);
+   color: var(--color-header-btn-hover-text);
    transform: translateY(-2px);
    box-shadow: var(--shadow-accent);
 }
@@ -363,9 +358,9 @@ body:not(.homepage) {
 =================================== */
 .menu-toggle {
    display: none;
-   background: rgba(255, 255, 255, 0.1);
+   background: var(--color-header-btn-bg);
    border: none;
-   color: var(--color-text-inverse);
+   color: var(--color-header-btn-text);
    cursor: pointer;
    padding: var(--spacing-sm);
    border-radius: var(--radius-lg);
@@ -375,13 +370,13 @@ body:not(.homepage) {
 }
 
 .header-container.scrolled .menu-toggle {
-   background: var(--color-surface-hover);
-   color: var(--color-text);
+   background: var(--color-header-btn-bg);
+   color: var(--color-header-btn-text);
 }
 
 .menu-toggle:hover {
-   background: var(--color-accent);
-   color: var(--color-text-inverse);
+   background: var(--color-header-btn-hover-bg);
+   color: var(--color-header-btn-hover-text);
 }
 
 /* ===================================

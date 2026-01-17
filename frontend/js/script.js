@@ -149,26 +149,7 @@ document.querySelectorAll('.producto-card').forEach(card => {
 
 
 
-const socialFloat = document.getElementById('socialFloat');
-const footer = document.getElementById('footer');
 
-if (socialFloat && footer) {
-    const handleSocialFloatScroll = throttle(() => {
-        const footerRect = footer.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-
-        const footerIsNear = footerRect.top <= windowHeight + 100;
-
-        if (footerIsNear) {
-            socialFloat.classList.add('hidden-near-footer');
-        } else {
-            socialFloat.classList.remove('hidden-near-footer');
-        }
-    }, 100);
-
-    window.addEventListener('scroll', handleSocialFloatScroll);
-    handleSocialFloatScroll(); // Ejecutar una vez al cargar
-}
 
 
 

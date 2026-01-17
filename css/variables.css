@@ -68,17 +68,26 @@
    --color-backdrop: rgba(0, 0, 0, 0.6);
 
    /* ===================================
-       NAVBAR Y HEADER
+       NAVBAR Y HEADER - LIGHT MODE
+       Navbar oscuro para mejor contraste
     =================================== */
-   --color-header-bg: var(--color-surface);
-   --color-header-text: var(--color-text);
-   --color-header-border: var(--color-border);
-   --color-header-info-bg: var(--color-primary);
-   --color-header-info-text: var(--color-text-inverse);
+   --color-header-bg: #1a1a1a;
+   --color-header-bg-scrolled: rgba(26, 26, 26, 0.98);
+   --color-header-text: #ffffff;
+   --color-header-border: #2e2e2e;
+   --color-header-info-bg: var(--color-accent);
+   --color-header-info-text: #1a1a1a;
 
-   --color-nav-link: var(--color-text);
+   /* Links de navegación */
+   --color-nav-link: rgba(255, 255, 255, 0.9);
    --color-nav-link-hover: var(--color-accent);
    --color-nav-link-active: var(--color-accent);
+   
+   /* Botones del header */
+   --color-header-btn-bg: rgba(255, 255, 255, 0.1);
+   --color-header-btn-text: #ffffff;
+   --color-header-btn-hover-bg: var(--color-accent);
+   --color-header-btn-hover-text: #1a1a1a;
 
    /* ===================================
        BOTONES
@@ -257,10 +266,26 @@
    --color-overlay: rgba(0, 0, 0, 0.95);
    --color-backdrop: rgba(0, 0, 0, 0.8);
 
-   /* Header dark */
-   --color-header-bg: var(--color-surface);
-   --color-header-border: var(--color-border);
+   /* ===================================
+      NAVBAR Y HEADER - DARK MODE
+   =================================== */
+   --color-header-bg: #1a1a1a;
+   --color-header-bg-scrolled: rgba(26, 26, 26, 0.98);
+   --color-header-text: #f5f5f5;
+   --color-header-border: #2e2e2e;
    --color-header-info-bg: #242424;
+   --color-header-info-text: #f5f5f5;
+
+   /* Links de navegación - Dark Mode */
+   --color-nav-link: rgba(245, 245, 245, 0.9);
+   --color-nav-link-hover: var(--color-accent-light);
+   --color-nav-link-active: var(--color-accent-light);
+   
+   /* Botones del header - Dark Mode */
+   --color-header-btn-bg: rgba(255, 255, 255, 0.1);
+   --color-header-btn-text: #f5f5f5;
+   --color-header-btn-hover-bg: var(--color-accent);
+   --color-header-btn-hover-text: #1a1a1a;
 
    /* Botones dark */
    --btn-primary-bg: var(--color-accent);

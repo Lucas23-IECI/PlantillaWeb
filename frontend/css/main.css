@@ -68,7 +68,7 @@
    left: -50%;
    width: 200%;
    height: 200%;
-   background: 
+   background:
       radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
       radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
       radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.05) 0%, transparent 70%);
@@ -81,16 +81,19 @@
    content: '';
    position: absolute;
    inset: 0;
-   background: 
+   background:
       linear-gradient(135deg, transparent 40%, rgba(6, 182, 212, 0.03) 40%, rgba(6, 182, 212, 0.03) 41%, transparent 41%),
       linear-gradient(135deg, transparent 60%, rgba(6, 182, 212, 0.03) 60%, rgba(6, 182, 212, 0.03) 61%, transparent 61%);
    pointer-events: none;
 }
 
 @keyframes heroBackground {
-   0%, 100% {
+
+   0%,
+   100% {
       transform: translate(0, 0) rotate(0deg);
    }
+
    50% {
       transform: translate(-5%, -5%) rotate(3deg);
    }
@@ -131,19 +134,25 @@
 }
 
 @keyframes badgeFloat {
-   0%, 100% {
+
+   0%,
+   100% {
       transform: translateY(0);
    }
+
    50% {
       transform: translateY(-4px);
    }
 }
 
 @keyframes badgeDot {
-   0%, 100% {
+
+   0%,
+   100% {
       opacity: 1;
       transform: scale(1);
    }
+
    50% {
       opacity: 0.5;
       transform: scale(0.8);
@@ -232,6 +241,7 @@
       opacity: 0;
       transform: translateY(30px);
    }
+
    to {
       opacity: 1;
       transform: translateY(0);
@@ -521,6 +531,7 @@
    from {
       opacity: 0;
    }
+
    to {
       opacity: 1;
    }
@@ -531,6 +542,7 @@
       opacity: 0;
       transform: translateY(20px);
    }
+
    to {
       opacity: 1;
       transform: translateY(0);
@@ -542,6 +554,7 @@
       opacity: 0;
       transform: translateX(20px);
    }
+
    to {
       opacity: 1;
       transform: translateX(0);
@@ -549,17 +562,34 @@
 }
 
 /* Stagger animation utility */
-.stagger-fade > * {
+.stagger-fade>* {
    opacity: 0;
    animation: fadeInUp 0.6s ease forwards;
 }
 
-.stagger-fade > *:nth-child(1) { animation-delay: 0.1s; }
-.stagger-fade > *:nth-child(2) { animation-delay: 0.2s; }
-.stagger-fade > *:nth-child(3) { animation-delay: 0.3s; }
-.stagger-fade > *:nth-child(4) { animation-delay: 0.4s; }
-.stagger-fade > *:nth-child(5) { animation-delay: 0.5s; }
-.stagger-fade > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger-fade>*:nth-child(1) {
+   animation-delay: 0.1s;
+}
+
+.stagger-fade>*:nth-child(2) {
+   animation-delay: 0.2s;
+}
+
+.stagger-fade>*:nth-child(3) {
+   animation-delay: 0.3s;
+}
+
+.stagger-fade>*:nth-child(4) {
+   animation-delay: 0.4s;
+}
+
+.stagger-fade>*:nth-child(5) {
+   animation-delay: 0.5s;
+}
+
+.stagger-fade>*:nth-child(6) {
+   animation-delay: 0.6s;
+}
 
 /* ===================================
    SITE NOTICE BANNER
@@ -609,6 +639,7 @@
 =================================== */
 
 @media (prefers-reduced-motion: reduce) {
+
    *,
    *::before,
    *::after {
@@ -616,6 +647,16 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
    }
+}
+
+/* ===================================
+   SOCIAL FLOAT OVERRIDE
+=================================== */
+.social-float-container.hidden-near-footer {
+   opacity: 0 !important;
+   pointer-events: none;
+   transform: translateY(20px);
+   transition: all 0.3s ease;
 }
 
 /* ===================================

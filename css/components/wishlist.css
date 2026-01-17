@@ -292,22 +292,30 @@
 =================================== */
 .wishlist-header-btn {
     position: relative;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-md);
-    border: none;
-    background: transparent;
-    color: var(--color-text);
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: var(--radius-full) !important;
+    border: 1px solid transparent !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
+.wishlist-header-btn svg {
+    stroke: #ffffff !important;
+}
+
 .wishlist-header-btn:hover {
-    background: var(--color-background-alt);
-    color: #e74c3c;
+    background: var(--color-accent) !important;
+    color: #1a1a1a !important;
+}
+
+.wishlist-header-btn:hover svg {
+    stroke: #1a1a1a !important;
 }
 
 .wishlist-count {
