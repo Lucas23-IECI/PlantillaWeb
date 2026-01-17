@@ -13,8 +13,8 @@ async function register(req, res) {
             return res.status(400).json({ error: 'Email, nombre y contraseña son requeridos' });
         }
 
-        if (password.length < 6) {
-            return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres' });
+        if (password.length < 8) {
+            return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres' });
         }
 
         const db = getDb();
@@ -232,8 +232,8 @@ async function changePassword(req, res) {
             return res.status(400).json({ error: 'Contraseña actual y nueva son requeridas' });
         }
 
-        if (newPassword.length < 6) {
-            return res.status(400).json({ error: 'La nueva contraseña debe tener al menos 6 caracteres' });
+        if (newPassword.length < 8) {
+            return res.status(400).json({ error: 'La nueva contraseña debe tener al menos 8 caracteres' });
         }
 
         const db = getDb();

@@ -9,6 +9,7 @@ const transactionController = require('../controllers/transactionController');
 const noticeController = require('../controllers/noticeController');
 const discountCodeController = require('../controllers/discountCodeController');
 const settingsController = require('../controllers/settingsController');
+const imageController = require('../controllers/imageController');
 
 // Optional controllers - will be created as needed
 let categoryController, variantController, bulkController, importExportController;
@@ -57,7 +58,7 @@ const optionalRoute = (controller, method) => {
         if (controller && controller[method]) {
             return controller[method](req, res);
         }
-        res.status(501).json({ 
+        res.status(501).json({
             error: 'Funcionalidad no implementada',
             message: 'Este endpoint estará disponible próximamente'
         });
@@ -69,14 +70,51 @@ const optionalRoute = (controller, method) => {
 // ==========================================
 router.get('/stats', async (req, res) => {
     try {
-        // TODO: Implement actual stats from database
+        const { getDb } = require('../config/firebaseAdmin');
+        const db = getDb();
+
+        // Get products stats
+        const productsSnapshot = await db.collection('products').get();
+        const totalProducts = productsSnapshot.size;
+        const activeProducts = productsSnapshot.docs.filter(doc => doc.data().active !== false).length;
+
+        // Get orders stats
+        const ordersSnapshot = await db.collection('transactions').get();
+        const allOrders = ordersSnapshot.docs.map(doc => doc.data());
+        const pendingOrders = allOrders.filter(o => o.status === 'pending').length;
+
+        // Calculate today's orders
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const todayOrders = allOrders.filter(o => {
+            const createdAt = o.createdAt?.toDate?.() || new Date(o.createdAt);
+            return createdAt >= today;
+        }).length;
+
+        // Calculate total sales from completed orders
+        const completedOrders = allOrders.filter(o => o.status === 'completed');
+        const totalSales = completedOrders.reduce((sum, o) => sum + (o.total_amount || o.amount || 0), 0);
+
+        // Get users stats
+        const usersSnapshot = await db.collection('users').get();
+        const totalUsers = usersSnapshot.size;
+
+        // Calculate new users this week
+        const weekAgo = new Date();
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        const newUsers = usersSnapshot.docs.filter(doc => {
+            const createdAt = doc.data().createdAt?.toDate?.() || new Date(doc.data().createdAt);
+            return createdAt >= weekAgo;
+        }).length;
+
         res.json({
-            ventas: { total: 0, change: 0 },
-            productos: { total: 0, activos: 0 },
-            usuarios: { total: 0, nuevos: 0 },
-            pedidos: { pendientes: 0, hoy: 0 }
+            ventas: { total: totalSales, change: 0 },
+            productos: { total: totalProducts, activos: activeProducts },
+            usuarios: { total: totalUsers, nuevos: newUsers },
+            pedidos: { pendientes: pendingOrders, hoy: todayOrders }
         });
     } catch (error) {
+        console.error('Error en getAdminStats:', error);
         res.status(500).json({ error: 'Error al obtener estadísticas' });
     }
 });
@@ -91,7 +129,7 @@ router.delete('/orders/:orderId', transactionController.deleteOrder);
 // ==========================================
 // PRODUCTS
 // ==========================================
-router.get('/products', productController.getProducts);
+router.get('/products', productController.getAdminProducts);
 router.post('/products', productController.createProduct);
 router.patch('/products/:productId', productController.updateProduct);
 router.delete('/products/:productId', productController.deleteProduct);
@@ -177,5 +215,20 @@ router.delete('/discount-codes/:code', discountCodeController.deleteCode);
 // ==========================================
 router.get('/settings', settingsController.getSettings);
 router.post('/settings', settingsController.updateSettings);
+
+// ==========================================
+// IMAGE MANAGEMENT (Cloudinary)
+// ==========================================
+router.get('/images', imageController.getImages);
+router.get('/images/folders', imageController.listFolders);
+router.get('/images/predefined-folders', imageController.getPredefinedFolders);
+router.post('/images/folders', imageController.addFolder);
+router.post('/images/upload', upload.array('images', 10), imageController.uploadImages);
+router.post('/images/transform', imageController.transformImage);
+router.post('/images/bulk-delete', imageController.bulkDeleteImages);
+router.get('/images/:publicId(*)', imageController.getImage);
+router.delete('/images/:publicId(*)', imageController.removeImage);
+router.post('/images/:publicId(*)/move', imageController.moveImageToFolder);
+router.patch('/images/:publicId(*)/tags', imageController.updateImageTags);
 
 module.exports = router;

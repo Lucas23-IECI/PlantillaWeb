@@ -24,6 +24,26 @@ async function getProducts(req, res) {
     }
 }
 
+// Admin version: returns ALL products (including inactive)
+async function getAdminProducts(req, res) {
+    try {
+        const db = getDb();
+        const snapshot = await db.collection(PRODUCTS_COLLECTION)
+            .orderBy('createdAt', 'desc')
+            .get();
+
+        const products = snapshot.docs.map(doc => ({
+            product_id: doc.id,
+            ...doc.data()
+        }));
+
+        res.json(products);
+    } catch (error) {
+        console.error('Error en getAdminProducts:', error);
+        res.status(500).json({ error: 'Error al obtener productos' });
+    }
+}
+
 async function getProductById(req, res) {
     try {
         const { id } = req.params;
@@ -89,7 +109,7 @@ async function getHomeFeaturedProducts(req, res) {
 
 async function createProduct(req, res) {
     try {
-        const { name, description, price, image_url, category = '', stock = 0, sku, featured, originalPrice, variants, active } = req.body;
+        const { name, description, price, image_url, images, category = '', stock = 0, sku, featured, originalPrice, variants, active } = req.body;
 
         if (!name || !price) {
             return res.status(400).json({ error: 'Nombre y precio son requeridos' });
@@ -101,6 +121,7 @@ async function createProduct(req, res) {
             description: (description || '').trim(),
             price: Number(price),
             image_url: image_url || '',
+            images: Array.isArray(images) ? images : (image_url ? [image_url] : []),
             category: (category || '').trim(),
             stock: Number(stock) || 0,
             sku: (sku || '').trim(),
@@ -138,7 +159,7 @@ async function updateProduct(req, res) {
             return res.status(404).json({ error: 'Producto no encontrado' });
         }
 
-        const allowedFields = ['name', 'description', 'price', 'image_url', 'category', 'stock', 'active', 'featured', 'originalPrice', 'variants', 'sku'];
+        const allowedFields = ['name', 'description', 'price', 'image_url', 'images', 'category', 'stock', 'active', 'featured', 'originalPrice', 'variants', 'sku'];
         const filteredUpdates = {};
         for (const key of allowedFields) {
             if (updates[key] !== undefined) {
@@ -270,6 +291,7 @@ async function setCatalogProductOrder(req, res) {
 
 module.exports = {
     getProducts,
+    getAdminProducts,
     getProductById,
     getHomeFeaturedProducts,
     createProduct,
