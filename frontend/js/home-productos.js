@@ -7,28 +7,32 @@ if (document.readyState === 'loading') {
 
 function initHomeProductos() {
     const container = document.getElementById('productosDestacados');
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/c886fa62-262f-4a7c-838a-6453085fb132', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'home-productos.js:initHomeProductos', message: 'Container found', data: { exists: !!container, id: container?.id }, timestamp: Date.now(), sessionId: 'debug-session', hypothesisId: 'A' }) }).catch(() => { });
-    // #endregion
     if (!container) return;
 
     cargarProductosDestacados(container);
 }
 
-function cargarProductosDestacados(container) {
+async function cargarProductosDestacados(container) {
     let productos = [];
 
-    if (typeof generarProductosMock === 'function') {
-        productos = generarProductosMock();
-    } else {
-        productos = getProductosFallback();
+    // Intentar cargar desde API primero
+    try {
+        if (typeof api !== 'undefined' && api.getProducts) {
+            const response = await api.getProducts();
+            productos = response.products || response || [];
+        }
+    } catch (error) {
+        console.warn('Error cargando productos destacados:', error);
+    }
+
+    // Si no hay productos de la API, mostrar mensaje vacío
+    if (!productos || productos.length === 0) {
+        container.innerHTML = '<p style="text-align:center;color:#666;padding:20px;">No hay productos destacados disponibles</p>';
+        return;
     }
 
     const destacados = productos.slice(0, 6);
 
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/c886fa62-262f-4a7c-838a-6453085fb132', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ location: 'home-productos.js:cargarProductos', message: 'Creating grid with class', data: { className: 'productos-grid-home', productCount: destacados.length, runId: 'post-fix' }, timestamp: Date.now(), sessionId: 'debug-session', hypothesisId: 'A' }) }).catch(() => { });
-    // #endregion
     container.innerHTML = destacados.map(p => crearCardProductoHome(p)).join('');
 
     container.querySelectorAll('.producto-home-card').forEach(card => {
@@ -40,12 +44,14 @@ function cargarProductosDestacados(container) {
 }
 
 function crearCardProductoHome(producto) {
+    const productId = producto.id || producto.product_id || producto._id;
     const nombre = producto.nombre || producto.name || 'Producto';
     const precio = producto.precio || producto.price || 0;
-    const precioOriginal = producto.precioOriginal || producto.originalPrice;
-    const marca = producto.marca || '';
-    const descuento = producto.descuento || producto.discount;
-    const imagen = producto.imagen || producto.image;
+    const precioOriginal = producto.precioOriginal || producto.originalPrice || producto.original_price;
+    const marca = producto.marca || producto.brand || '';
+    const descuento = producto.descuento || producto.discount ||
+        (precioOriginal && precio < precioOriginal ? Math.round((1 - precio / precioOriginal) * 100) : 0);
+    const imagen = producto.imagen || producto.image || producto.image_url || 'https://via.placeholder.com/300';
     const rating = producto.rating || 0;
 
     const formatPrice = (p) => '$' + p.toLocaleString('es-CL');
@@ -53,7 +59,7 @@ function crearCardProductoHome(producto) {
     const starsHtml = renderStarsHome(rating);
 
     return `
-        <article class="producto-home-card" data-id="${producto.id}">
+        <article class="producto-home-card" data-id="${productId}">
             <div class="producto-home-imagen">
                 <img src="${imagen}" alt="${nombre}" loading="lazy">
                 ${descuento ? `<span class="producto-badge">-${descuento}%</span>` : ''}
@@ -85,62 +91,6 @@ function renderStarsHome(rating) {
 }
 
 function getProductosFallback() {
-    return [
-        {
-            id: 1,
-            nombre: 'MacBook Pro 14"',
-            marca: 'Apple',
-            precio: 1899000,
-            precioOriginal: 2199000,
-            descuento: 14,
-            imagen: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=600&fit=crop',
-            rating: 4.9
-        },
-        {
-            id: 4,
-            nombre: 'Nike Air Max 270',
-            marca: 'Nike',
-            precio: 119000,
-            precioOriginal: 159000,
-            descuento: 25,
-            imagen: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop',
-            rating: 4.8
-        },
-        {
-            id: 5,
-            nombre: 'Sony WH-1000XM5',
-            marca: 'Sony',
-            precio: 289000,
-            precioOriginal: 350000,
-            descuento: 17,
-            imagen: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop',
-            rating: 4.9
-        },
-        {
-            id: 9,
-            nombre: 'Apple Watch Ultra 2',
-            marca: 'Apple',
-            precio: 799000,
-            imagen: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop',
-            rating: 4.8
-        },
-        {
-            id: 6,
-            nombre: 'Jeans Levi\'s 501',
-            marca: 'Levi\'s',
-            precio: 59000,
-            precioOriginal: 79000,
-            descuento: 25,
-            imagen: 'https://images.unsplash.com/photo-1542272454315-4c01d7abdf4a?w=600&h=600&fit=crop',
-            rating: 4.6
-        },
-        {
-            id: 12,
-            nombre: 'Mochila Patagonia 28L',
-            marca: 'Patagonia',
-            precio: 89000,
-            imagen: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop',
-            rating: 4.6
-        }
-    ];
+    // Mock data eliminado - usar productos reales desde Firebase
+    return [];
 }

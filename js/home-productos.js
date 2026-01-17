@@ -108,64 +108,9 @@ function renderStarsHome(rating) {
 
 /**
  * Fallback products if main mock not available
+ * NOTA: Mock data eliminado - usar productos reales desde Firebase
  */
 function getProductosFallback() {
-    return [
-        {
-            id: 1,
-            nombre: 'MacBook Pro 14"',
-            marca: 'Apple',
-            precio: 1899000,
-            precioOriginal: 2199000,
-            descuento: 14,
-            imagen: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=600&fit=crop',
-            rating: 4.9
-        },
-        {
-            id: 4,
-            nombre: 'Nike Air Max 270',
-            marca: 'Nike',
-            precio: 119000,
-            precioOriginal: 159000,
-            descuento: 25,
-            imagen: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&h=600&fit=crop',
-            rating: 4.8
-        },
-        {
-            id: 5,
-            nombre: 'Sony WH-1000XM5',
-            marca: 'Sony',
-            precio: 289000,
-            precioOriginal: 350000,
-            descuento: 17,
-            imagen: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop',
-            rating: 4.9
-        },
-        {
-            id: 9,
-            nombre: 'Apple Watch Ultra 2',
-            marca: 'Apple',
-            precio: 799000,
-            imagen: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&h=600&fit=crop',
-            rating: 4.8
-        },
-        {
-            id: 6,
-            nombre: 'Jeans Levi\'s 501',
-            marca: 'Levi\'s',
-            precio: 59000,
-            precioOriginal: 79000,
-            descuento: 25,
-            imagen: 'https://images.unsplash.com/photo-1542272454315-4c01d7abdf4a?w=600&h=600&fit=crop',
-            rating: 4.6
-        },
-        {
-            id: 12,
-            nombre: 'Mochila Patagonia 28L',
-            marca: 'Patagonia',
-            precio: 89000,
-            imagen: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop',
-            rating: 4.6
-        }
-    ];
+    // Productos fallback eliminados - la app ahora usa Firebase
+    return [];
 }

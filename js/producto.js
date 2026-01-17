@@ -549,66 +549,10 @@ function showNotification(mensaje) {
 }
 
 /**
- * Productos mock para desarrollo (Actualizado)
+ * Productos mock para desarrollo
+ * NOTA: Mock data eliminado - usar productos reales desde Firebase
  */
 function getProductosMock() {
-    return [
-        {
-            product_id: 'prod_1',
-            name: 'MacBook Pro 14"',
-            brand: 'Apple',
-            price: 1899000,
-            original_price: 2199000,
-            discount: 14,
-            description: 'MacBook Pro con chip M3 Pro, 18GB RAM y 512GB SSD. Pantalla Liquid Retina XDR de 14.2 pulgadas.',
-            image_url: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&h=600&fit=crop',
-            images: [
-                'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&h=800&fit=crop',
-                'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800&h=800&fit=crop',
-                'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=800&h=800&fit=crop'
-            ],
-            stock: 10,
-            rating: 4.9,
-            reviews: 287,
-            category: 'Electrónica'
-        },
-        {
-            product_id: 'prod_2',
-            name: 'iPhone 15 Pro Max',
-            brand: 'Apple',
-            price: 1499000,
-            original_price: 1699000,
-            discount: 12,
-            description: 'iPhone 15 Pro Max con chip A17 Pro, cámara de 48MP y pantalla Super Retina XDR de 6.7".',
-            image_url: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&h=600&fit=crop',
-            images: [
-                'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=800&h=800&fit=crop',
-                'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&h=800&fit=crop',
-                'https://images.unsplash.com/photo-1591337676887-a217a6970a8a?w=800&h=800&fit=crop'
-            ],
-            stock: 15,
-            rating: 4.8,
-            reviews: 523,
-            category: 'Electrónica'
-        },
-        {
-            product_id: 'prod_3',
-            name: 'Camiseta Algodón Premium',
-            brand: 'UrbanStyle',
-            price: 25000,
-            original_price: 35000,
-            discount: 29,
-            description: 'Camiseta 100% algodón orgánico certificado. Disponible en 8 colores. Corte regular fit.',
-            image_url: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=600&fit=crop',
-            images: [
-                'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&h=800&fit=crop',
-                'https://images.unsplash.com/photo-1618354691551-44de113f0164?w=800&h=800&fit=crop',
-                'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=800&h=800&fit=crop'
-            ],
-            stock: 50,
-            rating: 4.5,
-            reviews: 156,
-            category: 'Ropa'
-        }
-    ];
+    // Productos mock eliminados - la app ahora usa Firebase
+    return [];
 }

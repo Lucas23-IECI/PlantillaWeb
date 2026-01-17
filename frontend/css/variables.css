@@ -6,8 +6,8 @@
    Tipografía: Plus Jakarta Sans + Inter
 =================================== */
 
-/* Google Fonts Import */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+/* Google Fonts - Loaded via HTML <link> for non-blocking render */
+/* See home.html and page templates for font loading */
 
 :root {
    /* ===================================
@@ -89,7 +89,7 @@
    --color-nav-link: rgba(255, 255, 255, 0.9);
    --color-nav-link-hover: var(--color-accent-light);
    --color-nav-link-active: var(--color-accent-light);
-   
+
    /* Botones del header - Light Mode */
    --color-header-btn-bg: rgba(255, 255, 255, 0.1);
    --color-header-btn-text: #ffffff;
@@ -289,7 +289,7 @@
    --color-nav-link: rgba(241, 245, 249, 0.9);
    --color-nav-link-hover: var(--color-accent-light);
    --color-nav-link-active: var(--color-accent-light);
-   
+
    /* Botones del header - Dark Mode */
    --color-header-btn-bg: rgba(255, 255, 255, 0.1);
    --color-header-btn-text: #f1f5f9;
@@ -441,4 +441,36 @@ html.theme-transitioning *::after {
       color 300ms ease,
       border-color 300ms ease,
       box-shadow 300ms ease !important;
+}
+
+/* ===================================
+   WISHLIST HEADER BUTTON FIX
+   Mismo estilo que theme-toggle para consistencia visual
+=================================== */
+.wishlist-header-btn {
+   background: var(--color-surface) !important;
+   border: 1px solid var(--color-border) !important;
+   color: var(--color-error) !important;
+}
+
+.wishlist-header-btn:hover {
+   background-color: var(--color-surface-hover) !important;
+   border-color: var(--color-accent) !important;
+   color: var(--color-error) !important;
+   transform: scale(1.05);
+}
+
+.wishlist-header-btn svg {
+   stroke: var(--color-error);
+}
+
+[data-theme="dark"] .wishlist-header-btn {
+   background: var(--color-surface) !important;
+   border-color: var(--color-border) !important;
+   color: var(--color-error) !important;
+}
+
+[data-theme="dark"] .wishlist-header-btn:hover {
+   background: var(--color-surface-hover) !important;
+   border-color: var(--color-accent) !important;
 }

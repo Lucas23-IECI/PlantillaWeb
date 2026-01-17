@@ -10,6 +10,174 @@
     <meta name="author" content="Mi Tienda">
     <meta name="robots" content="index, follow">
 
+    <!-- DNS Prefetch & Preconnect for Speed -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//localhost:5000">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="css/variables.css?v=14.0" as="style">
+    <link rel="preload" href="css/main.css?v=14.0" as="style">
+
+    <!-- Critical CSS Inline for Instant First Paint -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.5
+        }
+
+        .header-container {
+            background: #0f172a;
+            color: #fff
+        }
+
+        .header-info {
+            background: #06b6d4;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.875rem
+        }
+
+        .header-nav {
+            padding: 0.75rem 0
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .header-logo {
+            color: #fff;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-decoration: none
+        }
+
+        .nav-links {
+            display: none;
+            list-style: none;
+            gap: 1.5rem
+        }
+
+        @media(min-width:768px) {
+            .nav-links {
+                display: flex
+            }
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center
+        }
+
+        .hero {
+            min-height: 70vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 700px
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem
+        }
+
+        .hero-title span {
+            color: #06b6d4
+        }
+
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            padding: 3rem
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #06b6d4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s
+        }
+
+        .btn-primary {
+            background: #06b6d4;
+            color: #fff
+        }
+
+        .btn-primary:hover {
+            background: #0891b2
+        }
+
+        .section {
+            padding: 4rem 0
+        }
+
+        [data-theme="dark"] body {
+            background: #0f172a;
+            color: #f1f5f9
+        }
+
+        [data-theme="dark"] .header-container {
+            background: #1e293b
+        }
+    </style>
+
+    <!-- Google Fonts - Non-blocking Load -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" media="print"
+        onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap">
+    </noscript>
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://mitienda.cl/">
 
@@ -41,12 +209,12 @@
     <meta name="apple-mobile-web-app-title" content="Mi Tienda">
 
     <!-- CSS - Sistema Modular -->
-    <link rel="stylesheet" href="css/variables.css?v=13.0">
-    <link rel="stylesheet" href="css/main.css?v=13.0">
-    <link rel="stylesheet" href="css/pages/home.css?v=11.0">
-    <link rel="stylesheet" href="css/components/wishlist.css?v=11.0">
-    <link rel="stylesheet" href="css/components/mini-cart.css?v=11.0">
-    <link rel="stylesheet" href="css/components/search.css?v=11.0">
+    <link rel="stylesheet" href="css/variables.css?v=14.0">
+    <link rel="stylesheet" href="css/main.css?v=14.0">
+    <link rel="stylesheet" href="css/pages/home.css?v=13.0">
+    <link rel="stylesheet" href="css/components/wishlist.css?v=12.0">
+    <link rel="stylesheet" href="css/components/mini-cart.css?v=12.0">
+    <link rel="stylesheet" href="css/components/search.css?v=12.0">
 </head>
 
 <body class="homepage">
@@ -393,24 +561,38 @@
         </a>
     </div>
 
-    <!-- Scripts -->
-    <script src="js/config.js?v=11.0"></script>
-    <script src="js/utils.js?v=11.0"></script>
-    <script src="js/auth.js?v=11.0"></script>
-    <script src="js/cart.js?v=11.0"></script>
-    <script src="js/mini-cart.js?v=11.0"></script>
-    <script src="js/api.js?v=11.0"></script>
-    <script src="js/header.js?v=11.0"></script>
-    <script src="js/productos.js?v=11.0"></script>
-    <script src="js/wishlist.js?v=11.0"></script>
-    <script src="js/home-productos.js?v=11.2"></script>
-    <script src="js/search.js?v=11.0"></script>
-    <script src="js/seo-schema.js?v=11.0"></script>
-    <script src="js/lazy-load.js?v=11.0"></script>
-    <script src="js/image-optimizer.js?v=11.0"></script>
-    <script src="js/cookie-banner.js?v=11.0"></script>
-    <script src="js/pwa.js?v=11.0"></script>
-    <script src="js/script.js?v=11.0"></script>
+    <!-- Inline Critical Config (no network request) -->
+    <script>
+        window.CONFIG = {
+            SITE_NAME: 'Mi Tienda',
+            API_URL: 'http://localhost:5000/api',
+            DEFAULT_PRODUCT_IMAGE: 'images/products/placeholder.png',
+            WHATSAPP_NUMBER: '56912345678',
+            CURRENCY_LOCALE: 'es-CL',
+            CURRENCY: 'CLP',
+            DEBUG: false
+        };
+    </script>
+
+    <!-- Critical Scripts (defer = non-blocking, maintains order) -->
+    <script src="js/utils.js?v=12.0" defer></script>
+    <script src="js/api.js?v=12.0" defer></script>
+    <script src="js/auth.js?v=12.0" defer></script>
+    <script src="js/cart.js?v=12.0" defer></script>
+    <script src="js/mini-cart.js?v=12.0" defer></script>
+    <script src="js/header.js?v=12.0" defer></script>
+    <script src="js/home-productos.js?v=13.0" defer></script>
+    <script src="js/wishlist.js?v=12.0" defer></script>
+    <script src="js/script.js?v=12.0" defer></script>
+
+    <!-- Non-Critical Scripts (async = load independently) -->
+    <script src="js/productos.js?v=13.0" async></script>
+    <script src="js/search.js?v=12.0" async></script>
+    <script src="js/seo-schema.js?v=12.0" async></script>
+    <script src="js/lazy-load.js?v=12.0" async></script>
+    <script src="js/image-optimizer.js?v=12.0" async></script>
+    <script src="js/cookie-banner.js?v=12.0" async></script>
+    <script src="js/pwa.js?v=12.0" async></script>
 </body>
 
 </html>
