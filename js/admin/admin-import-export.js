@@ -3,7 +3,7 @@
  * Importar y exportar productos CSV/Excel
  */
 
-const AdminImportExport = (function() {
+const AdminImportExport = (function () {
     'use strict';
 
     /**
@@ -20,7 +20,7 @@ const AdminImportExport = (function() {
 
         try {
             let products;
-            
+
             if (selectedOnly && typeof AdminBulk !== 'undefined') {
                 const ids = AdminBulk.getSelectedIds();
                 if (ids.length === 0) {
@@ -33,7 +33,7 @@ const AdminImportExport = (function() {
             }
 
             const productList = products.products || products || getMockProducts();
-            
+
             if (productList.length === 0) {
                 AdminUtils.showToast('error', 'No hay productos para exportar');
                 return;
@@ -44,10 +44,10 @@ const AdminImportExport = (function() {
 
             // Generate CSV content
             const csvContent = generateCSV(productList, exportFields);
-            
+
             // Download file
             downloadFile(csvContent, `productos_${new Date().toISOString().split('T')[0]}.csv`, 'text/csv');
-            
+
             AdminUtils.showToast('success', `${productList.length} productos exportados`);
 
         } catch (error) {
@@ -119,10 +119,10 @@ const AdminImportExport = (function() {
         const templateFields = ['sku', 'name', 'description', 'price', 'comparePrice', 'stock', 'category', 'image_url'];
         const headers = templateFields.map(f => getFieldLabel(f));
         const exampleRow = ['SKU-001', 'Producto Ejemplo', 'Descripción del producto', '29990', '39990', '100', 'Electrónica', 'https://ejemplo.com/imagen.jpg'];
-        
+
         const content = [headers.join(','), exampleRow.join(',')].join('\n');
         downloadFile(content, 'plantilla_productos.csv', 'text/csv');
-        
+
         AdminUtils.showToast('success', 'Plantilla descargada');
     }
 
@@ -226,7 +226,7 @@ const AdminImportExport = (function() {
      */
     async function handleFile(file) {
         const validTypes = ['text/csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-        
+
         if (!file.name.match(/\.(csv|xlsx|xls)$/i)) {
             AdminUtils.showToast('error', 'Formato no soportado. Usa CSV o Excel.');
             return;
@@ -235,7 +235,7 @@ const AdminImportExport = (function() {
         try {
             const text = await file.text();
             importData = parseCSV(text);
-            
+
             if (importData.length === 0) {
                 AdminUtils.showToast('error', 'El archivo está vacío');
                 return;
@@ -282,7 +282,7 @@ const AdminImportExport = (function() {
 
         for (let i = 0; i < line.length; i++) {
             const char = line[i];
-            
+
             if (char === '"') {
                 if (inQuotes && line[i + 1] === '"') {
                     current += '"';
@@ -297,7 +297,7 @@ const AdminImportExport = (function() {
                 current += char;
             }
         }
-        
+
         result.push(current.trim());
         return result;
     }
@@ -388,10 +388,10 @@ const AdminImportExport = (function() {
 
         // Process in batches
         const batchSize = 10;
-        
+
         for (let i = 0; i < importData.length; i += batchSize) {
             const batch = importData.slice(i, i + batchSize);
-            
+
             try {
                 await api.adminBulkCreateProducts?.(batch, { updateExisting });
                 success += batch.length;
@@ -399,11 +399,11 @@ const AdminImportExport = (function() {
                 errors.push({ index: i, error: error.message });
                 success += batch.length - 1; // Assume some succeeded
             }
-            
+
             processed += batch.length;
             document.getElementById('importProcessed').textContent = processed;
             document.getElementById('importProgressBar').style.width = `${(processed / importData.length) * 100}%`;
-            
+
             // Small delay to show progress
             await new Promise(resolve => setTimeout(resolve, 100));
         }
@@ -417,7 +417,7 @@ const AdminImportExport = (function() {
      */
     function showImportResults(success, errors) {
         const progressContainer = document.getElementById('importProgress');
-        
+
         progressContainer.innerHTML = `
             <div style="text-align: center; padding: var(--spacing-xl);">
                 <div style="width: 64px; height: 64px; margin: 0 auto var(--spacing-lg); border-radius: 50%; background: rgba(40, 167, 69, 0.1); display: flex; align-items: center; justify-content: center;">
@@ -513,7 +513,7 @@ const AdminImportExport = (function() {
         }
 
         AdminUtils.closeModal();
-        
+
         exportProducts({
             format,
             selectedOnly: scope === 'selected',
@@ -522,11 +522,8 @@ const AdminImportExport = (function() {
     }
 
     function getMockProducts() {
-        return [
-            { id: '1', sku: 'LAP-001', name: 'Laptop Pro 15"', price: 899000, stock: 25, category: 'Electrónica', active: true },
-            { id: '2', sku: 'AUD-002', name: 'Audífonos Bluetooth', price: 59000, stock: 50, category: 'Electrónica', active: true },
-            { id: '3', sku: 'SWT-003', name: 'Smartwatch Fitness', price: 129000, stock: 15, category: 'Electrónica', active: true }
-        ];
+        // Mock data eliminado - usar productos reales desde Firebase
+        return [];
     }
 
     // Add CSS

@@ -3,7 +3,7 @@
  * Historial de movimientos de inventario
  */
 
-const AdminHistorial = (function() {
+const AdminHistorial = (function () {
     'use strict';
 
     let movements = [];
@@ -124,9 +124,9 @@ const AdminHistorial = (function() {
                     </thead>
                     <tbody>
                         ${pageMovements.map(mov => {
-                            const type = typeIcons[mov.type] || typeIcons.ajuste;
-                            const quantityClass = mov.quantity > 0 ? 'text-success' : 'text-danger';
-                            return `
+            const type = typeIcons[mov.type] || typeIcons.ajuste;
+            const quantityClass = mov.quantity > 0 ? 'text-success' : 'text-danger';
+            return `
                                 <tr>
                                     <td>${AdminUtils.formatDate(mov.date, 'long')}</td>
                                     <td>
@@ -148,7 +148,7 @@ const AdminHistorial = (function() {
                                     <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${mov.notes || ''}">${mov.notes || '-'}</td>
                                 </tr>
                             `;
-                        }).join('')}
+        }).join('')}
                     </tbody>
                 </table>
             </div>
@@ -296,16 +296,8 @@ const AdminHistorial = (function() {
     }
 
     function getMockMovements() {
-        const now = Date.now();
-        return [
-            { id: '1', date: new Date(now - 3600000), type: 'venta', productName: 'Laptop Pro 15"', sku: 'LAP-001', quantity: -1, previousStock: 25, newStock: 24, userName: 'Sistema' },
-            { id: '2', date: new Date(now - 7200000), type: 'entrada', productName: 'Audífonos Bluetooth', sku: 'AUD-002', quantity: 50, previousStock: 10, newStock: 60, userName: 'Admin', notes: 'Reposición mensual' },
-            { id: '3', date: new Date(now - 86400000), type: 'ajuste', productName: 'Smartwatch Fitness', sku: 'SWT-003', quantity: -2, previousStock: 17, newStock: 15, userName: 'Admin', notes: 'Ajuste por conteo físico' },
-            { id: '4', date: new Date(now - 172800000), type: 'venta', productName: 'Cámara Digital', sku: 'CAM-004', quantity: -1, previousStock: 8, newStock: 7, userName: 'Sistema' },
-            { id: '5', date: new Date(now - 259200000), type: 'entrada', productName: 'Laptop Pro 15"', sku: 'LAP-001', quantity: 10, previousStock: 15, newStock: 25, userName: 'Admin', notes: 'Nueva orden de compra #PO-123' },
-            { id: '6', date: new Date(now - 345600000), type: 'devolucion', productName: 'Audífonos Bluetooth', sku: 'AUD-002', quantity: 1, previousStock: 9, newStock: 10, userName: 'Sistema', notes: 'Devolución cliente' },
-            { id: '7', date: new Date(now - 432000000), type: 'salida', productName: 'Mouse Inalámbrico', sku: 'MOU-005', quantity: -3, previousStock: 45, newStock: 42, userName: 'Admin', notes: 'Productos dañados' }
-        ];
+        // Mock data eliminado - usar movimientos reales desde Firebase
+        return [];
     }
 
     return {

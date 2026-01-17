@@ -365,7 +365,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .empty-state {
@@ -424,7 +426,7 @@
             </div>
             <form id="productForm">
                 <input type="hidden" id="productId">
-                
+
                 <!-- Images Section -->
                 <div class="images-section">
                     <div class="images-section-header">
@@ -486,7 +488,7 @@
                 <h2>Seleccionar Imágenes</h2>
                 <button class="modal-close" onclick="closeImageSelector()">&times;</button>
             </div>
-            
+
             <!-- Upload area -->
             <div class="selector-upload-area" id="selectorUploadArea">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -547,7 +549,7 @@
         // ==========================================
         async function loadProducts() {
             try {
-                const products = await api.getProducts(true);
+                const products = await api.getAdminProducts();
                 if (!products.length) {
                     grid.innerHTML = '<div class="empty-state"><p>No hay productos</p></div>';
                     return;
@@ -671,7 +673,7 @@
         // ==========================================
         function renderProductImages() {
             const container = document.getElementById('productImagesGrid');
-            
+
             if (productImages.length === 0) {
                 container.innerHTML = 'Sin imágenes. Usa los botones de arriba para agregar.';
                 container.classList.add('empty');
@@ -758,7 +760,7 @@
                 const search = document.getElementById('selectorSearch').value;
 
                 const response = await api.getImages({ folder, search, limit: 50 });
-                
+
                 if (response.success && response.data.length > 0) {
                     selectorImages = response.data;
                     renderSelectorImages();

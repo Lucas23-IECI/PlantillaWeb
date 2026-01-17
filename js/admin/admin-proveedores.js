@@ -3,7 +3,7 @@
  * Gestión de proveedores
  */
 
-const AdminProveedores = (function() {
+const AdminProveedores = (function () {
     'use strict';
 
     let suppliers = [];
@@ -307,12 +307,8 @@ const AdminProveedores = (function() {
     }
 
     function getMockSuppliers() {
-        return [
-            { id: '1', name: 'TechSupply Co.', email: 'ventas@techsupply.com', phone: '+56 2 1234 5678', address: 'Av. Principal 123, Santiago', productCount: 45, active: true, logo: '🖥️' },
-            { id: '2', name: 'ModaExpress', email: 'contacto@modaexpress.cl', phone: '+56 9 8765 4321', productCount: 32, active: true, logo: '👕' },
-            { id: '3', name: 'Distribuidora Global', email: 'info@distglobal.com', phone: '+56 2 9876 5432', address: 'Zona Industrial Norte', productCount: 28, active: true, logo: '📦' },
-            { id: '4', name: 'Importadora Sur', email: 'ventas@importsur.cl', productCount: 15, active: false, logo: '🚢' }
-        ];
+        // Mock data eliminado - usar proveedores reales desde Firebase
+        return [];
     }
 
     return {

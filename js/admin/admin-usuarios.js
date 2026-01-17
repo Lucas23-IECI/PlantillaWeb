@@ -2,7 +2,7 @@
  * Admin Panel - Users Module
  */
 
-const AdminUsuarios = (function() {
+const AdminUsuarios = (function () {
     'use strict';
 
     let users = [];
@@ -143,7 +143,7 @@ const AdminUsuarios = (function() {
         if (!q) {
             filteredUsers = [...users];
         } else {
-            filteredUsers = users.filter(u => 
+            filteredUsers = users.filter(u =>
                 (u.name || '').toLowerCase().includes(q) ||
                 (u.email || '').toLowerCase().includes(q)
             );
@@ -280,13 +280,8 @@ const AdminUsuarios = (function() {
     }
 
     function getMockUsers() {
-        return [
-            { id: '1', name: 'Admin Principal', email: 'admin@tienda.com', admin: true, phone: '+56912345678', orderCount: 0, createdAt: new Date(Date.now() - 86400000 * 365) },
-            { id: '2', name: 'Juan Pérez', email: 'juan@email.com', admin: false, phone: '+56987654321', orderCount: 5, createdAt: new Date(Date.now() - 86400000 * 30) },
-            { id: '3', name: 'María García', email: 'maria@email.com', admin: false, phone: '+56911111111', orderCount: 12, createdAt: new Date(Date.now() - 86400000 * 60) },
-            { id: '4', name: 'Carlos López', email: 'carlos@email.com', admin: false, orderCount: 3, createdAt: new Date(Date.now() - 86400000 * 15) },
-            { id: '5', name: 'Ana Martínez', email: 'ana@email.com', admin: false, phone: '+56922222222', orderCount: 8, createdAt: new Date(Date.now() - 86400000 * 45) }
-        ];
+        // Mock data eliminado - usar usuarios reales desde Firebase
+        return [];
     }
 
     return {

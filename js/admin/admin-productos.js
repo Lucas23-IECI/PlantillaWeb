@@ -2,7 +2,7 @@
  * Admin Panel - Products Module
  */
 
-const AdminProductos = (function() {
+const AdminProductos = (function () {
     'use strict';
 
     let products = [];
@@ -61,7 +61,7 @@ const AdminProductos = (function() {
 
                 <div id="productsContainer">
                     <div class="products-grid">
-                        ${[1,2,3,4,5,6].map(() => `
+                        ${[1, 2, 3, 4, 5, 6].map(() => `
                             <div class="product-card">
                                 <div class="skeleton skeleton-image"></div>
                                 <div class="card-body">
@@ -166,10 +166,10 @@ const AdminProductos = (function() {
                 ${items.map(product => `
                     <div class="product-card">
                         <div class="product-card-image">
-                            ${product.image_url ? 
-                                `<img src="${product.image_url}" alt="${product.name}" loading="lazy">` :
-                                `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--admin-text-muted);">${AdminUtils.Icons.package}</div>`
-                            }
+                            ${product.image_url ?
+                `<img src="${product.image_url}" alt="${product.name}" loading="lazy">` :
+                `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--admin-text-muted);">${AdminUtils.Icons.package}</div>`
+            }
                             <div class="product-card-badges">
                                 ${product.stock <= 0 ? '<span class="badge badge-danger">Sin stock</span>' : ''}
                                 ${product.stock > 0 && product.stock < 10 ? '<span class="badge badge-warning">Stock bajo</span>' : ''}
@@ -207,10 +207,10 @@ const AdminProductos = (function() {
                 ${items.map(product => `
                     <div class="product-list-item">
                         <div class="product-list-image">
-                            ${product.image_url ? 
-                                `<img src="${product.image_url}" alt="${product.name}">` :
-                                `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--admin-text-muted);">${AdminUtils.Icons.package}</div>`
-                            }
+                            ${product.image_url ?
+                `<img src="${product.image_url}" alt="${product.name}">` :
+                `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--admin-text-muted);">${AdminUtils.Icons.package}</div>`
+            }
                         </div>
                         <div class="product-list-info">
                             <h4 class="product-list-name">${product.name}</h4>
@@ -258,10 +258,10 @@ const AdminProductos = (function() {
                                     <tr>
                                         <td>
                                             <div style="width:40px;height:40px;border-radius:6px;overflow:hidden;background:var(--admin-bg-muted);">
-                                                ${product.image_url ? 
-                                                    `<img src="${product.image_url}" alt="" style="width:100%;height:100%;object-fit:cover;">` :
-                                                    `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--admin-text-muted);">${AdminUtils.Icons.package}</div>`
-                                                }
+                                                ${product.image_url ?
+                `<img src="${product.image_url}" alt="" style="width:100%;height:100%;object-fit:cover;">` :
+                `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--admin-text-muted);">${AdminUtils.Icons.package}</div>`
+            }
                                             </div>
                                         </td>
                                         <td><strong>${product.name}</strong></td>
@@ -305,7 +305,7 @@ const AdminProductos = (function() {
         if (!q) {
             filteredProducts = [...products];
         } else {
-            filteredProducts = products.filter(p => 
+            filteredProducts = products.filter(p =>
                 p.name.toLowerCase().includes(q) ||
                 (p.category || '').toLowerCase().includes(q) ||
                 (p.sku || '').toLowerCase().includes(q)
@@ -456,7 +456,7 @@ const AdminProductos = (function() {
 
         const formData = new FormData(form);
         const hasVariants = form.querySelector('[name="hasVariants"]')?.checked || false;
-        
+
         const data = {
             name: formData.get('name'),
             sku: formData.get('sku'),
@@ -521,7 +521,7 @@ const AdminProductos = (function() {
     // ==========================================
     // VARIANTS MANAGEMENT
     // ==========================================
-    
+
     let variantCounter = 0;
 
     function toggleVariantsSection() {
@@ -562,7 +562,7 @@ const AdminProductos = (function() {
     function addVariantRow() {
         const container = document.getElementById('variantsList');
         if (!container) return;
-        
+
         const existingRows = container.querySelectorAll('.variant-row').length;
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = renderVariantRow(null, existingRows);
@@ -579,14 +579,14 @@ const AdminProductos = (function() {
     function collectVariants() {
         const variants = [];
         const rows = document.querySelectorAll('.variant-row');
-        
+
         rows.forEach(row => {
             const id = row.dataset.variantId;
             const name = row.querySelector(`[name="variant_name_${id}"]`)?.value;
             const sku = row.querySelector(`[name="variant_sku_${id}"]`)?.value;
             const priceModifier = parseFloat(row.querySelector(`[name="variant_price_${id}"]`)?.value) || 0;
             const stock = parseInt(row.querySelector(`[name="variant_stock_${id}"]`)?.value) || 0;
-            
+
             if (name) {
                 variants.push({
                     id: id.startsWith('new_') ? undefined : id,
@@ -597,23 +597,13 @@ const AdminProductos = (function() {
                 });
             }
         });
-        
+
         return variants;
     }
 
     function getMockProducts() {
-        return [
-            { id: '1', name: 'Producto Premium', category: 'Categoría 1', price: 99990, stock: 25, image_url: '', active: true, featured: true },
-            { id: '2', name: 'Producto Básico', category: 'Categoría 1', price: 29990, stock: 50, image_url: '', active: true },
-            { id: '3', name: 'Producto Especial', category: 'Categoría 2', price: 149990, stock: 8, image_url: '', active: true },
-            { id: '4', name: 'Camiseta con Variantes', category: 'Categoría 2', price: 19990, stock: 0, image_url: '', active: true, variants: [
-                { id: 'v1', name: 'Talla S', sku: 'CAM-S', priceModifier: 0, stock: 10 },
-                { id: 'v2', name: 'Talla M', sku: 'CAM-M', priceModifier: 0, stock: 15 },
-                { id: 'v3', name: 'Talla L', sku: 'CAM-L', priceModifier: 2000, stock: 8 }
-            ]},
-            { id: '5', name: 'Producto Classic', category: 'Categoría 3', price: 39990, stock: 100, image_url: '', active: false },
-            { id: '6', name: 'Producto Edición Limitada', category: 'Categoría 1', price: 199990, stock: 3, image_url: '', active: true, featured: true }
-        ];
+        // Mock data eliminado - usar productos reales desde Firebase
+        return [];
     }
 
     return {
