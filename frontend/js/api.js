@@ -2,7 +2,8 @@ class APIClient {
     constructor(baseURL) {
         this._customBaseURL = baseURL;
         this.cache = new Map();
-        this.cacheTimeout = 5 * 60 * 1000;
+        this.cacheTimeout = 10 * 60 * 1000; // 10 min cache for faster loads
+        this.pendingRequests = new Map(); // Deduplication - prevents identical requests
     }
 
     get baseURL() {
@@ -109,6 +110,7 @@ class APIClient {
     async getProducts(forceRefresh = false) {
         const cacheKey = 'products';
 
+        // Return cached if valid
         if (!forceRefresh && this.cache.has(cacheKey)) {
             const cached = this.cache.get(cacheKey);
             if (Date.now() - cached.timestamp < this.cacheTimeout) {
@@ -116,9 +118,23 @@ class APIClient {
             }
         }
 
-        const data = await this.get('/products');
-        this.cache.set(cacheKey, { data, timestamp: Date.now() });
-        return data;
+        // Deduplication: return pending request if exists
+        if (!forceRefresh && this.pendingRequests.has(cacheKey)) {
+            return this.pendingRequests.get(cacheKey);
+        }
+
+        // Make new request with deduplication
+        const promise = this.get('/products').then(data => {
+            this.cache.set(cacheKey, { data, timestamp: Date.now() });
+            this.pendingRequests.delete(cacheKey);
+            return data;
+        }).catch(err => {
+            this.pendingRequests.delete(cacheKey);
+            throw err;
+        });
+
+        this.pendingRequests.set(cacheKey, promise);
+        return promise;
     }
 
     async getProductById(id) {
@@ -193,6 +209,20 @@ class APIClient {
         const formData = new FormData();
         formData.append('image', file);
         return this.requestForm('/admin/upload', formData);
+    }
+
+    async getImages(params = {}) {
+        const query = new URLSearchParams(params).toString();
+        return this.get(`/admin/images${query ? `?${query}` : ''}`);
+    }
+
+    async uploadImages(files, options = {}) {
+        const formData = new FormData();
+        files.forEach(file => formData.append('images', file));
+        if (options.folder) {
+            formData.append('folder', options.folder);
+        }
+        return this.requestForm('/admin/images/upload', formData);
     }
 
     async adminGetHomeFeaturedProductIds() {

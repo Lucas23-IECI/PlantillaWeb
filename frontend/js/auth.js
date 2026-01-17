@@ -126,3 +126,8 @@ function requireAdmin() {
 }
 
 document.addEventListener('DOMContentLoaded', updateAuthLinks);
+
+// Alias for compatibility
+function getCurrentUser() {
+    return getStoredUser();
+}

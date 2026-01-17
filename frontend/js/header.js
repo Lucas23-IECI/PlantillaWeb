@@ -125,10 +125,6 @@ function initUserButton() {
     const userBtn = document.querySelector('.user-btn');
     if (!userBtn) return;
 
-    // #region agent log
-    fetch('http://127.0.0.1:7242/ingest/c886fa62-262f-4a7c-838a-6453085fb132',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'header.js:initUserButton',message:'User button init',data:{isLoggedIn:typeof isLoggedIn === 'function' ? isLoggedIn() : 'function not found'},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H3-H4'})}).catch(()=>{});
-    // #endregion
-
     // Create dropdown container
     const dropdownContainer = document.createElement('div');
     dropdownContainer.className = 'user-dropdown-container';
@@ -137,9 +133,9 @@ function initUserButton() {
 
     userBtn.addEventListener('click', function (e) {
         e.stopPropagation();
-        
+
         const loggedIn = typeof isLoggedIn === 'function' && isLoggedIn();
-        
+
         if (!loggedIn) {
             // Go to login
             const isInPages = window.location.pathname.includes('/pages/');

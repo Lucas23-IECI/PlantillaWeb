@@ -3,7 +3,7 @@
  * Handles all user profile functionality
  */
 
-(function() {
+(function () {
     'use strict';
 
     // Check auth
@@ -20,7 +20,7 @@
     // ==========================================
     // INITIALIZATION
     // ==========================================
-    
+
     async function init() {
         setupNavigation();
         await loadUserData();
@@ -33,14 +33,14 @@
         try {
             // Load profile data
             userProfile = await api.getUserProfile().catch(() => null);
-            
+
             // Load wishlist
             userWishlist = await loadWishlistData();
-            
+
             // Load orders count for badge
             const ordersResult = await api.getMyTransactions().catch(() => ({ transactions: [] }));
             userOrders = ordersResult.transactions || [];
-            
+
             // Update badges
             updateBadges();
         } catch (error) {
@@ -57,12 +57,12 @@
     function updateBadges() {
         const ordersCount = document.getElementById('ordersCount');
         const wishlistCount = document.getElementById('wishlistCount');
-        
+
         if (ordersCount && userOrders.length > 0) {
             ordersCount.textContent = userOrders.length;
             ordersCount.style.display = 'inline-flex';
         }
-        
+
         if (wishlistCount && userWishlist.length > 0) {
             wishlistCount.textContent = userWishlist.length;
             wishlistCount.style.display = 'inline-flex';
@@ -83,10 +83,10 @@
             // Set avatar initials
             const initials = (user.name || user.email || 'U').split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
             avatar.innerHTML = initials;
-            
+
             name.textContent = user.name || 'Usuario';
             email.textContent = user.email || '';
-            
+
             // Member since
             const createdAt = userProfile?.createdAt || user.createdAt;
             if (createdAt) {
@@ -131,7 +131,7 @@
 
     function loadSection(section) {
         currentSection = section;
-        
+
         switch (section) {
             case 'profile':
                 renderProfileSection();
@@ -233,7 +233,7 @@
         e.preventDefault();
         const form = e.target;
         const formData = new FormData(form);
-        
+
         const data = {
             name: formData.get('name'),
             phone: formData.get('phone'),
@@ -245,11 +245,11 @@
 
         try {
             await api.updateUserProfile(data);
-            
+
             // Update local storage
             const updatedUser = { ...user, name: data.name };
             localStorage.setItem('user_data', JSON.stringify(updatedUser));
-            
+
             updateProfileBanner();
             showNotification('Datos actualizados correctamente', 'success');
         } catch (error) {
@@ -276,9 +276,9 @@
         try {
             const result = await api.getMyTransactions();
             userOrders = result.transactions || [];
-            
+
             const body = content.querySelector('.cuenta-section-body');
-            
+
             if (userOrders.length === 0) {
                 body.innerHTML = `
                     <div class="cuenta-empty">
@@ -332,13 +332,13 @@
             'cancelled': 'cancelled',
             'cancelado': 'cancelled'
         };
-        
+
         const statusClass = statusMap[order.status?.toLowerCase()] || 'pending';
         const date = new Date(order.createdAt || order.created_at);
-        const formattedDate = date.toLocaleDateString('es-CL', { 
-            day: 'numeric', 
-            month: 'short', 
-            year: 'numeric' 
+        const formattedDate = date.toLocaleDateString('es-CL', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
         });
 
         return `
@@ -372,7 +372,7 @@
 
     async function renderWishlistSection() {
         userWishlist = await loadWishlistData();
-        
+
         content.innerHTML = `
             <div class="cuenta-section">
                 <div class="cuenta-section-header">
@@ -401,15 +401,11 @@
     }
 
     function renderWishlistItem(item) {
-        // #region agent log
-        fetch('http://127.0.0.1:7242/ingest/c886fa62-262f-4a7c-838a-6453085fb132',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'cuenta.js:renderWishlistItem',message:'Wishlist item data',data:{rawItem:item,hasName:!!item.name,hasNombre:!!item.nombre,hasPrice:!!item.price,hasPrecio:!!item.precio,name:item.name,nombre:item.nombre,price:item.price,precio:item.precio},timestamp:Date.now(),sessionId:'debug-session',hypothesisId:'H5-H6'})}).catch(()=>{});
-        // #endregion
-        
         // Normalize field names (wishlist.js uses nombre/precio, cuenta.js expects name/price)
         const name = item.name || item.nombre || 'Producto';
         const price = item.price || item.precio || 0;
         const image = item.image_url || item.imagen || item.image || '';
-        
+
         return `
             <div class="wishlist-item" data-id="${item.id || item.product_id}">
                 <div class="wishlist-item-image">
@@ -435,7 +431,7 @@
     }
 
     // Global functions for wishlist actions
-    window.removeFromWishlistUI = function(productId) {
+    window.removeFromWishlistUI = function (productId) {
         if (typeof removeFromWishlist === 'function') {
             removeFromWishlist(productId);
         } else {
@@ -448,7 +444,7 @@
         showNotification('Producto eliminado de favoritos', 'info');
     };
 
-    window.addToCartFromWishlist = function(productId) {
+    window.addToCartFromWishlist = function (productId) {
         const item = userWishlist.find(i => (i.id || i.product_id) == productId);
         if (item && typeof addToCart === 'function') {
             addToCart(item);
@@ -490,7 +486,7 @@
 
     function renderAddressList() {
         const body = content.querySelector('.cuenta-section-body');
-        
+
         if (userAddresses.length === 0) {
             body.innerHTML = `
                 <div class="addresses-grid">
@@ -538,7 +534,7 @@
         `;
     }
 
-    window.openAddressModal = function(address = null) {
+    window.openAddressModal = function (address = null) {
         const isEdit = !!address;
         const modalHTML = `
             <div class="modal-overlay" id="addressModal">
@@ -585,14 +581,14 @@
         document.body.insertAdjacentHTML('beforeend', modalHTML);
     };
 
-    window.closeAddressModal = function() {
+    window.closeAddressModal = function () {
         document.getElementById('addressModal')?.remove();
     };
 
-    window.saveAddress = async function(addressId) {
+    window.saveAddress = async function (addressId) {
         const form = document.getElementById('addressForm');
         const formData = new FormData(form);
-        
+
         const data = {
             name: formData.get('name'),
             street: formData.get('street'),
@@ -616,16 +612,16 @@
         }
     };
 
-    window.editAddress = function(addressId) {
+    window.editAddress = function (addressId) {
         const address = userAddresses.find(a => a.id === addressId);
         if (address) {
             openAddressModal(address);
         }
     };
 
-    window.deleteAddress = async function(addressId) {
+    window.deleteAddress = async function (addressId) {
         if (!confirm('¿Eliminar esta dirección?')) return;
-        
+
         try {
             await api.deleteUserAddress(addressId);
             showNotification('Dirección eliminada', 'success');
@@ -706,11 +702,11 @@
         document.getElementById('passwordForm')?.addEventListener('submit', handlePasswordChange);
     }
 
-    window.showPasswordForm = function() {
+    window.showPasswordForm = function () {
         document.getElementById('passwordFormContainer').style.display = 'block';
     };
 
-    window.hidePasswordForm = function() {
+    window.hidePasswordForm = function () {
         document.getElementById('passwordFormContainer').style.display = 'none';
         document.getElementById('passwordForm').reset();
     };
@@ -745,14 +741,14 @@
     // VIEW ORDER DETAILS
     // ==========================================
 
-    window.viewOrderDetails = function(orderId) {
+    window.viewOrderDetails = function (orderId) {
         const order = userOrders.find(o => (o.order_id || o.id) == orderId);
         if (!order) return;
 
         const date = new Date(order.createdAt || order.created_at);
-        const formattedDate = date.toLocaleDateString('es-CL', { 
-            day: 'numeric', 
-            month: 'long', 
+        const formattedDate = date.toLocaleDateString('es-CL', {
+            day: 'numeric',
+            month: 'long',
             year: 'numeric',
             hour: '2-digit',
             minute: '2-digit'

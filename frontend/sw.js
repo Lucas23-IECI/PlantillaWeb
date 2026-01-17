@@ -3,10 +3,10 @@
  * Provides offline functionality, caching, and push notifications
  */
 
-const CACHE_NAME = 'mi-tienda-v2';
-const STATIC_CACHE = 'static-v2';
-const DYNAMIC_CACHE = 'dynamic-v2';
-const IMAGE_CACHE = 'images-v2';
+const CACHE_NAME = 'mi-tienda-v3';
+const STATIC_CACHE = 'static-v3';
+const DYNAMIC_CACHE = 'dynamic-v3';
+const IMAGE_CACHE = 'images-v3';
 
 // Resources to cache immediately
 const STATIC_ASSETS = [
@@ -45,7 +45,7 @@ const MAX_IMAGE_CACHE_ITEMS = 100;
  */
 self.addEventListener('install', event => {
     console.log('[SW] Installing service worker...');
-    
+
     event.waitUntil(
         caches.open(STATIC_CACHE)
             .then(cache => {
@@ -67,16 +67,16 @@ self.addEventListener('install', event => {
  */
 self.addEventListener('activate', event => {
     console.log('[SW] Activating service worker...');
-    
+
     event.waitUntil(
         caches.keys()
             .then(cacheNames => {
                 return Promise.all(
                     cacheNames
                         .filter(name => {
-                            return name !== STATIC_CACHE && 
-                                   name !== DYNAMIC_CACHE && 
-                                   name !== IMAGE_CACHE;
+                            return name !== STATIC_CACHE &&
+                                name !== DYNAMIC_CACHE &&
+                                name !== IMAGE_CACHE;
                         })
                         .map(name => {
                             console.log('[SW] Deleting old cache:', name);
@@ -94,34 +94,34 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
     const { request } = event;
     const url = new URL(request.url);
-    
+
     // Skip non-GET requests
     if (request.method !== 'GET') return;
-    
+
     // Skip API requests (always fetch from network)
     if (url.pathname.startsWith('/api/')) {
         event.respondWith(networkFirst(request));
         return;
     }
-    
+
     // Handle image requests
     if (isImageRequest(request)) {
         event.respondWith(cacheFirstWithRefresh(request, IMAGE_CACHE));
         return;
     }
-    
+
     // Handle static assets
     if (isStaticAsset(request)) {
         event.respondWith(cacheFirst(request, STATIC_CACHE));
         return;
     }
-    
+
     // Handle page requests
     if (request.mode === 'navigate') {
         event.respondWith(networkFirstWithOffline(request));
         return;
     }
-    
+
     // Default: network first with cache fallback
     event.respondWith(networkFirst(request));
 });
@@ -132,7 +132,7 @@ self.addEventListener('fetch', event => {
 async function cacheFirst(request, cacheName) {
     const cached = await caches.match(request);
     if (cached) return cached;
-    
+
     try {
         const response = await fetch(request);
         if (response.ok) {
@@ -150,7 +150,7 @@ async function cacheFirst(request, cacheName) {
  */
 async function cacheFirstWithRefresh(request, cacheName) {
     const cached = await caches.match(request);
-    
+
     // Fetch fresh version in background
     const fetchPromise = fetch(request)
         .then(async response => {
@@ -162,7 +162,7 @@ async function cacheFirstWithRefresh(request, cacheName) {
             return response;
         })
         .catch(() => cached);
-    
+
     return cached || fetchPromise;
 }
 
@@ -198,7 +198,7 @@ async function networkFirstWithOffline(request) {
     } catch (error) {
         const cached = await caches.match(request);
         if (cached) return cached;
-        
+
         // Return offline page
         return caches.match('/pages/offline.html') || createOfflinePage();
     }
@@ -232,7 +232,7 @@ function isStaticAsset(request) {
 async function trimCache(cacheName, maxItems) {
     const cache = await caches.open(cacheName);
     const keys = await cache.keys();
-    
+
     if (keys.length > maxItems) {
         // Delete oldest items first
         const toDelete = keys.slice(0, keys.length - maxItems);
@@ -317,7 +317,7 @@ function createOfflinePage() {
         </body>
         </html>
     `;
-    
+
     return new Response(html, {
         headers: { 'Content-Type': 'text/html' }
     });
@@ -328,9 +328,9 @@ function createOfflinePage() {
  */
 self.addEventListener('push', event => {
     if (!event.data) return;
-    
+
     const data = event.data.json();
-    
+
     const options = {
         body: data.body || 'Tienes una nueva notificación',
         icon: '/images/icons/icon-192x192.png',
@@ -345,7 +345,7 @@ self.addEventListener('push', event => {
             { action: 'close', title: 'Cerrar' }
         ]
     };
-    
+
     event.waitUntil(
         self.registration.showNotification(data.title || 'Mi Tienda', options)
     );
@@ -356,11 +356,11 @@ self.addEventListener('push', event => {
  */
 self.addEventListener('notificationclick', event => {
     event.notification.close();
-    
+
     if (event.action === 'close') return;
-    
+
     const url = event.notification.data?.url || '/';
-    
+
     event.waitUntil(
         clients.matchAll({ type: 'window', includeUncontrolled: true })
             .then(windowClients => {
