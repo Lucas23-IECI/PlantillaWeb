@@ -23,7 +23,17 @@
 
     <!-- Critical CSS Inline for Instant First Paint -->
     <style>
-        * {
+        /* Critical: Prevent horizontal overflow */
+        html,
+        body {
+            overflow-x: hidden !important;
+            max-width: 100vw;
+            width: 100%;
+        }
+
+        *,
+        *::before,
+        *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box
@@ -36,9 +46,25 @@
             line-height: 1.5
         }
 
+        .header-container,
+        .hero,
+        .container,
+        footer {
+            max-width: 100vw;
+            overflow-x: hidden
+        }
+
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1rem
+        }
+
         .header-container {
             background: #0f172a;
-            color: #fff
+            color: #fff;
+            width: 100%
         }
 
         .header-info {
@@ -209,12 +235,12 @@
     <meta name="apple-mobile-web-app-title" content="Mi Tienda">
 
     <!-- CSS - Sistema Modular -->
-    <link rel="stylesheet" href="css/variables.css?v=14.0">
-    <link rel="stylesheet" href="css/main.css?v=14.0">
-    <link rel="stylesheet" href="css/pages/home.css?v=13.0">
-    <link rel="stylesheet" href="css/components/wishlist.css?v=12.0">
-    <link rel="stylesheet" href="css/components/mini-cart.css?v=12.0">
-    <link rel="stylesheet" href="css/components/search.css?v=12.0">
+    <link rel="stylesheet" href="css/variables.css?v=17.0">
+    <link rel="stylesheet" href="css/main.css?v=17.0">
+    <link rel="stylesheet" href="css/pages/home.css?v=17.0">
+    <link rel="stylesheet" href="css/components/wishlist.css?v=17.0">
+    <link rel="stylesheet" href="css/components/mini-cart.css?v=17.0">
+    <link rel="stylesheet" href="css/components/search.css?v=17.0">
 </head>
 
 <body class="homepage">

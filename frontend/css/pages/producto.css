@@ -454,6 +454,18 @@
     cursor: not-allowed;
 }
 
+/* Fix: Dark mode - Asegurar visibilidad del texto del botón */
+[data-theme="dark"] .btn-add-cart {
+    background: var(--color-accent);
+    color: #ffffff;
+    box-shadow: 0 6px 25px rgba(6, 182, 212, 0.3);
+}
+
+[data-theme="dark"] .btn-add-cart:hover:not(:disabled) {
+    background: var(--color-accent-dark);
+    box-shadow: 0 10px 35px rgba(6, 182, 212, 0.4);
+}
+
 .btn-wishlist-large {
     display: flex;
     align-items: center;
