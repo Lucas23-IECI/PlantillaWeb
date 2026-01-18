@@ -4,9 +4,71 @@
 =================================== */
 
 /* ===================================
+   GLOBAL OVERFLOW PREVENTION
+   Prevents horizontal scroll on all devices
+=================================== */
+html {
+   overflow-x: hidden !important;
+   max-width: 100vw !important;
+   width: 100% !important;
+}
+
+body {
+   overflow-x: hidden !important;
+   max-width: 100vw !important;
+   width: 100% !important;
+   position: relative;
+   /* Clip any content that overflows */
+   -webkit-overflow-scrolling: touch;
+}
+
+/* Force all containers to respect viewport */
+*,
+*::before,
+*::after {
+   box-sizing: border-box;
+}
+
+/* Prevent child elements from causing overflow */
+main,
+header,
+footer,
+section,
+article,
+aside,
+nav,
+.container,
+.container-narrow,
+.container-small,
+.hero,
+.hero-content,
+.footer-content,
+.footer-bottom,
+.header-container,
+.header-nav,
+.featured-section,
+.features-section {
+   max-width: 100vw !important;
+   overflow-x: hidden;
+   box-sizing: border-box;
+}
+
+/* Ensure images and media don't overflow */
+img,
+video,
+iframe,
+embed,
+object,
+svg {
+   max-width: 100% !important;
+   height: auto;
+}
+
+/* ===================================
    TABLET (max-width: 1024px)
 =================================== */
 @media (max-width: 1024px) {
+
    /* Layout */
    .container {
       padding: 0 var(--spacing-lg);
@@ -36,6 +98,7 @@
    MOBILE (max-width: 768px)
 =================================== */
 @media (max-width: 768px) {
+
    /* Layout */
    .container {
       padding: 0 var(--spacing-md);
@@ -47,9 +110,17 @@
    }
 
    /* Typography */
-   h1 { font-size: var(--font-size-3xl); }
-   h2 { font-size: var(--font-size-2xl); }
-   h3 { font-size: var(--font-size-xl); }
+   h1 {
+      font-size: var(--font-size-3xl);
+   }
+
+   h2 {
+      font-size: var(--font-size-2xl);
+   }
+
+   h3 {
+      font-size: var(--font-size-xl);
+   }
 
    .section-title {
       font-size: var(--font-size-2xl);
@@ -331,7 +402,9 @@
 /* ===================================
    HIGH DPI SCREENS
 =================================== */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
    /* Ensure crisp shadows on retina */
    .card-shadow {
       box-shadow: var(--card-shadow);
@@ -342,6 +415,7 @@
    TOUCH DEVICES
 =================================== */
 @media (hover: none) {
+
    /* Remove hover effects that don't work well on touch */
    .product-wishlist {
       opacity: 1;
