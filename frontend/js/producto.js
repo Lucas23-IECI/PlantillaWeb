@@ -27,14 +27,14 @@ async function loadProductDetail() {
 
         try {
             if (typeof api !== 'undefined' && api.getProductById) {
-                // 500ms timeout for instant fallback
+                // 5 second timeout for API (Render cold start can be slow)
                 const timeoutPromise = new Promise((_, reject) =>
-                    setTimeout(() => reject(new Error('Timeout')), 500)
+                    setTimeout(() => reject(new Error('Timeout')), 5000)
                 );
                 producto = await Promise.race([api.getProductById(productId), timeoutPromise]);
             }
         } catch (apiError) {
-            // Silent fallback
+            console.debug('API failed, will try alternative sources:', apiError.message);
         }
 
         if (!producto) {
@@ -260,26 +260,62 @@ function renderProducto(container, producto) {
     `;
 }
 
-function renderProductosRecomendados(producto) {
+async function renderProductosRecomendados(producto) {
     const container = document.getElementById('recomendadosContainer');
     if (!container) return;
 
-    const mockProducts = (typeof generarProductosMock === 'function') ? generarProductosMock() : getProductosMock();
+    let allProducts = [];
 
-    const recomendados = mockProducts
+    // Try to get products from mock first
+    if (typeof generarProductosMock === 'function') {
+        allProducts = generarProductosMock();
+    } else if (typeof getProductosMock === 'function') {
+        allProducts = getProductosMock();
+    }
+
+    // If mock is empty, try API
+    if (allProducts.length === 0 && typeof api !== 'undefined' && api.getProducts) {
+        try {
+            allProducts = await api.getProducts();
+        } catch (err) {
+            console.debug('Could not load products for recommendations:', err.message);
+        }
+    }
+
+    if (allProducts.length === 0) {
+        container.style.display = 'none';
+        return;
+    }
+
+    const recomendados = allProducts
         .filter(p => (p.category || p.categoria) === producto.categoria && (p.product_id || p.id) !== producto.id && (p.stock || p.quantity) > 0)
         .slice(0, 8)
         .map(normalizeProduct);
 
     if (recomendados.length === 0) {
-        container.style.display = 'none';
+        // If no products in same category, show any products
+        const anyProducts = allProducts
+            .filter(p => (p.product_id || p.id) !== producto.id && (p.stock || p.quantity) > 0)
+            .slice(0, 8)
+            .map(normalizeProduct);
+
+        if (anyProducts.length === 0) {
+            container.style.display = 'none';
+            return;
+        }
+
+        renderRecomendadosHTML(container, anyProducts, 'Otros productos');
         return;
     }
 
+    renderRecomendadosHTML(container, recomendados, producto.categoria);
+}
+
+function renderRecomendadosHTML(container, products, categoryLabel) {
     container.innerHTML = `
         <div class="recomendados-header">
             <h2>También te puede interesar</h2>
-            <p>Productos similares en ${producto.categoria}</p>
+            <p>Productos similares en ${categoryLabel}</p>
         </div>
         <div class="recomendados-carousel">
             <button class="carousel-arrow carousel-prev" aria-label="Anterior">
@@ -288,7 +324,7 @@ function renderProductosRecomendados(producto) {
                 </svg>
             </button>
             <div class="recomendados-track">
-                ${recomendados.map(p => crearCardRecomendado(p)).join('')}
+                ${products.map(p => crearCardRecomendado(p)).join('')}
             </div>
             <button class="carousel-arrow carousel-next" aria-label="Siguiente">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
