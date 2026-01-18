@@ -320,3 +320,23 @@
         height: 60px;
     }
 }
+
+/* ===================================
+   DARK MODE FIXES
+   Asegurar visibilidad de texto en botones
+=================================== */
+[data-theme="dark"] .btn-view-cart {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+[data-theme="dark"] .btn-view-cart:hover {
+    background: var(--color-accent);
+    color: #ffffff;
+    border-color: var(--color-accent);
+}
+
+[data-theme="dark"] .mini-cart-qty button:hover {
+    background: var(--color-accent);
+    color: #ffffff;
+}

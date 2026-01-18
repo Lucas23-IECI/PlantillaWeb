@@ -11,6 +11,8 @@
    color: var(--color-text-inverse);
    padding: var(--spacing-5xl) 0 var(--spacing-xl);
    position: relative;
+   overflow-x: hidden;
+   max-width: 100vw;
 }
 
 /* Accent line top */
@@ -347,6 +349,90 @@
 
    .footer-newsletter button {
       width: 100%;
+   }
+}
+
+/* Small mobile (< 480px) */
+@media (max-width: 480px) {
+   .footer {
+      padding: var(--spacing-2xl) 0 var(--spacing-md);
+   }
+
+   .footer .container {
+      padding: 0 var(--spacing-sm);
+   }
+
+   .footer-content {
+      gap: var(--spacing-lg);
+   }
+
+   .footer-about .footer-logo {
+      flex-wrap: wrap;
+   }
+
+   .footer-logo-text {
+      width: 40px;
+      height: 40px;
+      font-size: var(--font-size-base);
+   }
+
+   .footer-about h3 {
+      font-size: var(--font-size-base);
+   }
+
+   .footer-description {
+      font-size: var(--font-size-xs);
+   }
+
+   .footer-title {
+      font-size: var(--font-size-xs);
+      margin-bottom: var(--spacing-sm);
+   }
+
+   .footer-links li,
+   .footer-legal li {
+      margin-bottom: var(--spacing-xs);
+   }
+
+   .footer a {
+      font-size: var(--font-size-xs);
+   }
+
+   .footer-contact li {
+      font-size: var(--font-size-xs);
+      gap: var(--spacing-xs);
+   }
+
+   .footer-contact svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .footer-social a {
+      width: 36px;
+      height: 36px;
+   }
+
+   .footer-social svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .footer-bottom {
+      padding-top: var(--spacing-md);
+      gap: var(--spacing-sm);
+   }
+
+   .footer-bottom p {
+      font-size: var(--font-size-xs);
+   }
+
+   .footer-bottom-links {
+      gap: var(--spacing-md);
+   }
+
+   .footer-bottom-links a {
+      font-size: 9px;
    }
 }
 

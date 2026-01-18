@@ -169,3 +169,27 @@
       display: none;
    }
 }
+
+/* Small mobile (< 480px) */
+@media (max-width: 480px) {
+   .social-float-container {
+      left: 12px;
+      bottom: 12px;
+      gap: 4px;
+   }
+
+   .social-float {
+      width: 40px;
+      height: 40px;
+   }
+
+   .social-float .social-icon svg {
+      width: 18px;
+      height: 18px;
+   }
+
+   /* Ensure social text never causes overflow */
+   .social-float .social-text {
+      display: none !important;
+   }
+}

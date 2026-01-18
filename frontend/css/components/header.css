@@ -8,11 +8,13 @@
 =================================== */
 .header-container {
    width: 100%;
+   max-width: 100vw;
    z-index: var(--z-fixed);
    background: var(--color-header-bg);
    position: relative;
    top: 0;
    transition: all var(--transition-smooth);
+   overflow-x: hidden;
 }
 
 /* Sticky para homepage - fondo sólido */
@@ -669,5 +671,62 @@ body:not(.homepage) {
    .menu-toggle {
       width: 40px;
       height: 40px;
+   }
+}
+
+/* Small mobile (< 480px) */
+@media (max-width: 480px) {
+   .header-info {
+      font-size: 9px;
+      padding: 4px var(--spacing-xs);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+   }
+
+   .header-info p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+   }
+
+   .header-nav .container {
+      padding: var(--spacing-xs) var(--spacing-sm);
+      gap: var(--spacing-xs);
+   }
+
+   .header-logo {
+      font-size: var(--font-size-base);
+   }
+
+   .header-actions {
+      gap: 2px;
+   }
+
+   .theme-toggle,
+   .cart-btn,
+   .user-btn,
+   .wishlist-header-btn,
+   .menu-toggle {
+      width: 34px;
+      height: 34px;
+      padding: 6px;
+   }
+
+   .theme-toggle svg,
+   .cart-btn svg,
+   .user-btn svg,
+   .wishlist-header-btn svg,
+   .menu-toggle svg {
+      width: 16px;
+      height: 16px;
+   }
+
+   .cart-count,
+   .wishlist-count {
+      width: 16px;
+      height: 16px;
+      font-size: 9px;
+      top: -1px;
+      right: -1px;
    }
 }
