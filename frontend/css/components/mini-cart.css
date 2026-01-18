@@ -17,8 +17,8 @@
     position: fixed;
     top: 0;
     right: -400px;
-    width: 100%;
-    max-width: 400px;
+    width: 400px;
+    max-width: 100vw;
     height: 100vh;
     background: var(--color-surface);
     z-index: 9999;
